@@ -4,6 +4,7 @@
     "airbnb-base",
     "next",
     "next/core-web-vitals",
+    "next/babel",
     "plugin:prettier/recommended"
   ],
   "plugins": ["testing-library", "prettier"],

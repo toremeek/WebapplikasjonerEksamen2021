@@ -3,6 +3,7 @@
   "extends": [
     "airbnb-base",
     "next",
+    "next/babel",
     "next/core-web-vitals",
     "plugin:prettier/recommended"
   ],
