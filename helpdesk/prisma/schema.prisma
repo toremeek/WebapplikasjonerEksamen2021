@@ -21,11 +21,11 @@ model Comment {
 
 model Issue {
   id           String     @id @default(cuid())
-  isResolved   Boolean
+  isResolved   Boolean    @default(false)
   title        String     @unique
   description  String
   creator      String
-  severity     Int
+  severity     Int        @default(1)
   created_at   DateTime   @default(now())
   // En 'issue' kan kun høre til en 'department'
   department   Department @relation(fields: [departmentId], references: [id])
