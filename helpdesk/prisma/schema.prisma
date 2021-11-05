@@ -9,3 +9,35 @@ datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
+
+model Comment {
+  id         String   @id @default(cuid())
+  comment    String
+  created_at DateTime @default(now())
+  // En 'comment' kan kun høre til en 'issue'
+  issue      Issue    @relation(fields: [issueId], references: [id])
+  issueId    String
+}
+
+model Issue {
+  id           String     @id @default(cuid())
+  isResolved   Boolean
+  title        String     @unique
+  description  String
+  creator      String
+  severity     Int
+  created_at   DateTime   @default(now())
+  // En 'issue' kan kun høre til en 'department'
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+  // En 'issue' kan ha flere 'comments'
+  comments     Comment[]
+}
+
+model Department {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  created_at DateTime @default(now())
+  // En 'department' kan ha flere 'issues'
+  issues     Issue[]
+}
