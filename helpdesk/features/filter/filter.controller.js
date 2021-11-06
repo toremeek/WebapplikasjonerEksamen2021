@@ -16,6 +16,7 @@ export const filterIssues = async (req, res) => {
   if (!value || !isValidProperty(resource)) return Response(res).badRequest()
   const result = await listIssuesWith({ resource, value })
 
-  if (!result.success) return Response(res).serverError(result.error)
-  return Response(res).ok(result)
+  const { success, data, error } = result
+  if (!success) return Response(res).serverError(error)
+  return Response(res).ok(data)
 }
