@@ -21,9 +21,6 @@ export const create = async (issueData) => {
   const issue = await issuesRepository.exist({ title })
   if (!issue.success) return Result.failure(issue.error)
 
-  // Fjerner department fra issue - skal knyttes sammen med departmentId
-  delete issueData.department
-
   const createdIssue = await issuesRepository.create({
     ...issueData,
     departmentId,
