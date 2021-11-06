@@ -6,6 +6,7 @@ const SupportForm = () => {
     creator: '',
     description: '',
     severity: '',
+    department: '',
   })
 
   const handleInputOnChange = ({ currentTarget: { name, value } }) =>
@@ -20,7 +21,24 @@ const SupportForm = () => {
     <form className="support_form" onSubmit={handleSendSupport}>
       <h2>Ny henvendelse</h2>
       <div>
-        <select value={form.severity} onChange={handleInputOnChange}>
+        <p>Velg avdeling:</p>
+        <select
+          value={form.department}
+          name="department"
+          onChange={handleInputOnChange}
+        >
+          <option value="It">IT</option>
+          <option value="Salg">Salg</option>
+          <option value="Design">Design</option>
+        </select>
+      </div>
+      <div>
+        <p>Velg hastegrad:</p>
+        <select
+          value={form.severity}
+          name="severity"
+          onChange={handleInputOnChange}
+        >
           <option value="High">Høy</option>
           <option value="Medium">Medium</option>
           <option value="Lav">Lav</option>
