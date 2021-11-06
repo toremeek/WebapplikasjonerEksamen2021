@@ -1,4 +1,6 @@
 import * as issuesRepository from './issues.repository'
+import * as departmentRepository from '../departments/departments.repository'
+import { Result } from '@/lib/api/result'
 
 // Henter alle issues fra databasen
 export const list = async () => await issuesRepository.findMany()
@@ -9,27 +11,25 @@ export const create = async (issueData) => {
   const { title, description, creator, severity, department } = issueData
 
   // Sjekker om department eksisterer i databasen
-  const departmentId = await departmentRepository.exist(department)?.data?.id
+  const departmentFromDb = await departmentRepository.findOneByName(department)
+  const departmentId = departmentFromDb.data?.id
 
   if (!departmentId)
-    return {
-      success: false,
-      error: `Department '${department}' does not exist`,
-    }
+    return Result.failure(`Department '${department}' does not exist`)
 
-  // Sjekk om det finnes en issue med samme tittel, descripton og department.
-  // For man kan ha samme issue men i en annen avdeling?
-  const issue = await issuesRepository.exist({ title, description })
-  // Server feiler
-  if (!issue.success) return { success: false, error: issue.error }
+  // Sjekk om det finnes en issue med samme tittel
+  const issue = await issuesRepository.exist({ title })
+  if (!issue.success) return Result.failure(issue.error)
+
+  // Fjerner department fra issue - skal knyttes sammen med departmentId
+  delete issueData.department
 
   const createdIssue = await issuesRepository.create({
-    ...issue,
+    ...issueData,
     departmentId,
   })
 
-  if (!createdIssue.success)
-    return { success: false, error: createdIssue.error }
-
-  return { success: true, data: createdIssue.data }
+  const { success, data, error } = createdIssue
+  if (!success) return Result.failure(error)
+  return Result.success(data)
 }

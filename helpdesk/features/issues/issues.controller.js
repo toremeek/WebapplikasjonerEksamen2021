@@ -18,7 +18,7 @@ export const createIssue = async (req, res) => {
 
   // TODO: Validate input ...
 
-  const createdIssue = issuesService.create({
+  const createdIssue = await issuesService.create({
     title,
     description,
     creator,

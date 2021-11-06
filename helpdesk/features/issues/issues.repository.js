@@ -25,7 +25,7 @@ export const findManyWhere = async (property) => {
       return Result.failure(DbError.read('department', undefined, error))
 
     resource = 'departmentId'
-    value = departmentInfo.data.id
+    value = departmentInfo.data?.id
   } else value = +value
 
   try {
@@ -44,6 +44,11 @@ export const findManyWhere = async (property) => {
 // Legger til ny issue
 export const create = async (issue) => {
   try {
+    const { departmentId } = issue
+    // Fjerner props som ikke skal inn i db
+    delete issue.departmentId
+    delete issue.department
+
     const newIssue = await prisma.issue.create({
       data: {
         ...issue,
@@ -70,6 +75,6 @@ export const exist = async (identifier) => {
 
     return Result.success(issue)
   } catch (error) {
-    return Result.failure(DbError('issue', undefined, error))
+    return Result.failure(DbError.read('issue', undefined, error))
   }
 }
