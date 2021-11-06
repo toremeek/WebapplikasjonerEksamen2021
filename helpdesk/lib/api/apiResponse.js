@@ -3,7 +3,7 @@
 export const Response = (res) => ({
   ok: (data) => res.status(200).json({ success: true, data }),
   created: (data) => res.status(201).json({ success: true, data }),
-  badRequest: (error = 'Dataen du har fylt ut innholder feil') =>
+  badRequest: (error = 'Bad request 💀') =>
     res.status(400).json({ success: false, error }),
   conflict: (error = 'Ressursen finnes allerede') =>
     res.status(409).json({ success: false, error }),
