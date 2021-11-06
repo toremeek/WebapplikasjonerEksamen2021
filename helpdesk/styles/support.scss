@@ -4,6 +4,14 @@ main {
 }
 
 .support_form {
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  padding: 1rem;
+  h2{
+    font-size: 1.5rem;
+    padding: 0;
+    margin: 1rem 0;
+  }
   div {
     margin-bottom: 1rem;
   }
@@ -60,5 +68,42 @@ main {
     border: none;
     }
     
+  }
+}
+
+.high{
+  display: flex;
+  font-weight: bold;
+  color: #b52424;
+  div {
+    background-color: #b52424;
+    width: 15px;
+    height: 15px;
+    border-radius: 40px;
+    margin: 5px;
+  }
+}
+.medium{
+  display: flex;
+  font-weight: bold;
+  color: #dede2f;
+  div {
+    background-color: #dede2f;
+    width: 15px;
+    height: 15px;
+    border-radius: 40px;
+    margin: 5px;
+  }
+}
+.low{
+  display: flex;
+  font-weight: bold;
+  color: #4a8c52;
+  div {
+    background-color: #4a8c52;
+    width: 15px;
+    height: 15px;
+    border-radius: 40px;
+    margin: 4px;
   }
 }

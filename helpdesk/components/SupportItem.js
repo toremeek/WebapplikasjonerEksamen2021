@@ -6,43 +6,6 @@ const SupportItem = ({ item }) => {
   const severityMedium = item?.severity === 'medium' ? 'Medium' : null
   const severityLow = item?.severity === 'low' ? 'Lav' : null
 
-  // styled components for de ulike viktighetsgradene //
-  const HighSpan = styled.span`
-    display: flex;
-    font-weight: bold;
-    color: #b52424;
-    div {
-      background-color: #b52424;
-      width: 15px;
-      height: 15px;
-      border-radius: 40px;
-      margin: 5px;
-    }
-  `
-  const MediumSpan = styled.span`
-    display: flex;
-    font-weight: bold;
-    color: #dede2f;
-    div {
-      background-color: #dede2f;
-      width: 15px;
-      height: 15px;
-      border-radius: 40px;
-      margin: 5px;
-    }
-  `
-  const LowSpan = styled.span`
-    display: flex;
-    font-weight: bold;
-    color: #4a8c52;
-    div {
-      background-color: #4a8c52;
-      width: 15px;
-      height: 15px;
-      border-radius: 40px;
-      margin: 5px;
-    }
-  `
   return (
     <li className="issue">
       <div className="meta">
@@ -50,22 +13,22 @@ const SupportItem = ({ item }) => {
           {item?.department.charAt(0).toUpperCase() + item?.department.slice(1)}
         </span>
         {severityHigh ? (
-          <HighSpan>
+          <span className="high">
             {severityHigh}
             <div></div>
-          </HighSpan>
+          </span>
         ) : null}
         {severityMedium ? (
-          <MediumSpan>
+          <span className="medium">
             {severityMedium}
             <div></div>
-          </MediumSpan>
+          </span>
         ) : null}
         {severityLow ? (
-          <LowSpan>
+          <span className="low">
             {severityLow}
             <div></div>
-          </LowSpan>
+          </span>
         ) : null}
       </div>
       <h3>
