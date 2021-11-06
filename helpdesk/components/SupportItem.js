@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import {validate } from "@/lib/Validation"
 
 /* eslint-disable no-ternary */
 const SupportItem = ({ item }) => {

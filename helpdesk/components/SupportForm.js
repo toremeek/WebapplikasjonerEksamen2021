@@ -1,6 +1,16 @@
+import { validate } from '@/lib/Validation'
 import { useState } from 'react'
+import styled from 'styled-components';
+
+//bruker styled compoenents på error-beskjeder//
+
+const StyledErrorP = styled.p`
+color: red;
+margin: 20px 0 0 0;
+`;
 
 const SupportForm = () => {
+const [validationErrors, setValidationErrors] = useState();
   const [form, setForm] = useState({
     title: '',
     creator: '',
@@ -14,19 +24,45 @@ const SupportForm = () => {
 
   const handleSendSupport = (event) => {
     event.preventDefault()
-    console.log(form)
+
+    const isValidTitle = validate.minMaxLength(25, 150, form.title)
+  console.log(isValidTitle)
+    const isValidDescription = validate.maxLength(250, form.description)
+   console.log(isValidDescription)
+   
+    //TODO: skriv inn validering av fornavn og etternavn //
+
+   if (!isValidDescription) {
+      setValidationErrors({
+        description: "Må fylles ut, minimum 5 tegn og maks 250 tegn",
+      })
+    } else if (!isValidTitle) {
+      setValidationErrors({
+        title: "Tittel må fylles ut, minimum 25 og maks 150 tegn",
+      })
+    }
+    
+    else{
+      setValidationErrors(null)
+      //her kommer logikk for å pushe til api //
+      console.log(form)
+    }
   }
+
 
   return (
     <form className="support_form" onSubmit={handleSendSupport}>
       <h2>Ny henvendelse</h2>
       <div>
+      {validationErrors?.department?.length > 0 ? <StyledErrorP>{validationErrors.department}</StyledErrorP> : null}
         <p>Velg avdeling:</p>
         <select
+        required
           value={form.department}
           name="department"
           onChange={handleInputOnChange}
         >
+          <option value="">Velg</option>
           <option value="It">IT</option>
           <option value="Salg">Salg</option>
           <option value="Design">Design</option>
@@ -34,24 +70,33 @@ const SupportForm = () => {
       </div>
       <div>
         <p>Velg hastegrad:</p>
+        {validationErrors?.severity?.length > 0 ? <StyledErrorP>{validationErrors.severity}</StyledErrorP> : null}
+
         <select
+        required
           value={form.severity}
           name="severity"
+          id="severity"
           onChange={handleInputOnChange}
+          
         >
+          <option value="">Velg</option>
           <option value="High">Høy</option>
           <option value="Medium">Medium</option>
           <option value="Lav">Lav</option>
         </select>
       </div>
       <div>
+        {validationErrors?.title?.length > 0 ? <StyledErrorP>{validationErrors.title}</StyledErrorP> : null}
         <label htmlFor="title">Tittel</label>
         <input
           type="text"
           id="title"
           name="title"
+          placeholder="Tittel på henvendelsen din"
           onChange={handleInputOnChange}
           value={form.title}
+          
         />
       </div>
       <div>
@@ -59,23 +104,28 @@ const SupportForm = () => {
         <input
           type="text"
           id="creator"
+          placeholder="Fornavn Etternavn"
           name="creator"
           onChange={handleInputOnChange}
           value={form.creator}
+          required
+          
         />
       </div>
       <div>
+      {validationErrors?.description?.length > 0 ? <StyledErrorP>{validationErrors.description}</StyledErrorP> : null}
         <label htmlFor="description">Beskrivelse</label>
         <textarea
           type="text"
           id="description"
+          placeholder="Hva er problemet?"
           name="description"
           onChange={handleInputOnChange}
           value={form.description}
+          required
         />
       </div>
-      <div>{/* TODO Add department */}</div>
-      <div>{/* TODO Add severity */}</div>
+      <div>{}</div>
       <button type="sumbit">Send henvendelse</button>
     </form>
   )
