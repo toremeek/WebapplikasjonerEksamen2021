@@ -6,7 +6,6 @@ export const DbError = {
   },
 
   read(resource, message, error) {
-    console.log(error)
     return { resource, message: message ?? `Failed finding ${resource}` }
   },
 
