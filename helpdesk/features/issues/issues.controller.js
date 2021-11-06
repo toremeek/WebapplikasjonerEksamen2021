@@ -1,3 +1,4 @@
+import { Response } from '@/lib/api/apiResponse'
 import * as issuesService from './issues.service'
 
 // GET
@@ -5,8 +6,9 @@ import * as issuesService from './issues.service'
 export const listIssues = async (req, res) => {
   const issues = await issuesService.list()
 
-  if (issues.error) return res.status(500).json(issues.error)
-  return res.status(200).json(issues)
+  const { success, error, data } = issues
+  if (!success) return Response(res).serverError(error)
+  return Response(res).ok(data)
 }
 
 // POST
@@ -25,8 +27,7 @@ export const createIssue = async (req, res) => {
   })
 
   // TODO: Sjekke server response
-  if (!createdIssue.success)
-    return res.status(500).json({ success: false, error: createdIssue.error })
-
-  return res.status(201).json(createdIssue)
+  const { success, error, data } = createdIssue
+  if (!success) return Response(res).serverError(error)
+  return Response(res).created(data)
 }
