@@ -13,11 +13,9 @@ export const filterIssues = async (req, res) => {
   } = req.query
 
   // Sjekker om vi har en verdi og gyldig property å filtrere med
-  if (!value || !isValidProperty(resource)) return res.status(400).end()
-
+  if (!value || !isValidProperty(resource)) return Response(res).badRequest()
   const result = await listIssuesWith({ resource, value })
 
   if (!result.success) return Response(res).serverError(result.error)
-
   return Response(res).ok(result)
 }
