@@ -2,7 +2,7 @@ import { DbError } from '@/lib/api/dbErrors'
 import { Result } from '@/lib/api/result'
 import prisma from '@/lib/clients/db'
 
-// Henter alle
+// Henter alle -- BRUKES IKKE !!
 export const findMany = async () => {
   try {
     const departments = await prisma.department.findMany()
@@ -13,7 +13,7 @@ export const findMany = async () => {
   }
 }
 
-// Henter avdeling med id
+// Henter avdeling med id -- BRUKES IKKE !!
 export const findOne = async (id) => {
   try {
     const department = await prisma.department.findUnique({ where: { id } })
