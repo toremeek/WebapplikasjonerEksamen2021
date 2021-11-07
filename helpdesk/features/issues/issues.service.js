@@ -7,7 +7,6 @@ export const list = async () => await issuesRepository.findMany()
 
 // Legg til ny issue i databasen
 export const create = async (issueData) => {
-  // Hva sendes inn fra front-end, department id eller value?
   const { title, department } = issueData
 
   // Sjekker om department eksisterer i databasen
