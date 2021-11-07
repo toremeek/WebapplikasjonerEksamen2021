@@ -26,26 +26,32 @@ const [validationErrors, setValidationErrors] = useState();
     event.preventDefault()
 
     const isValidTitle = validate.minMaxLength(25, 150, form.title)
-  console.log(isValidTitle)
     const isValidDescription = validate.maxLength(250, form.description)
-   console.log(isValidDescription)
    
-    //TODO: skriv inn validering av fornavn og etternavn //
+   const isValidName = validate.nameCheck(form.creator)
+   console.log(isValidName)
+
 
    if (!isValidDescription) {
       setValidationErrors({
-        description: "Må fylles ut, minimum 5 tegn og maks 250 tegn",
+        description: "Beskrivelse må fylles ut, min 5 tegn og maks 250 tegn",
       })
     } else if (!isValidTitle) {
       setValidationErrors({
-        title: "Tittel må fylles ut, minimum 25 og maks 150 tegn",
+        title: "Tittel må fylles ut, min 25 og maks 150 tegn",
+      })
+    }
+    else if(!isValidName){
+      setValidationErrors({
+        creator: "For og etternavn må ha stor forbokstav og mellomrom"
       })
     }
     
     else{
       setValidationErrors(null)
-      //her kommer logikk for å pushe til api //
       console.log(form)
+      //her kommer logikk for å pushe til api //
+     
     }
   }
 
@@ -100,6 +106,7 @@ const [validationErrors, setValidationErrors] = useState();
         />
       </div>
       <div>
+      {validationErrors?.creator?.length > 0 ? <StyledErrorP>{validationErrors.creator}</StyledErrorP> : null}
         <label htmlFor="creator">Navn</label>
         <input
           type="text"

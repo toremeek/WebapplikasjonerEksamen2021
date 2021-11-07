@@ -10,7 +10,6 @@ export const validate = {
     },  
     
     maxLength(length, value) {
-        console.log(value.length)
         if (length && value?.length <= length) {return true}
         else{
             return false
@@ -18,10 +17,17 @@ export const validate = {
        
     },
     minMaxLength(min, max, value){
-        console.log(value)
         if(value?.length >= min && value?.length <= max) {return true}
         else{
             return false
     }  
-  }
+  },
+  nameCheck(value){
+        const checkWhiteSpace = new RegExp("\\s+");
+            if(checkWhiteSpace.test(value)){
+                return value
+                .split(" ")
+                .filter(Boolean)
+                .every((s) => s[0].toUpperCase() === s[0]);}
+                },
 }
