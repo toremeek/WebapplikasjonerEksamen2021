@@ -35,7 +35,7 @@ Ved feil `400 - BAD REQUEST` eller `500 - SERVER ERROR` returneres:
 | `GET`           | `/api/issues/{id}`               | Henter alle verdier for issue med `id`                   |   ❌   | Returnerer bare issue - må joine tabeller          |
 | `PUT` / `PATCH` | `/api/issues/{id}`               | Merker en issue som løst                                 |   ❌   | Ikke implementert                                  |
 | `GET`           | `/api/issues/{id}/comments`      | Henter alle kommentarer til issue med `id`               |   ✔️   | Virker ok - endre på objektet?                     |
-| `POST`          | `/api/issues/{id}/comments`      | Legger til kommentar til issue med `id`                  |   ❌   | Mangler inputvalidering                            |
+| `POST`          | `/api/issues/{id}/comments`      | Legger til kommentar til issue med `id` **[2]**          |   ❌   | Mangler inputvalidering                            |
 | `GET`           | `/api/issues/{resource}/{value}` | Henter issues med `resource` lik `value` (case sensitiv) |   ❌   | Returnerer alle når value ikke finnes              |
 
 **[1]:** `body` må inneholde:
@@ -51,3 +51,12 @@ Ved feil `400 - BAD REQUEST` eller `500 - SERVER ERROR` returneres:
 ```
 
 **Merk:** `department` er case sensitiv
+
+**[2]:** `body` må inneholde:
+
+```JSON
+{
+  "comment": "Hvem liker 🍍 på 🍕?"
+}
+
+```
