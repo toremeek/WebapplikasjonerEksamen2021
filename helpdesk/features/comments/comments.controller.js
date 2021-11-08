@@ -22,8 +22,6 @@ export const addComment = async (req, res) => {
   const { id } = req.query
   const { comment } = req.body
 
-  console.log(`Controller: ${id}, ${comment}`)
-
   if (!id || !comment)
     return Response(res).badRequest('Missing required fields')
 

@@ -1,4 +1,5 @@
-const handler = (req, res) => {
+import * as issuesController from '@/features/issues/issues.controller'
+const handler = async (req, res) => {
   const {
     body,
     method,
@@ -7,10 +8,7 @@ const handler = (req, res) => {
 
   switch (method) {
     case 'GET':
-      // Returnerer issue
-      res
-        .status(200)
-        .json({ success: true, data: `Henter hele issuen med ${id} 🐲` })
+      await issuesController.getIssueExtended(req, res)
       break
     case 'DELETE ':
       // Legger til issue

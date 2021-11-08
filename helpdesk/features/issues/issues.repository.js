@@ -6,9 +6,37 @@ import * as departmentRepository from '@/features/departments/departments.reposi
 // Henter alle issues fra databasen
 export const findMany = async () => {
   try {
-    const issues = await prisma.issue.findMany()
+    const issues = await prisma.issue.findMany({
+      include: {
+        department: { select: { name: true } },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
+    })
 
     return Result.success(issues)
+  } catch (error) {
+    return Result.failure(DbError.read('issues', undefined, error))
+  }
+}
+
+// Henter en issue med kommentarer
+export const findOne = async (issueId) => {
+  try {
+    const issue = await prisma.issue.findUnique({
+      where: {
+        id: issueId,
+      },
+      include: {
+        department: { select: { name: true } },
+        comments: true,
+      },
+    })
+
+    return Result.success(issue)
   } catch (error) {
     return Result.failure(DbError.read('issues', undefined, error))
   }

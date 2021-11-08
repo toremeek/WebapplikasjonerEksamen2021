@@ -1,12 +1,12 @@
+import { Result } from '@/lib/api/result'
 import * as departmentsRepository from './departments.repository'
-import * as issuesRepository from '../issues/issues.repository'
 
-export const getIssueComments = async (issueId) => {
-  const issue = await issuesRepository.exist(issueId)
+export const getName = async (departmentId) => {
+  const department = await departmentsRepository.findOne(departmentId)
 
-  if (!issue.success) return { success: false, error: issue.error }
-  if (!issue.data)
-    return { success: false, error: `Issue with id ${id} does not exist` }
+  const { success, data, error } = department
+  if (!success) return Result.failure(error)
+  if (!data) return Result.failure(`Department with id ${id} does not exist`)
 
-  const comments = await departmentsRepository()
+  return Result.success(data)
 }
