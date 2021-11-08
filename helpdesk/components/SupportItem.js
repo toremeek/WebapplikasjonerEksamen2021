@@ -2,9 +2,8 @@ import { useState } from 'react'
 import ServiceModal from './ServiceModal'
 
 /* eslint-disable no-ternary */
-const SupportItem = ({ item }) => {
+const SupportItem = ({ item, apiData }) => {
   const [modal, setModal] = useState(false)
-
   const severityHigh = item?.severity === 'high' ? 'Høy' : null
   const severityMedium = item?.severity === 'medium' ? 'Medium' : null
   const severityLow = item?.severity === 'low' ? 'Lav' : null

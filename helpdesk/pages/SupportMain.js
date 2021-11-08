@@ -1,6 +1,6 @@
 import SupportItem from '@/components/SupportItem'
+import useGetData from '@/hooks/useGetData'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 const SupportMain = () => {
   const data = [
@@ -42,37 +42,47 @@ const SupportMain = () => {
     },
   ]
   const [filterData, setFilterData] = useState('')
-
+  //sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
+  const url = 'issues'
+  const { apiData, error, loading } = useGetData({ url })
   const handleDepartmentFilter = (value) => {
     setFilterData(value.target.value)
   }
 
   return (
-    <section className="issues">
-      <h2>Alle henvendelser</h2>
-      <div>
-        <p>Filtrer etter:</p>
-        <select
-          name="filter"
-          value={data.department}
-          onChange={handleDepartmentFilter}
-        >
-          <option value="">Alle avdelinger</option>
-          <option value="it">IT</option>
-          <option value="salg">Salg</option>
-          <option value="design">Design</option>
-        </select>
-      </div>
-      <ul>
-        {filterData?.length > 0
-          ? data
-              ?.filter((data) => data.department == filterData)
-              .map((filteredData) => (
-                <SupportItem key={filteredData.id} item={filteredData} />
-              ))
-          : data?.map((issue) => <SupportItem key={issue.id} item={issue} />)}
-      </ul>
-    </section>
+    <>
+      {loading ? (
+        <p>Laster..</p>
+      ) : (
+        <section className="issues">
+          <h2>Alle henvendelser</h2>
+          <div>
+            <p>Filtrer etter:</p>
+            <select
+              name="filter"
+              value={data.department}
+              onChange={handleDepartmentFilter}
+            >
+              <option value="">Alle avdelinger</option>
+              <option value="it">IT</option>
+              <option value="salg">Salg</option>
+              <option value="design">Design</option>
+            </select>
+          </div>
+          <ul>
+            {filterData?.length > 0
+              ? data
+                  ?.filter((data) => data.department == filterData)
+                  .map((filteredData) => (
+                    <SupportItem key={filteredData.id} item={filteredData} />
+                  ))
+              : data?.map((issue) => (
+                  <SupportItem key={issue.id} apiData={apiData} item={issue} />
+                ))}
+          </ul>
+        </section>
+      )}
+    </>
   )
 }
 
