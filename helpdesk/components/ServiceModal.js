@@ -54,8 +54,9 @@ const ServiceModal = ({ item, setModal }) => {
     setAddComment(true)
   }
 
-  const handleNewComment = (e) => {
-    e.preven
+  const handleNewComment = (event) => {
+    event.preventDefault
+    setComment(event.target.value)
   }
   const handleCommentChange = (e) => {
     e.preventDefault()
