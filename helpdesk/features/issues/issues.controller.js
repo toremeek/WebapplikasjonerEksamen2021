@@ -31,3 +31,16 @@ export const createIssue = async (req, res) => {
   if (!success) return Response(res).serverError(error)
   return Response(res).created(data)
 }
+
+// GET
+// api/issues/{id}
+export const getIssueExtended = async (req, res) => {
+  const { id } = req.query
+  if (!id) return Response(res).badRequest('Missing required field: id')
+
+  const issue = await issuesService.getIssueExtended(id)
+
+  const { success, error, data } = issue
+  if (!success) return Response(res).serverError(error)
+  return Response(res).ok(data)
+}

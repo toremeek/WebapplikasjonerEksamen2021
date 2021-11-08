@@ -23,6 +23,25 @@ export const findMany = async () => {
   }
 }
 
+// Henter en issue med kommentarer
+export const findOne = async (issueId) => {
+  try {
+    const issue = await prisma.issue.findUnique({
+      where: {
+        id: issueId,
+      },
+      include: {
+        department: { select: { name: true } },
+        comments: true,
+      },
+    })
+
+    return Result.success(issue)
+  } catch (error) {
+    return Result.failure(DbError.read('issues', undefined, error))
+  }
+}
+
 // Henter alle issues med property lik ...
 // Department / severity
 // TODO: Fikse innviklet logikk - splitte opp i to funksjoner?
