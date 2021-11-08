@@ -1,7 +1,6 @@
 import SupportItem from '@/components/SupportItem'
 import useGetData from '@/hooks/useGetData'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 const SupportMain = () => {
   const data = [
@@ -43,11 +42,9 @@ const SupportMain = () => {
     },
   ]
   const [filterData, setFilterData] = useState('')
-
   //sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
   const url = 'issues'
   const { apiData, error, loading } = useGetData({ url })
-  console.table(apiData?.data)
   const handleDepartmentFilter = (value) => {
     setFilterData(value.target.value)
   }
