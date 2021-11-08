@@ -13,7 +13,7 @@ export const findMany = async () => {
   }
 }
 
-// Henter avdeling med id -- BRUKES IKKE !!
+// Henter avdeling med id
 export const findOne = async (id) => {
   try {
     const department = await prisma.department.findUnique({ where: { id } })
