@@ -17,6 +17,7 @@ export const createIssue = async (req, res) => {
   const { title, description, creator, severity, department } = req.body
 
   // TODO: Validate input ...
+  // TODO: DTO https://xn--fullstkk-o0a.no/courses/next-final/01-validering/
 
   const createdIssue = await issuesService.create({
     title,
