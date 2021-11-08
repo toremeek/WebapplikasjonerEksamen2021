@@ -40,3 +40,18 @@ export const create = async (issueData) => {
   if (!success) return Result.failure(error)
   return Result.success(data)
 }
+
+// Merke issue som løst / resovled
+export const resolve = async (id) => {
+  // Henter issue med id fra databasen
+  const issue = await issuesRepository.exist({ id })
+  // Sjekker om issue eksistere og om den er uløst
+  if (!issue.success) return Result.failure(issue.error)
+  if (!issue.data) return Result.failure(`Cannot find issue: ${id}`)
+  if (issue.data.isResolved)
+    return Result.failure(`Issue is allready resolved!`)
+
+  const { success, data, error } = await issuesRepository.resolve(id)
+  if (!success) return Result.failure(error)
+  return Result.success(data)
+}

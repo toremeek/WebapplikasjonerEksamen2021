@@ -106,3 +106,17 @@ export const exist = async (identifier) => {
     return Result.failure(DbError.read('issue', undefined, error))
   }
 }
+
+// Oppdaterer issue med {id} til isResolved = true
+export const resolve = async (issueId) => {
+  try {
+    const issue = await prisma.issue.update({
+      where: { id: issueId },
+      data: { isResolved: true },
+    })
+
+    return Result.success(issue)
+  } catch (error) {
+    return Result.failure(DbError.update('issue', undefined, error))
+  }
+}

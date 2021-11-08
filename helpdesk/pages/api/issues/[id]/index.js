@@ -10,12 +10,13 @@ const handler = async (req, res) => {
     case 'GET':
       await issuesController.getIssueExtended(req, res)
       break
-    case 'DELETE ':
+    case 'DELETE':
       // Legger til issue
       res.status(200).json({ success: true, data: 'Fjernet 🐮' })
       break
     case 'PUT':
-      res.status(200).json({ success: true, data: 'Alle issues! 🐲' })
+      await issuesController.markIssueResovled(req, res)
+      break
     default:
       res.status(400).json({ success: false, error: 'Bad request 💀' })
   }

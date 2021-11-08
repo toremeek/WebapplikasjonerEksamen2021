@@ -44,3 +44,16 @@ export const getIssueExtended = async (req, res) => {
   if (!success) return Response(res).serverError(error)
   return Response(res).ok(data)
 }
+
+// PUT
+// api/issues/{id}
+export const markIssueResovled = async (req, res) => {
+  const { id } = req.query
+  if (!id) return Response(res).badRequest('Missing required field: id')
+
+  const issue = await issuesService.resolve(id)
+
+  const { success, error, data } = issue
+  if (!success) return Response(res).serverError(error)
+  return Response(res).ok(data)
+}
