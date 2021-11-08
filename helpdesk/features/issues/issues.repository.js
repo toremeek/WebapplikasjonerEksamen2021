@@ -6,7 +6,16 @@ import * as departmentRepository from '@/features/departments/departments.reposi
 // Henter alle issues fra databasen
 export const findMany = async () => {
   try {
-    const issues = await prisma.issue.findMany()
+    const issues = await prisma.issue.findMany({
+      include: {
+        department: { select: { name: true } },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
+    })
 
     return Result.success(issues)
   } catch (error) {
