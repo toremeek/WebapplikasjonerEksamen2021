@@ -47,7 +47,7 @@ const SupportMain = () => {
   //sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
   const url = 'issues'
   const { apiData, error, loading } = useGetData({ url })
-  console.log(apiData)
+  console.table(apiData?.data)
   const handleDepartmentFilter = (value) => {
     setFilterData(value.target.value)
   }
@@ -80,7 +80,7 @@ const SupportMain = () => {
                     <SupportItem key={filteredData.id} item={filteredData} />
                   ))
               : data?.map((issue) => (
-                  <SupportItem key={issue.id} item={issue} />
+                  <SupportItem key={issue.id} apiData={apiData} item={issue} />
                 ))}
           </ul>
         </section>
