@@ -4,13 +4,13 @@ import { Result } from '@/lib/api/result'
 
 // Henter alle issues fra databasen
 export const list = async () => {
-  await issuesRepository.findMany()
+  const { success, data, error } = await issuesRepository.findMany()
+  if (!success) return Result.failure(error)
+  return Result.success(data)
 }
 
 // Henter en issue med kommentarer
 export const getIssueExtended = async (issueId) => {
-  console.log(issueId)
-
   const { success, data, error } = await issuesRepository.findOne(issueId)
   if (!success) return Result.failure(error)
   return Result.success(data)
