@@ -1,5 +1,7 @@
 import * as issuesController from '@/features/issues/issues.controller'
+import { Response } from '@/lib/api/apiResponse'
 
+// api/issues
 const handler = async (req, res) => {
   const { method } = req
 
@@ -15,7 +17,7 @@ const handler = async (req, res) => {
       break
 
     default:
-      res.status(405).end()
+      return Response(res).badRequest()
   }
 }
 

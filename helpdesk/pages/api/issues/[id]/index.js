@@ -1,9 +1,11 @@
 import * as issuesController from '@/features/issues/issues.controller'
 import { Response } from '@/lib/api/apiResponse'
+
+// api/issues/{id}
 const handler = async (req, res) => {
   const { method } = req
 
-  switch (method) {
+  switch (method?.toUpperCase()) {
     case 'GET':
       await issuesController.getIssueExtended(req, res)
       break
