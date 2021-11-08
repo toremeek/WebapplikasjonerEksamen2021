@@ -3,7 +3,6 @@ import ServiceModal from './ServiceModal'
 
 /* eslint-disable no-ternary */
 const SupportItem = ({ item }) => {
-  console.log('item', item)
   const [modal, setModal] = useState(false)
 
   const severityHigh = item?.severity === 'high' ? 'Høy' : null

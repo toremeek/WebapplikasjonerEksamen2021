@@ -14,6 +14,7 @@ const SupportMain = () => {
       severity: 'low',
       isResolved: false,
       createdAt: new Date(2021, 11, 22).toLocaleDateString(),
+      comments: ['Dette var ikke bra'],
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ const SupportMain = () => {
       severity: 'medium',
       isResolved: false,
       createdAt: new Date(2021, 11, 6).toLocaleDateString(),
+      comments: ['Dette var flotte saker'],
     },
     {
       id: 3,
@@ -36,22 +38,24 @@ const SupportMain = () => {
       severity: 'high',
       isResolved: false,
       createdAt: new Date(2021, 10, 12).toLocaleDateString(),
+      comments: ['Håpløst, hun har ikke peiling'],
     },
   ]
   const [filterData, setFilterData] = useState('')
 
-  const handleInputOnChange = (value) => {
+  const handleDepartmentFilter = (value) => {
     setFilterData(value.target.value)
   }
+
   return (
     <section className="issues">
       <h2>Alle henvendelser</h2>
       <div>
-        <p>Vis saker for:</p>
+        <p>Filtrer etter:</p>
         <select
           name="filter"
           value={data.department}
-          onChange={handleInputOnChange}
+          onChange={handleDepartmentFilter}
         >
           <option value="">Alle avdelinger</option>
           <option value="it">IT</option>

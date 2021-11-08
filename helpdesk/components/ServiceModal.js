@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 const StyledModal = styled.section`
   display: flex;
@@ -36,10 +37,30 @@ const ServiceModal = ({ item, setModal }) => {
   const severityMedium = item?.severity === 'medium' ? 'Medium' : null
   const severityLow = item?.severity === 'low' ? 'Lav' : null
 
+  const [showComments, setShowComments] = useState(false)
+  const [addComment, setAddComment] = useState(false)
+  const [comment, setComment] = useState('')
+
   const closeModal = () => {
     setModal(false)
   }
+  const handleShowComments = () => {
+    setShowComments(true)
+  }
+  const handleCloseComments = () => {
+    setShowComments(false)
+  }
+  const handleAddComment = () => {
+    setAddComment(true)
+  }
 
+  const handleNewComment = (e) => {
+    e.preven
+  }
+  const handleCommentChange = (e) => {
+    e.preventDefault()
+    setComment(e.target.value)
+  }
   return (
     <>
       <StyledModal>
@@ -76,12 +97,45 @@ const ServiceModal = ({ item, setModal }) => {
           <span>{item?.creator}</span>
           <span>{item?.createdAt}</span>
           <div className="issue_actions">
-            <button type="button">Se kommentarer (2)</button>
-            <button type="button">Legg til kommentar</button>
+            {showComments ? (
+              <button type="button" onClick={handleCloseComments}>
+                Lukk kommentar(er)
+              </button>
+            ) : (
+              <button type="button" onClick={handleShowComments}>
+                Se kommentarer ({item.comments.length})
+              </button>
+            )}
+            <button type="button" onClick={handleAddComment}>
+              Legg til kommentar
+            </button>
             <button type="button" onClick={closeModal}>
               Lukk
             </button>
           </div>
+          {showComments ? <p>Kommentarer</p> : null}
+          <ul>
+            {showComments
+              ? item.comments.map((comment, index) => (
+                  <li key={index}>
+                    <p>{comment}</p>
+                  </li>
+                ))
+              : null}
+          </ul>
+          {addComment ? (
+            <form onSubmit={handleNewComment}>
+              <h2>Legg til en ny kommentar</h2>
+              <textarea
+                type="text"
+                id="comment"
+                placeholder="Skriv.."
+                value={comment}
+                onChange={handleCommentChange}
+              ></textarea>
+              <button type="sumbit">Legg til kommentar</button>
+            </form>
+          ) : null}
         </InnerModal>
       </StyledModal>
     </>
