@@ -112,7 +112,7 @@ const SupportForm = () => {
               type="text"
               id="title"
               name="title"
-              placeholder="Tittel på henvendelsen din"
+              placeholder="Tittel på henvendelsen"
               onChange={handleInputOnChange}
               value={form.title}
             />
