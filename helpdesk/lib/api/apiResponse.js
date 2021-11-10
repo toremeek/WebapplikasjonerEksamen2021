@@ -3,11 +3,6 @@ import { Result } from './result'
 // Trenger vi å logge hvorfor feil har oppstått?
 // Legge til flere error meldigner
 
-// 409 - Duplicate
-// 404 - Not exist
-// 204 - No Content success status response
-// 201 - Created
-
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 export const Response = (res) => ({
