@@ -1,4 +1,5 @@
 import { validate } from '@/lib/Validation'
+import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 
@@ -17,25 +18,22 @@ const JsonP = styled.p`
 
 const SupportForm = () => {
   const [validationErrors, setValidationErrors] = useState()
-  const [sendt, setSendt] = useState(false)
+  const [error, setError] = useState(false)
   const [form, setForm] = useState({
     title: '',
-    creator: '',
     description: '',
+    creator: '',
     severity: '',
     department: '',
-    isResolved: false,
-    createdAt: new Date(),
-    comments: [],
   })
 
   const handleInputOnChange = ({ currentTarget: { name, value } }) =>
     setForm((state) => ({ ...state, [name]: value }))
 
   //Validere input før de sendes til api//
-  const handleSendSupport = (event) => {
+  const handleSendSupport = async (event) => {
     event.preventDefault()
-
+    console.log(form)
     const isValidTitle = validate.minMaxLength(25, 150, form.title)
     const isValidDescription = validate.maxLength(250, form.description)
     const isValidName = validate.nameCheck(form.creator)
@@ -54,103 +52,109 @@ const SupportForm = () => {
       })
     } else {
       setValidationErrors(null)
-      setSendt(true)
-      console.log(form)
-      //her kommer logikk for å pushe til api //
+      await postForm()
+    }
+  }
+  /* TODO: noe feiler uder post, får kode 500 tilbake */
+  const postForm = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/issues/', {
+        form,
+      })
+      console.log(response)
+    } catch (err) {
+      setError(err)
+      console.log('noe gikk galt', error)
     }
   }
 
   return (
     <>
-      {sendt ? (
-        <p>Takk, din henvendelse er mottatt</p>
-      ) : (
-        <form className="support_form" onSubmit={handleSendSupport}>
-          <h2>Ny henvendelse</h2>
-          <div>
-            {validationErrors?.department?.length > 0 ? (
-              <StyledErrorP>{validationErrors.department}</StyledErrorP>
-            ) : null}
-            <p>Velg avdeling:</p>
-            <select
-              required
-              value={form.department}
-              name="department"
-              onChange={handleInputOnChange}
-            >
-              <option value="">Velg</option>
-              <option value="It">IT</option>
-              <option value="Salg">Salg</option>
-              <option value="Design">Design</option>
-            </select>
-          </div>
-          <div>
-            <p>Velg hastegrad:</p>
-            {validationErrors?.severity?.length > 0 ? (
-              <StyledErrorP>{validationErrors.severity}</StyledErrorP>
-            ) : null}
+      <form className="support_form" onSubmit={handleSendSupport}>
+        <h2>Ny henvendelse</h2>
+        <div>
+          {validationErrors?.department?.length > 0 ? (
+            <StyledErrorP>{validationErrors.department}</StyledErrorP>
+          ) : null}
+          <p>Velg avdeling:</p>
+          <select
+            required
+            value={form.department}
+            name="department"
+            onChange={handleInputOnChange}
+          >
+            <option value="">Velg</option>
+            <option value="It">IT</option>
+            <option value="Salg">Salg</option>
+            <option value="Design">Design</option>
+          </select>
+        </div>
+        <div>
+          <p>Velg hastegrad:</p>
+          {validationErrors?.severity?.length > 0 ? (
+            <StyledErrorP>{validationErrors.severity}</StyledErrorP>
+          ) : null}
 
-            <select
-              required
-              value={form.severity}
-              name="severity"
-              id="severity"
-              onChange={handleInputOnChange}
-            >
-              <option value="">Velg</option>
-              <option value="High">Høy</option>
-              <option value="Medium">Medium</option>
-              <option value="Lav">Lav</option>
-            </select>
-          </div>
-          <div>
-            {validationErrors?.title?.length > 0 ? (
-              <StyledErrorP>{validationErrors.title}</StyledErrorP>
-            ) : null}
-            <label htmlFor="title">Tittel</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Tittel på henvendelsen"
-              onChange={handleInputOnChange}
-              value={form.title}
-            />
-          </div>
-          <div>
-            {validationErrors?.creator?.length > 0 ? (
-              <StyledErrorP>{validationErrors.creator}</StyledErrorP>
-            ) : null}
-            <label htmlFor="creator">Navn</label>
-            <input
-              type="text"
-              id="creator"
-              placeholder="Fornavn Etternavn"
-              name="creator"
-              onChange={handleInputOnChange}
-              value={form.creator}
-              required
-            />
-          </div>
-          <div>
-            {validationErrors?.description?.length > 0 ? (
-              <StyledErrorP>{validationErrors.description}</StyledErrorP>
-            ) : null}
-            <label htmlFor="description">Beskrivelse</label>
-            <textarea
-              type="text"
-              id="description"
-              placeholder="Hva er problemet?"
-              name="description"
-              onChange={handleInputOnChange}
-              value={form.description}
-              required
-            />
-          </div>
-          <div>{}</div>
-          <button type="sumbit">Send henvendelse</button>
-        </form>
-      )}
+          <select
+            required
+            value={form.severity}
+            name="severity"
+            id="severity"
+            onChange={handleInputOnChange}
+          >
+            <option value="">Velg</option>
+            <option value="3">Høy</option>
+            <option value="2">Medium</option>
+            <option value="1">Lav</option>
+          </select>
+        </div>
+        <div>
+          {validationErrors?.title?.length > 0 ? (
+            <StyledErrorP>{validationErrors.title}</StyledErrorP>
+          ) : null}
+          <label htmlFor="title">Tittel</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Tittel på henvendelsen"
+            onChange={handleInputOnChange}
+            value={form.title}
+          />
+        </div>
+        <div>
+          {validationErrors?.creator?.length > 0 ? (
+            <StyledErrorP>{validationErrors.creator}</StyledErrorP>
+          ) : null}
+          <label htmlFor="creator">Navn</label>
+          <input
+            type="text"
+            id="creator"
+            placeholder="Fornavn Etternavn"
+            name="creator"
+            onChange={handleInputOnChange}
+            value={form.creator}
+            required
+          />
+        </div>
+        <div>
+          {validationErrors?.description?.length > 0 ? (
+            <StyledErrorP>{validationErrors.description}</StyledErrorP>
+          ) : null}
+          <label htmlFor="description">Beskrivelse</label>
+          <textarea
+            type="text"
+            id="description"
+            placeholder="Hva er problemet?"
+            name="description"
+            onChange={handleInputOnChange}
+            value={form.description}
+            required
+          />
+        </div>
+        <div>{}</div>
+        <button type="sumbit">Send henvendelse</button>
+      </form>
     </>
   )
 }

@@ -4,15 +4,15 @@ import useGetData from '@/hooks/useGetData'
 import { useState } from 'react'
 
 const SupportMain = () => {
-  // const [filterData, setFilterData] = useState('')
+  const [filterData, setFilterData] = useState('')
 
-  //sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
+  // sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
   const url = 'issues'
   const { apiData, error, loading } = useGetData({ url })
 
-  // const handleDepartmentFilter = (value) => {
-  //   setFilterData(value.target.value)
-  // }
+  const handleDepartmentFilter = (e) => {
+    setFilterData(e.target.value)
+  }
 
   return (
     <>
@@ -22,19 +22,20 @@ const SupportMain = () => {
       ) : (
         <section className="issues">
           <h2>Alle henvendelser</h2>
-          {/* <div>
+
+          <div>
             <p>Filtrer etter:</p>
             <select
               name="filter"
-              value={data.department}
+              value={filterData}
               onChange={handleDepartmentFilter}
             >
               <option value="">Alle avdelinger</option>
-              <option value="it">IT</option>
-              <option value="salg">Salg</option>
-              <option value="design">Design</option>
+              <option value="ckvqmujnx0021eovhtbsz3elo">IT</option>
+              <option value="ckvqmujnx0025eovhtgero4ce">Salg</option>
+              <option value="ckvqmujnx0022eovhl41yg01u">Design</option>
             </select>
-          </div> */}
+          </div>
           <ul>
             {apiData?.data.length > 0
               ? apiData?.data.map((items) => (

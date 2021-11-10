@@ -17,7 +17,7 @@ const GetComments = ({ id }) => {
         {apiData?.data.length > 0
           ? apiData?.data.map((comments, index) => (
               <li className="issue" key={comments.id}>
-                <h3>Kommentar {index + 1}</h3>
+                {/* <h3>Kommentar {index + 1}</h3> */}
                 <p>{comments.comment}</p>
               </li>
             ))

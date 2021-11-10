@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import GetComments from './GetComments'
+import PostComment from './PostComment'
 const StyledModal = styled.section`
   display: flex;
   z-index: 1;
@@ -42,7 +43,6 @@ const ServiceModal = ({ item, setModal }) => {
   const severityLow = item?.severity === 1 ? 'Lav' : null
 
   const [addComment, setAddComment] = useState(false)
-  const [comment, setComment] = useState('')
 
   const closeModal = () => {
     setModal(false)
@@ -52,14 +52,6 @@ const ServiceModal = ({ item, setModal }) => {
     setAddComment(true)
   }
 
-  const handleNewComment = (event) => {
-    event.preventDefault
-    setComment(event.target.value)
-  }
-  const handleCommentChange = (e) => {
-    e.preventDefault()
-    setComment(e.target.value)
-  }
   return (
     <>
       <StyledModal>
@@ -104,19 +96,7 @@ const ServiceModal = ({ item, setModal }) => {
                 Lukk
               </button>
             </div>
-            {addComment ? (
-              <form onSubmit={handleNewComment}>
-                <h2>Legg til en ny kommentar</h2>
-                <textarea
-                  type="text"
-                  id="comment"
-                  placeholder="Skriv.."
-                  value={comment}
-                  onChange={handleCommentChange}
-                ></textarea>
-                <button type="sumbit">Legg til kommentar</button>
-              </form>
-            ) : null}
+            {addComment ? <PostComment id={item.id} /> : null}
             <GetComments id={item.id} />
           </li>
         </InnerModal>
