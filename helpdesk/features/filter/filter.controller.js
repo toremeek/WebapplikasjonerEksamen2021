@@ -2,8 +2,8 @@ import { listIssuesWith } from './filter.service'
 import { Response } from '@/lib/api/apiResponse'
 
 // TODO: Finne en bedre løsning?
-const filterProperties = ['department', 'severity']
-const isValidProperty = (property) => filterProperties.includes(property)
+const FILTER_PROPERTIES = ['department', 'severity']
+const isValidProperty = (property) => FILTER_PROPERTIES.includes(property)
 
 // GET
 // api/issues/{resource}/{value}
