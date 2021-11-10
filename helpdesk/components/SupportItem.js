@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 import GetComments from './GetComments'
@@ -93,7 +94,9 @@ const SupportItem = ({ item }) => {
             Åpne saken
           </button>
         </div>
-        {addComments ? <PostComment id={item.id} /> : null}
+        {addComments ? (
+          <PostComment setAddComments={setAddComments} id={item.id} />
+        ) : null}
         {showComments ? <GetComments id={item.id} /> : null}
       </li>
     </>

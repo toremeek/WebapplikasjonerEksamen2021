@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-const PostComment = ({ id }) => {
+const PostComment = ({ id, setAddComments }) => {
   const [comment, setComment] = useState('')
   const [error, setError] = useState(false)
   const handleNewComment = async (event) => {
@@ -18,7 +18,7 @@ const PostComment = ({ id }) => {
         `http://localhost:3000/api/issues/${id}/comments`,
         { comment }
       )
-      console.log(response)
+      setAddComments(false)
     } catch (err) {
       setError(err.response.statusText)
       console.log('noe gikk galt', error)

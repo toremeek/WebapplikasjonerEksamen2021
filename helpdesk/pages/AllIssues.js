@@ -1,4 +1,5 @@
 import SupportItem from '@/components/SupportItem'
+import { filterIssues } from '@/features/filter/filter.controller'
 import useGetData from '@/hooks/useGetData'
 import { useState } from 'react'
 
@@ -10,8 +11,16 @@ const SupportMain = () => {
   const { apiData, error, loading } = useGetData({ url })
 
   const handleDepartmentFilter = (e) => {
-    setFilterData(e.target.value)
+    const filterDep = e.target.value
+    setFilterData(filterDep)
   }
+  //finner unike avdelinger fra apiData//
+  const departments = [
+    ...new Set(apiData?.data?.map((item) => item.department.name)),
+  ]
+
+  //finner unik hastegrad fra apiData //
+  const severity = [...new Set(apiData?.data?.map((item) => item.severity))]
 
   return (
     <>
@@ -30,9 +39,13 @@ const SupportMain = () => {
               onChange={handleDepartmentFilter}
             >
               <option value="">Alle avdelinger</option>
-              <option value="ckvqmujnx0021eovhtbsz3elo">IT</option>
-              <option value="ckvqmujnx0025eovhtgero4ce">Salg</option>
-              <option value="ckvqmujnx0022eovhl41yg01u">Design</option>
+              {departments?.length > 0
+                ? departments.map((deps) => (
+                    <option key={deps} value={deps}>
+                      {deps}
+                    </option>
+                  ))
+                : null}
             </select>
           </div>
           <ul>
