@@ -16,6 +16,7 @@ export const getIssueExtended = async (issueId) => {
   const { success, data, error } = await issuesRepository.findOne(issueId)
 
   if (!success) return Result.failure(error)
+  if (!data) return Result.failure('Missing required field: id')
 
   return Result.success(data)
 }
