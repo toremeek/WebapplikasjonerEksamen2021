@@ -32,11 +32,18 @@ const SupportForm = () => {
 
   //Validere input før de sendes til api//
   const handleSendSupport = async (event) => {
+    const sendData = {
+      title: form.title,
+      description: form.description,
+      creator: form.creator,
+      severity: parseInt(form.severity),
+      department: form.department,
+    }
+    console.log('objektet', sendData)
     event.preventDefault()
-    console.log(form)
-    const isValidTitle = validate.minMaxLength(25, 150, form.title)
-    const isValidDescription = validate.maxLength(250, form.description)
-    const isValidName = validate.nameCheck(form.creator)
+    const isValidTitle = validate.minMaxLength(25, 150, sendData.title)
+    const isValidDescription = validate.maxLength(250, sendData.description)
+    const isValidName = validate.nameCheck(sendData.creator)
 
     if (!isValidDescription) {
       setValidationErrors({
@@ -51,20 +58,22 @@ const SupportForm = () => {
         creator: 'For og etternavn må ha stor forbokstav og mellomrom',
       })
     } else {
+      console.log(form)
       setValidationErrors(null)
-      await postForm()
+      await postForm(sendData)
     }
   }
   /* TODO: noe feiler uder post, får kode 500 tilbake */
-  const postForm = async () => {
+  const postForm = async (sendData) => {
+    console.log('kjører')
     try {
       const response = await axios.post('http://localhost:3000/api/issues/', {
-        form,
+        sendData,
       })
       console.log(response)
     } catch (err) {
       setError(err)
-      console.log('noe gikk galt', error)
+      console.log('noe gikk galt', err)
     }
   }
 
@@ -84,7 +93,7 @@ const SupportForm = () => {
             onChange={handleInputOnChange}
           >
             <option value="">Velg</option>
-            <option value="It">IT</option>
+            <option value="IT">IT</option>
             <option value="Salg">Salg</option>
             <option value="Design">Design</option>
           </select>
