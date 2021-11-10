@@ -1,9 +1,9 @@
-import { Response } from '@/lib/api/apiResponse'
 import { listIssuesWith } from './filter.service'
+import { Response } from '@/lib/api/apiResponse'
 
 // TODO: Finne en bedre løsning?
 const filterProperties = ['department', 'severity']
-const isValidProperty = (property) => filterProperties.includes(property)
+const isValidProperty = (property) => property in filterProperties
 
 // GET
 // api/issues/{resource}/{value}
@@ -17,6 +17,8 @@ export const filterIssues = async (req, res) => {
   const result = await listIssuesWith({ resource, value })
 
   const { success, data, error } = result
+
   if (!success) return Response(res).serverError(error)
+
   return Response(res).ok(data)
 }
