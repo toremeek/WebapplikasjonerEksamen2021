@@ -1,4 +1,3 @@
-import GetComments from '@/components/GetComments'
 import SupportItem from '@/components/SupportItem'
 import useGetData from '@/hooks/useGetData'
 import { useState } from 'react'
