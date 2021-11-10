@@ -1,4 +1,3 @@
-import * as departmentRepository from '@/features/departments/departments.repository'
 import { DbError } from '@/lib/api/dbErrors'
 import { Result } from '@/lib/api/result'
 import prisma from '@/lib/clients/db'
