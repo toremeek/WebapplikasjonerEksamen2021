@@ -1,14 +1,23 @@
 import SupportItem from '@/components/SupportItem'
+import axios from 'axios'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const IssuePage = () => {
   const data = localStorage.getItem('item')
   const itemData = JSON.parse(data)
-  console.log(itemData.id)
+
   //sender tilbake til allissues//
   const router = useRouter()
   const back = () => {
     router.push('AllIssues')
+  }
+  const handleResolved = async () => {
+    try {
+      await axios.put(`http://localhost:3000/api/issues/${itemData.id}`)
+    } catch (err) {
+      console.log('noe gikk galt', err)
+    }
   }
   return (
     <>
@@ -17,6 +26,11 @@ const IssuePage = () => {
         <button type="button" onClick={back}>
           Tilbake
         </button>
+        {itemData.isResolved === false ? (
+          <button type="button" onClick={handleResolved}>
+            Sett som løst
+          </button>
+        ) : null}
       </section>
     </>
   )

@@ -3,7 +3,6 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import GetComments from './GetComments'
 import PostComment from './PostComment'
-import ServiceModal from './ServiceModal'
 
 const StyledDiv = styled.div`
   display: flex;
@@ -17,16 +16,11 @@ const SupportItem = ({ item }) => {
   )
   const [commentButtonText, setCommentButtonText] =
     useState('Legg til kommentar')
-  const [modal, setModal] = useState(false)
   const [showComments, setShowComments] = useState(false)
   const [addComments, setAddComments] = useState(false)
   const severityHigh = item?.severity === 3 ? 'Høy' : null
   const severityMedium = item?.severity === 2 ? 'Medium' : null
   const severityLow = item?.severity === 1 ? 'Lav' : null
-
-  const showModal = () => {
-    setModal(true)
-  }
 
   const handleShowComments = () => {
     if (!showComments) {
@@ -49,14 +43,10 @@ const SupportItem = ({ item }) => {
   const router = useRouter()
   const nextPage = () => {
     localStorage.setItem('item', JSON.stringify(item))
-
     router.push(`/Issue/`, `/Issue/${item.title}`)
   }
   return (
     <>
-      {modal ? (
-        <ServiceModal item={item} setModal={setModal} id={item.id} />
-      ) : null}
       <li className="issue">
         <div className="meta">
           <span>
@@ -83,6 +73,7 @@ const SupportItem = ({ item }) => {
           ) : null}
         </div>
         <h3>{item.title}</h3>
+        {item.isResolved ? <p>Løst</p> : <p>Ikke løst</p>}
         <span>{item.description}</span>
         <span id="creator">{item.creator}</span>
         <div className="meta">
@@ -96,11 +87,8 @@ const SupportItem = ({ item }) => {
           <button type="button" onClick={handleAddComments}>
             {commentButtonText}
           </button>
-          <button type="button" onClick={showModal}>
-            Åpne modal
-          </button>
           <button type="button" onClick={nextPage}>
-            Åpne ny side
+            Åpne saken
           </button>
         </div>
         {addComments ? (

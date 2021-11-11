@@ -22,7 +22,7 @@ const useGetData = ({ url }) => {
     doSearch()
   }, [url])
 
-  return { apiData, error, loading }
+  return { apiData, setApiData, error, loading }
 }
 
 export default useGetData

@@ -72,13 +72,7 @@ const SupportMain = () => {
                 ))
               : null}
           </ul>
-          <ul>
-            {/* {filterData?.data?.length === undefined
-              ? apiData?.data?.map((item) => (
-                  <SupportItem key={item.id} item={item} />
-                ))
-              : null} */}
-          </ul>
+          <ul></ul>
         </section>
       )}
     </>

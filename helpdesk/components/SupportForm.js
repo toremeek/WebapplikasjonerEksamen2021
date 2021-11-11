@@ -1,5 +1,6 @@
 import { validate } from '@/lib/Validation'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styled from 'styled-components'
 
@@ -17,6 +18,7 @@ const JsonP = styled.p`
 `
 
 const SupportForm = () => {
+  const router = useRouter()
   const [validationErrors, setValidationErrors] = useState()
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -87,6 +89,10 @@ const SupportForm = () => {
     })
   }
 
+  const toAllIssues = () => {
+    router.push('/AllIssues')
+  }
+
   return (
     <>
       {success ? (
@@ -94,6 +100,9 @@ const SupportForm = () => {
           <p>Takk for din henvendelse</p>
           <button type="button" onClick={handleSuccess}>
             Ny sak
+          </button>
+          <button type="button" onClick={toAllIssues}>
+            Se alle saker
           </button>
         </div>
       ) : (
@@ -179,7 +188,6 @@ const SupportForm = () => {
               required
             />
           </div>
-          <div>{}</div>
           <button type="sumbit">Send henvendelse</button>
           {error ? <p>Noe gikk galt.. {error}</p> : null}
         </form>
