@@ -46,6 +46,11 @@ const SupportItem = ({ item }) => {
       setCommentButtonText('Legg til kommentar')
     }
   }
+  const router = useRouter()
+  const nextPage = () => {
+    window.localStorage.setItem('item', item.id)
+    router.push('/Issue')
+  }
   return (
     <>
       {modal ? (
@@ -91,7 +96,10 @@ const SupportItem = ({ item }) => {
             {commentButtonText}
           </button>
           <button type="button" onClick={showModal}>
-            Åpne saken
+            Åpne modal
+          </button>
+          <button type="button" onClick={nextPage}>
+            Åpne ny side
           </button>
         </div>
         {addComments ? (

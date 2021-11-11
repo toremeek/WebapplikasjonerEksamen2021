@@ -1,23 +1,19 @@
 import * as issuesController from '@/features/issues/issues.controller'
-const handler = async (req, res) => {
-  const {
-    body,
-    method,
-    query: { id },
-  } = req
+import { Response } from '@/lib/api/apiResponse'
 
-  switch (method) {
+// api/issues/{id}
+const handler = async (req, res) => {
+  const { method } = req
+
+  switch (method?.toUpperCase()) {
     case 'GET':
       await issuesController.getIssueExtended(req, res)
       break
-    case 'DELETE ':
-      // Legger til issue
-      res.status(200).json({ success: true, data: 'Fjernet 🐮' })
-      break
     case 'PUT':
-      res.status(200).json({ success: true, data: 'Alle issues! 🐲' })
+      await issuesController.markIssueResovled(req, res)
+      break
     default:
-      res.status(400).json({ success: false, error: 'Bad request 💀' })
+      return Response(res).badRequest()
   }
 }
 

@@ -1,6 +1,7 @@
 import * as commentsController from '@/features/comments/comments.controller'
 import { Response } from '@/lib/api/apiResponse'
 
+// api/issues/{id}/comments
 const handler = async (req, res) => {
   const { method } = req
 

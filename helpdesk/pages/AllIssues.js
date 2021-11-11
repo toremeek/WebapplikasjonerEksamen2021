@@ -1,26 +1,31 @@
 import SupportItem from '@/components/SupportItem'
 import useGetData from '@/hooks/useGetData'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const SupportMain = () => {
-  const [filter, setFilter] = useState('fds')
+  const [filter, setFilter] = useState('')
+  const [filterData, setFilterData] = useState()
 
-  //TODO: url kan endre til variabel om man ikke gjør nytt api-kall
-  const [url, setUrl] = useState('issues')
+  const url = 'issues'
   // sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
   const { apiData, error, loading } = useGetData({ url })
 
-  //TODO: ikke i mål med filtrering. Gjør API-kall, men får ingenting tilbake //
+  //gjør nytt api-kall med verdien som er valgt i seleten//
   const handleDepartmentFilter = async (e) => {
-    const filterDep = e.target.value.toLowerCase()
-    console.log(filterDep)
-    setFilter(filterDep)
-    // const response = await axios.get(
-    //   `http://localhost:3000/api/issues/department/${filterDep}`
-    // )
-    // const filtereddata = await response?.data
-    // console.log('respFilt', filtereddata)
+    if (e === undefined || e.target.value === '') {
+      setFilterData(apiData)
+      setFilter('')
+    } else {
+      setFilter(e.target.value)
+      const filterDep = e.target.value
+      const response = await axios.get(
+        `http://localhost:3000/api/issues/department/${filterDep}`
+      )
+      const newData = await response?.data
+
+      setFilterData(newData)
+    }
   }
 
   //finner unike avdelinger fra apiData//
@@ -57,11 +62,22 @@ const SupportMain = () => {
             </select>
           </div>
           <ul>
-            {apiData?.data?.length > 0
-              ? apiData?.data.map((items) => (
+            {filterData?.data?.length > 0
+              ? filterData?.data?.map((items) => (
                   <SupportItem key={items.id} item={items} />
                 ))
+              : filterData?.data?.length === undefined
+              ? apiData?.data?.map((item) => (
+                  <SupportItem key={item.id} item={item} />
+                ))
               : null}
+          </ul>
+          <ul>
+            {/* {filterData?.data?.length === undefined
+              ? apiData?.data?.map((item) => (
+                  <SupportItem key={item.id} item={item} />
+                ))
+              : null} */}
           </ul>
         </section>
       )}
