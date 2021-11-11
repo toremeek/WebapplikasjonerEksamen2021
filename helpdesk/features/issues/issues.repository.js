@@ -48,6 +48,14 @@ export const findManyWhere = async (property, value) => {
       where: {
         [property]: value,
       },
+      include: {
+        department: { select: { name: true } },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
     })
 
     return Result.success(issues)

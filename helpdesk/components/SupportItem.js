@@ -48,8 +48,9 @@ const SupportItem = ({ item }) => {
   }
   const router = useRouter()
   const nextPage = () => {
-    window.localStorage.setItem('item', item.id)
-    router.push('/Issue')
+    localStorage.setItem('item', JSON.stringify(item))
+
+    router.push(`/Issue/`, `/Issue/${item.title}`)
   }
   return (
     <>

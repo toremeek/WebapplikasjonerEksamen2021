@@ -2,6 +2,7 @@ const { useState, useEffect } = require('react')
 import axios from 'axios'
 
 const useGetData = ({ url }) => {
+  console.log(url)
   const [apiData, setApiData] = useState()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)

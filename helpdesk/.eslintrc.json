@@ -108,5 +108,11 @@
         ["@/features", "./features"]
       ]
     }
-  }
+  },
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto"
+    }
+  ]
 }
