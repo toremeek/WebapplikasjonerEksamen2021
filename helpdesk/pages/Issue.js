@@ -1,7 +1,6 @@
 import SupportItem from '@/components/SupportItem'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 
 const IssuePage = () => {
   const data = localStorage.getItem('item')
