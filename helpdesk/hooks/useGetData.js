@@ -19,7 +19,7 @@ const useGetData = ({ url }) => {
   }
   useEffect(() => {
     doSearch()
-  }, [])
+  }, [url])
 
   return { apiData, error, loading }
 }
