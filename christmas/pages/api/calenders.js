@@ -1,18 +1,16 @@
-import prisma from '@/lib/clients/db'
+import { get } from '@/features/calender/calender.controller'
+import { Response } from '@/lib/api/apiResponse'
 
-export default async function handler(req, res) {
-  const { name } = req.query
+const handler = async (req, res) => {
+  const { method } = req
 
-  if (req.method.toLowerCase() === 'get') {
-    const calender = await prisma.calender.findUnique({
-      where: {
-        name,
-      },
-      include: {
-        slot: true,
-      },
-    })
-
-    res.status(200).json({ success: true, data: calender })
+  switch (method.toUpperCase()) {
+    case 'GET':
+      await get(req, res)
+      break
+    default:
+      Response(res).badRequest()
   }
 }
+
+export default handler
