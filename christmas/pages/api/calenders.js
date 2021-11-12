@@ -4,11 +4,9 @@ export default async function handler(req, res) {
   const { name } = req.query
 
   if (req.method.toLowerCase() === 'get') {
-    const calender = await prisma.calender.findMany({
+    const calender = await prisma.calender.findUnique({
       where: {
-        name: {
-          contains: name,
-        },
+        name,
       },
       include: {
         slot: true,
