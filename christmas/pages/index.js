@@ -10,17 +10,17 @@ export default function Home() {
   let colors = []
 
   //todo: få denne slik at den luken man trykker på blir en annen farge, ikke alle sammen
-  const handleClick = (id) => {
-    const test = calendar.slot.map(({ id }) => id)
-    console.log(id)
+  const handleClick = (itemId) => {
+    const slotId = calendar.slot.map(({ id }) => id)
+    console.log(itemId)
 
-    for (let i = 0; i < test.length; i++) {
-      if (id == test[i]) {
+    for (let i = 0; i < slotId.length; i++) {
+      if (itemId == slotId[i]) {
         try {
           colors.push('textgreen')
           setOpen(true)
           console.log(open)
-          console.log(test[i])
+          console.log(slotId[i])
         } catch (error) {
           console.log(error)
         }
