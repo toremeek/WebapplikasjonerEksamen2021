@@ -26,21 +26,20 @@ const PostComment = ({ id, setAddComments }) => {
   }
 
   return (
-    <>
-      <section>
-        <form onSubmit={handleNewComment}>
-          <h2>Legg til en ny kommentar</h2>
-          <textarea
-            type="text"
-            id="comment"
-            placeholder="Skriv.."
-            value={comment}
-            onChange={handleCommentChange}
-          ></textarea>
-          <button type="sumbit">Legg til kommentar</button>
-        </form>
-      </section>
-    </>
+    <section className="add-comment wrapper dark">
+      <form onSubmit={handleNewComment}>
+        <h2>Legg til kommentar</h2>
+        <textarea
+          type="text"
+          id="comment"
+          placeholder="Skriv.."
+          value={comment}
+          rows="4"
+          onChange={handleCommentChange}
+        ></textarea>
+        <button type="sumbit">Send</button>
+      </form>
+    </section>
   )
 }
 

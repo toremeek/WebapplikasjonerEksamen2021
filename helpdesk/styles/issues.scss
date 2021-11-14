@@ -9,6 +9,8 @@ $light-blue: #77abc6;
 
 // FONT SIZES
 $large: 1.3rem;
+$medium: 1.1rem;
+$normal: 1rem;
 $small: 0.9rem;
 $smaller: 0.8rem;
 
@@ -24,6 +26,13 @@ $semi-bold: 500;
   .dot {
     background-color: $color;
   }
+}
+
+button {
+  background: none;
+  border: none;
+  font-weight: $bold;
+  text-decoration: underline;
 }
 
 .wrapper {
@@ -111,10 +120,6 @@ $semi-bold: 500;
 
     button {
       font-size: $small;
-      font-weight: $bold;
-      text-decoration: underline;
-      background: white;
-      border: none;
 
       &.active {
         color: $light-blue;
@@ -146,6 +151,40 @@ $semi-bold: 500;
     select {
       margin-left: 1rem;
       padding: 2px 6px;
+    }
+  }
+}
+
+.add-comment {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+  }
+
+  h2 {
+    font-size: $medium;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    align-self: flex-end;
+    pad: 4px 6px;
+  }
+
+  textarea {
+    border-color: $lighter-gray;
+    padding: $smaller;
+    border-radius: 10px;
+    resize: none;
+    // width: 100%;
+    // margin: 0;
+    font-family: inherit;
+    font-size: $normal;
+
+    &:focus {
+      outline: none;
     }
   }
 }

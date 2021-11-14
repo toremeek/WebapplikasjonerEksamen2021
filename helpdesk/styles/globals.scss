@@ -1,4 +1,4 @@
-@import "./support.scss";
+@import './support.scss';
 
 html {
   font-size: 100%;
@@ -21,7 +21,8 @@ a {
   box-sizing: border-box;
 }
 
-ul, li {
+ul,
+li {
   margin: 0;
   padding: 0;
 }
@@ -38,20 +39,20 @@ ul, li {
     display: flex;
     gap: 1rem;
   }
-  li{
-      text-decoration: none;
-      list-style: none;
+  li {
+    text-decoration: none;
+    list-style: none;
   }
   .first {
     color: black;
     font-size: 1.2rem;
-    text-decoration: none; 
+    text-decoration: none;
   }
-  .first:hover{
-    color: white;  
+  .first:hover {
+    color: white;
   }
 }
 
-button{
+button {
   cursor: pointer;
 }
