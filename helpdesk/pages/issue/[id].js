@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import SupportItem from '@/components/SupportItem'
 import useApi from '@/hooks/useApi'
 import { useEffect } from 'react'
+import Alert from '@/components/shared/Alert'
+import Loading from '@/components/shared/Loading'
 
 const IssuePage = () => {
   const router = useRouter()
@@ -18,22 +20,20 @@ const IssuePage = () => {
     resolve(id)
   }
 
-  // TODO: Lage laster komponent som kan brukes
-  if (isLoading) return <p>Laster</p>
-  // TODO: Lage en error/beskjed komponent
-  return error ? (
-    <p>{error} er denne true</p>
-  ) : (
+  const back = () => router.back()
+
+  if (isLoading) return <Loading />
+  return (
     <>
-      {data ? <SupportItem key={id} item={data} /> : null}
-      <button type="button" onClick={null}>
+      {error ? (
+        <Alert role="danger" text={error} />
+      ) : data ? (
+        <SupportItem item={data} extend />
+      ) : null}
+
+      <button type="button" onClick={back}>
         Tilbake
       </button>
-      {data?.isResolved === false ? (
-        <button type="button" onClick={handleResolve}>
-          Sett som løst
-        </button>
-      ) : null}
     </>
   )
 }

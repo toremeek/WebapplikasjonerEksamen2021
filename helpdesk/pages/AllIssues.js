@@ -10,7 +10,6 @@ const SupportMain = () => {
   const { data, get, error, isLoading } = useApi()
 
   const getFilterIssues = async (filter) => {
-    console.log(filter)
     const { property, value } = filter
 
     if (!property || !value) getIssues()
@@ -28,11 +27,11 @@ const SupportMain = () => {
   }, [])
 
   return (
-    <section className="allissues">
+    <section className="allissues wrapper">
       <Filter setFilter={setFilter} />
       <h1>Henvendelser</h1>
       <section className="issues-container">
-        {error ? <p>Noe gikk galt, {error}</p> : null}
+        {error ? <Alert role="danger" text={error} /> : null}
         {isLoading ? (
           <Loading />
         ) : data?.length > 0 ? (

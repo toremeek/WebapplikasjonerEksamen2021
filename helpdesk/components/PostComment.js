@@ -1,44 +1,44 @@
-import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Loading from './shared/Loading'
+import Alert from './shared/Alert'
+import useApi from '@/hooks/useApi'
 
 const PostComment = ({ id, setAddComments }) => {
   const [comment, setComment] = useState('')
-  const [error, setError] = useState(false)
-  const handleNewComment = async (event) => {
-    event.preventDefault()
-    await postComment()
-  }
+
+  const { data, post, error, isLoading } = useApi()
+
   const handleCommentChange = (e) => {
     setComment(e.target.value)
   }
 
-  const postComment = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/api/issues/${id}/comments`,
-        { comment }
-      )
-      setAddComments(false)
-    } catch (err) {
-      setError(err.response.statusText)
-      console.log('noe gikk galt', error)
-    }
+  const postComment = (event) => {
+    event.preventDefault()
+    post(`${id}/comments`, { comment })
   }
 
   return (
-    <section className="add-comment wrapper dark">
-      <form onSubmit={handleNewComment}>
-        <h2>Legg til kommentar</h2>
-        <textarea
-          type="text"
-          id="comment"
-          placeholder="Skriv.."
-          value={comment}
-          rows="4"
-          onChange={handleCommentChange}
-        ></textarea>
-        <button type="sumbit">Send</button>
-      </form>
+    <section className="add-comment wrapper border dark">
+      <h2>Legg til kommentar</h2>
+      {error ? <Alert role="danger" text={error} /> : null}
+      {isLoading ? (
+        <Loading />
+      ) : data ? (
+        <Alert role="success" text="Din kommentar er nå lagt til!" />
+      ) : (
+        <form onSubmit={postComment}>
+          <textarea
+            type="text"
+            id="comment"
+            placeholder="Skriv.."
+            value={comment}
+            rows="4"
+            onChange={handleCommentChange}
+            required
+          ></textarea>
+          <button type="sumbit">Send</button>
+        </form>
+      )}
     </section>
   )
 }

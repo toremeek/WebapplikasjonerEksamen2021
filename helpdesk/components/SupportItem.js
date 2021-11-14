@@ -6,9 +6,11 @@ import IssueButton from './issue/IssueButton'
 import Severity from './issue/Severity'
 import PostComment from './PostComment'
 import Link from 'next/link'
+import CommentsList from './issue/CommentsList'
 
 /* eslint-disable no-ternary */
-const SupportItem = ({ item }) => {
+const SupportItem = (props) => {
+  const { item, extend } = props
   const {
     id,
     title,
@@ -18,7 +20,7 @@ const SupportItem = ({ item }) => {
     isResolved,
     created_at,
     department: { name: department },
-    // _count: { comments: commentsCount = 0 },
+    comments,
   } = item
 
   // Hånderer hva som skal vises
@@ -33,6 +35,7 @@ const SupportItem = ({ item }) => {
       setShowComments(false)
       setDisplay()
     } else {
+      setAddComments(false)
       setShowComments(true)
       setDisplay(<GetComments id={item.id} />)
     }
@@ -43,6 +46,7 @@ const SupportItem = ({ item }) => {
       setAddComments(false)
       setDisplay()
     } else {
+      setShowComments(false)
       setAddComments(true)
       setDisplay(<PostComment setAddComments={setAddComments} id={item.id} />)
     }
@@ -60,14 +64,12 @@ const SupportItem = ({ item }) => {
 
   // TODO: Hva blir mest semantisk riktig?? section -> article / article -> section ? Mtp. kommentarer osv.
   return (
-    <section>
-      <article className="wrapper light issue">
+    <article className="">
+      <section className="wrapper border light issue">
         <span className="department">{department}</span>
         <Severity severity={severity} />
         <header>
-          <h1>
-            <Link href={`/issue/${id}`}>{title}</Link>
-          </h1>
+          <h1>{extend ? title : <Link href={`/issue/${id}`}>{title}</Link>}</h1>
         </header>
         <p className="description">{description}</p>
         <p className="creator">{creator}</p>
@@ -76,7 +78,7 @@ const SupportItem = ({ item }) => {
             {DateFormatter(created_at)}
           </time>
           <nav>
-            {item._count?.comments > 0 ? (
+            {item._count?.comments > 0 && !extend ? (
               <IssueButton
                 state={showComments}
                 trueText="Lukk kommentarer"
@@ -94,12 +96,17 @@ const SupportItem = ({ item }) => {
               state={isResolved}
               trueText="Saken er løst"
               falseText="Avslutt"
+              handler={handleResolve}
+              isResolved={isResolved}
             />
           </nav>
         </footer>
-      </article>
+      </section>
       {display ? display : null}
-    </section>
+      {extend && comments.length > 0 ? (
+        <CommentsList comments={comments} />
+      ) : null}
+    </article>
   )
 }
 

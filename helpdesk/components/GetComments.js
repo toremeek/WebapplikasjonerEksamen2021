@@ -1,28 +1,27 @@
-import useGetData from '@/hooks/useGetData'
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import useApi from '@/hooks/useApi'
+import { useEffect } from 'react'
+import CommentsList from './issue/CommentsList'
+import Alert from './shared/Alert'
+import Loading from './shared/Loading'
 /* eslint-disable no-ternary */
 
-const StyledUl = styled.ul`
-  margin-top: 3rem;
-`
-const GetComments = ({ id }) => {
-  const url = `issues/${id}/comments`
-  const { apiData, loading, error } = useGetData({ url })
+const GetComments = (props) => {
+  const { id } = props
+  const { data, get, error, isLoading } = useApi()
+
+  const fetchComments = () => {
+    get(`${id}/comments`)
+  }
+
+  useEffect(() => {
+    fetchComments()
+  }, [])
+
   return (
     <>
-      {loading ? <p>Laster..</p> : null}
-      {error ? <p>Noe gikk galt, {error}</p> : null}
-      <StyledUl>
-        {apiData?.data.length > 0
-          ? apiData?.data.map((comments, index) => (
-              <li className="issue" key={comments.id}>
-                {/* <h3>Kommentar {index + 1}</h3> */}
-                <p>{comments.comment}</p>
-              </li>
-            ))
-          : null}
-      </StyledUl>
+      {isLoading ? <Loading /> : null}
+      {error ? <Alert role="danger" text={`Noe gikk galt, ${error}`} /> : null}
+      {data?.length > 0 ? <CommentsList comments={data} /> : null}
     </>
   )
 }

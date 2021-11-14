@@ -22,10 +22,10 @@ const useApi = () => {
     }
   }, [])
 
-  const post = useCallback(async (task) => {
+  const post = useCallback(async (url, task) => {
     setIsLoading(true)
     try {
-      const response = await axios.post('/api/issues', { task })
+      const response = await axios.post(`/api/issues/${url}`, task)
       const { data, success } = response.data
 
       if (success) setData(data)
