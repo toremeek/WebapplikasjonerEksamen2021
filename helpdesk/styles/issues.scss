@@ -1,0 +1,151 @@
+// COLORS
+$primary: #2e2d2d;
+$red-color: #b52424;
+$green-color: #4a8c52;
+$yellow-color: #dede2f;
+$light-gray: #989898;
+$lighter-gray: #eaeaea;
+$light-blue: #77abc6;
+
+// FONT SIZES
+$large: 1.3rem;
+$small: 0.9rem;
+$smaller: 0.8rem;
+
+// FONT WEIGHT
+$bolder: 700;
+$bold: 600;
+$semi-bold: 500;
+
+// Setting bg and color in severity
+@mixin priority($color) {
+  color: $color;
+
+  .dot {
+    background-color: $color;
+  }
+}
+
+.wrapper {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 1rem;
+
+  &.dark {
+    border-color: $light-gray;
+  }
+
+  &.light {
+    border-color: $lighter-gray;
+  }
+}
+
+.issue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'department severity' 'title title' 'description description' 'creator .' 'footer footer';
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    h1 {
+      grid-area: title;
+      color: $primary;
+      font-size: $large;
+      margin: 0.4rem 0;
+    }
+  }
+
+  .department {
+    grid-area: department;
+    color: $light-gray;
+  }
+
+  .severity {
+    grid-area: severity;
+    justify-self: end;
+    font-weight: $semi-bold;
+
+    .dot {
+      border-radius: 50%;
+      width: 0.7rem;
+      height: 0.7rem;
+      display: inline-block;
+    }
+
+    &.red {
+      @include priority($red-color);
+    }
+    &.green {
+      @include priority($green-color);
+    }
+    &.yellow {
+      @include priority($yellow-color);
+    }
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .creator {
+    grid-area: creator;
+    margin-top: 0.6rem;
+    font-size: $small;
+    color: $light-gray;
+  }
+
+  footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+
+    time {
+      font-size: $smaller;
+      color: $light-gray;
+    }
+
+    button {
+      font-size: $small;
+      font-weight: $bold;
+      text-decoration: underline;
+      background: white;
+      border: none;
+
+      &.active {
+        color: $light-blue;
+      }
+    }
+  }
+}
+
+.allissues {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: 'title filter' 'issues issues';
+
+  .issues-container {
+    grid-area: issues;
+  }
+
+  h1 {
+    grid-area: title;
+    color: $primary;
+  }
+
+  .filter {
+    grid-area: filter;
+    align-self: center;
+    justify-self: end;
+    margin-top: 0.3rem;
+
+    select {
+      margin-left: 1rem;
+      padding: 2px 6px;
+    }
+  }
+}

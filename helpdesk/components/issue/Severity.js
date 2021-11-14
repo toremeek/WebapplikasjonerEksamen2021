@@ -11,9 +11,9 @@ const Severity = ({ severity }) => {
     text: 'dont know',
   }
   return (
-    <>
-      <span className={`dot ${color}`}></span> {text}
-    </>
+    <span className={`severity ${color}`}>
+      {text} <span className="dot"></span>
+    </span>
   )
 }
 

@@ -37,3 +37,14 @@ export const listIssuesWith = async (property) => {
 
   return Result.success(data)
 }
+
+export const filterProps = async () => {
+  const { success, data } = await departmentRepository.findMany()
+  if (!success) return Result.failure('Failed finding departments')
+  const departments = data.map((dep) => dep.name)
+
+  return Result.success({
+    departments,
+    severity: [{ 1: 'Lav', 2: 'Middels', 3: 'Høy' }],
+  })
+}

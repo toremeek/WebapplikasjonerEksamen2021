@@ -1,4 +1,4 @@
-import { listIssuesWith } from './filter.service'
+import { listIssuesWith, filterProps } from './filter.service'
 import { Response } from '@/lib/api/apiResponse'
 
 // TODO: Finne en bedre løsning?
@@ -17,6 +17,16 @@ export const filterIssues = async (req, res) => {
     return Response(res).badRequest('Missing required fields: resource, value')
 
   const { success, data, error } = await listIssuesWith({ resource, value })
+
+  if (!success) return Response(res).serverError(error)
+
+  return Response(res).ok(data)
+}
+
+// GET
+// api/issues/filter
+export const getFilterProps = async (req, res) => {
+  const { success, data, error } = await filterProps()
 
   if (!success) return Response(res).serverError(error)
 
