@@ -2,6 +2,8 @@ import SupportItem from '@/components/SupportItem'
 import Filter from '@/components/issue/Filter'
 import { useEffect, useState } from 'react'
 import useApi from '@/hooks/useApi'
+import Loading from '@/components/shared/Loading'
+import Alert from '@/components/shared/Alert'
 
 const SupportMain = () => {
   const [filter, setFilter] = useState('')
@@ -32,11 +34,11 @@ const SupportMain = () => {
       <section className="issues-container">
         {error ? <p>Noe gikk galt, {error}</p> : null}
         {isLoading ? (
-          <p>Laster..</p>
+          <Loading />
         ) : data?.length > 0 ? (
           data.map((issues) => <SupportItem key={issues.id} item={issues} />)
         ) : (
-          <p>finner ingen resultater</p>
+          <Alert role="info" text="Finner ingen resultater..." />
         )}
       </section>
     </section>
