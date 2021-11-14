@@ -8,7 +8,7 @@ export const get = async (name) => {
         name,
       },
       include: {
-        slots: true,
+        slot: true,
       },
     })
 
