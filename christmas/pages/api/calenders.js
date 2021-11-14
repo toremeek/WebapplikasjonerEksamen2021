@@ -10,6 +10,7 @@ const handler = async (req, res) => {
       break
     default:
       Response(res).badRequest()
+      break
   }
 }
 
