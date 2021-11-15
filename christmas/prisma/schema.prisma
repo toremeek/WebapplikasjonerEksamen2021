@@ -11,34 +11,42 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  createdAt DateTime @default(now())
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  createdAt DateTime   @default(now())
+  // En User kan ha mange UserSlots - men en UserSlot kan kun høre til en User
+  userSlots UserSlot[]
 }
 
 model Calender {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
   createdAt DateTime @default(now())
-  slot Slot[]
+  // En Calender kan ha mange Slots, men en Slot kan kun høre til en Calendar
+  slot      Slot[]
 }
 
 model Slot {
-  id Int @id @default(autoincrement())
-  slug String @unique
-  order Int @unique
-  createdAt DateTime @default(now())
-  openAt DateTime
-  calender Calender @relation(fields: [calenderId], references: [id])
+  id         Int        @id @default(autoincrement())
+  slug       String     @unique
+  order      Int        @unique
+  createdAt  DateTime   @default(now())
+  openAt     DateTime
+  // En Calender kan ha mange Slots, men en Slot kan kun høre til en Calendar
+  calender   Calender   @relation(fields: [calenderId], references: [id])
   calenderId Int
+  // En slot kan ha mange UserSlots - men en UserSlot kan kun høre til en Slot
+  userSlots  UserSlot[]
 }
 
 model UserSlot {
-  id Int @id @default(autoincrement())
-  coupon String
+  id        Int      @id @default(autoincrement())
+  coupon    String
   createdAt DateTime @default(now())
-  // Må lage relasjonen
-  slotId Int
-  // Må lage relasjonen
-  userId Int
+  // En slot kan ha mange UserSlots - men en UserSlot kan kun høre til en Slot
+  slot      Slot     @relation(fields: [slotId], references: [id])
+  slotId    Int
+  // En User kan ha mange UserSlots - men en UserSlot kan kun høre til en User
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }

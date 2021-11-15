@@ -1,5 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+
+import axios from 'axios'
 
 export const useCalendar = () => {
   const [calendar, setCalendar] = useState({})
@@ -19,6 +20,7 @@ export const useCalendar = () => {
         console.log(error)
       }
     }
+
     getCalendar()
   }, [])
 
