@@ -1,16 +1,15 @@
 import '../styles/globals.scss'
 import Footer from '@/components/Footer'
 import Layout from '@/components/Layout'
+// import { CalenderProvider } from 'context/CalenderContext'
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <div>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <Footer />
-    </div>
-  )
-}
+const ChristmasCalenderApp = ({ Component, pageProps }) => (
+  <>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+    <Footer />
+  </>
+)
 
-export default MyApp
+export default ChristmasCalenderApp
