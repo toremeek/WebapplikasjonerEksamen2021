@@ -7,6 +7,12 @@ const DashboardItem = () => {
   const [modal, setModal] = useState(false)
   const { users } = useUser()
 
+  var random_index = Math.floor(Math.random() * users.length)
+  // var randomUser = users[random_index].username
+  // console.log(randomUser)
+
+  console.log(users)
+
   const showModal = () => {
     setModal((prev) => !prev)
   }
@@ -39,6 +45,7 @@ const DashboardItem = () => {
                     <td>{user.id}</td>
                     <td>{user.username}</td>
                     <td>{user.createdAt}</td>
+                    <td>{user.slug}</td>
                     <td></td>
                   </tr>
                 </tbody>

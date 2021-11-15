@@ -1,3 +1,4 @@
+import { useUser } from '@/hooks/useUser'
 import { useState } from 'react'
 import styled from 'styled-components'
 
@@ -35,7 +36,7 @@ const CloseSign = styled.span`
   cursor: pointer;
 `
 
-const AdminModal = ({ modal, setModal }) => {
+const AdminModal = ({ modal, setModal, obj }) => {
   const closeModal = () => {
     setModal(false)
   }
@@ -47,7 +48,7 @@ const AdminModal = ({ modal, setModal }) => {
           <InnerModal>
             <CloseSign onClick={closeModal}>X</CloseSign>
             <h1>Superbonus luke 1</h1>
-            <div className="superbonus winner">Trude</div>
+            <div className="superbonus winner">{obj}</div>
           </InnerModal>
         </StyledModal>
       ) : null}

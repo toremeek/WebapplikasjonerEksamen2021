@@ -7,7 +7,7 @@ const dashboard = () => {
   const { admin } = useUser()
   return (
     <>
-      {admin ? (
+      {!admin ? (
         <>
           <DashboardItem />
           <DashboardItem />
