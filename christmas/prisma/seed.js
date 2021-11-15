@@ -90,6 +90,7 @@ const christmasCalender = async () =>
 
 async function main() {
   console.log('Start seeding ...')
+  await prisma.userSlot.deleteMany({})
   await prisma.user.deleteMany({})
   await prisma.slot.deleteMany({})
   await prisma.calender.deleteMany({})
