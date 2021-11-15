@@ -17,16 +17,16 @@ const PostComment = ({ id, setAddComments }) => {
     post(`${id}/comments`, { comment })
   }
 
+  if (data) return <Alert role="success" text="Din kommentar er nå lagt til!" />
+  if (error) return <Alert role="danger" text={error} />
+
   return (
     <section className="add-comment wrapper border dark">
-      <h2>Legg til kommentar</h2>
-      {error ? <Alert role="danger" text={error} /> : null}
       {isLoading ? (
         <Loading />
-      ) : data ? (
-        <Alert role="success" text="Din kommentar er nå lagt til!" />
       ) : (
         <form onSubmit={postComment}>
+          <h2>Legg til kommentar</h2>
           <textarea
             type="text"
             id="comment"
