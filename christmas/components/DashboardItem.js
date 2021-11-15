@@ -13,6 +13,8 @@ const DashboardItem = () => {
 
   console.log(users)
 
+  const dateFormater = (datestring) => new Date(datestring).toLocaleDateString()
+
   const showModal = () => {
     setModal((prev) => !prev)
   }
@@ -44,7 +46,7 @@ const DashboardItem = () => {
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.username}</td>
-                    <td>{user.createdAt}</td>
+                    <td>{dateFormater(user.createdAt)}</td>
                     <td>{user.slug}</td>
                     <td></td>
                   </tr>
