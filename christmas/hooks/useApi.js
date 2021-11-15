@@ -58,7 +58,7 @@ const useApi = () => {
       const response = await axios.put(`/api/slots/${id}`)
       const { data, success } = response.data
 
-      if (success) setData({ success: true, id: data.id })
+      if (success) setData({ success: true, slot: data })
       setError()
     } catch (err) {
       setError(err)

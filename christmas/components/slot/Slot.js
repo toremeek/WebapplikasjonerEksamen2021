@@ -8,33 +8,49 @@ import { daysUntil, isTimePassed } from '@/lib/dateHandler'
 const Slot = (props) => {
   const dispatch = useCalenderDispatch()
   const { slot } = props
-  const { id, isOpen, openAt, order } = slot
+  const { id, isOpen, openAt, order, coupon } = slot
 
   const { data, error, openSlot } = useApi()
 
-  const handelOpenSlot = () => openSlot(id)
-
   useEffect(() => {
-    if (data?.success) dispatch({ type: 'OPEN_SLOT', id })
+    if (data?.success) dispatch({ type: 'OPEN_SLOT', slot: data.slot })
   }, [data])
 
-  const buttonStyle = () => {
-    if (!isTimePassed(openAt)) return 'not-available'
+  // Slot click-handlers
+  const handelOpenSlot = () => openSlot(id)
+  const noAvailableAnimation = () => console.log('Animerer....')
 
-    return isOpen ? 'open' : 'can-open'
+  // Bestemmer hvordan slot skal virke - style, handler osv.
+  const slotType = () => {
+    // Hvis slot ikke er tilgjengelig - ikke åpen ennå
+    if (!isTimePassed(openAt))
+      return {
+        handler: noAvailableAnimation,
+        style: 'not-available',
+        display: { main: order, alt: `Åpner om ${daysUntil(openAt)} dager` },
+      }
+
+    // Bruker har åpnet sloten
+    if (isOpen)
+      return {
+        style: 'open',
+        display: { main: coupon },
+      }
+
+    // Slot er tilgjengelig, og kan åpnes
+    return {
+      handler: handelOpenSlot,
+      style: 'can-open',
+      display: { main: order },
+    }
   }
 
-  // TODO: Funksjon som definerer fargen på slot:
-  // Åpnet: grønn, Ikke åpnet, men tilgjengelig: Hvit, Ikke tilgjengelig: dusgrå
+  const { handler, style, display } = slotType()
 
   return (
-    <div className={`slot ${buttonStyle()}`} onClick={handelOpenSlot}>
-      <h1>{order}</h1>
-      {isTimePassed(openAt) ? (
-        <button onClick={handelOpenSlot}>Åpne nå</button>
-      ) : (
-        <p className="small">{`Åpner om ${daysUntil(openAt)} dager`}</p>
-      )}
+    <div className={`slot ${style}`} onClick={handler}>
+      <h1>{display.main}</h1>
+      {display.alt ? <p className="small">{display.alt}</p> : null}
     </div>
   )
 }

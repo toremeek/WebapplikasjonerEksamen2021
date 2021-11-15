@@ -1,12 +1,15 @@
 import { createContext, useContext, useReducer } from 'react'
 
-const reducer = (state, { type, id }) => {
+const reducer = (state, { type, slot }) => {
   switch (type) {
     case 'OPEN_SLOT': {
+      const { slotId, coupon } = slot
+
       const { slot: slots } = state
-      const slotIndex = slots.findIndex((obj) => obj.id === id)
+      const slotIndex = slots.findIndex((obj) => obj.id === slotId)
 
       slots[slotIndex].isOpen = true
+      slots[slotIndex].coupon = coupon
 
       return {
         ...state,
