@@ -48,7 +48,7 @@
     "next-page-tester": "^0.30.0",
     "node-mocks-http": "^1.11.0",
     "prettier": "^2.4.1",
-    "prisma": "^3.3.0",
+    "prisma": "^3.4.2",
     "react-test-renderer": "17.0.2",
     "sass": "^1.43.4"
   },
