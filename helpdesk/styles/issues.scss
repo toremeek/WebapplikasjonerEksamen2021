@@ -1,0 +1,270 @@
+// COLORS
+$primary: #2e2d2d;
+$red-color: #b52424;
+$green-color: #4a8c52;
+$yellow-color: #dede2f;
+$light-gray: #989898;
+$lighter-gray: #eaeaea;
+$light-blue: #77abc6;
+
+$warning: #fff3cd;
+$info: #cce5ff;
+$success: #d4edda;
+$danger: #f8d7da;
+
+// FONT SIZES
+$large: 1.3rem;
+$medium: 1.1rem;
+$normal: 1rem;
+$small: 0.9rem;
+$smaller: 0.8rem;
+
+// FONT WEIGHT
+$bolder: 700;
+$bold: 600;
+$semi-bold: 500;
+
+// Setting bg and color in severity
+@mixin priority($color) {
+  color: $color;
+
+  .dot {
+    background-color: $color;
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  font-weight: $bold;
+  text-decoration: underline;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $smaller;
+
+  .border {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  &.dark {
+    border-color: $light-gray;
+  }
+
+  &.light {
+    border-color: $lighter-gray;
+  }
+}
+
+.issue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 'department severity' 'title title' 'description description' 'creator .' 'footer footer' 'comments comments';
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    h1 {
+      grid-area: title;
+      color: $primary;
+      font-size: $large;
+      margin: 0.4rem 0;
+    }
+  }
+
+  .department {
+    grid-area: department;
+    color: $light-gray;
+  }
+
+  .severity {
+    grid-area: severity;
+    justify-self: end;
+    font-weight: $semi-bold;
+
+    .dot {
+      border-radius: 50%;
+      width: 0.7rem;
+      height: 0.7rem;
+      display: inline-block;
+    }
+
+    &.red {
+      @include priority($red-color);
+    }
+    &.green {
+      @include priority($green-color);
+    }
+    &.yellow {
+      @include priority($yellow-color);
+    }
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .creator {
+    grid-area: creator;
+    margin-top: 0.6rem;
+    font-size: $small;
+    color: $light-gray;
+  }
+
+  footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+
+    time {
+      font-size: $smaller;
+      color: $light-gray;
+    }
+
+    button {
+      font-size: $small;
+
+      &.active {
+        color: $light-blue;
+      }
+
+      &.resolved {
+        color: $green-color;
+      }
+    }
+  }
+}
+
+.allissues {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: 'title filter' 'issues issues';
+
+  .issues-container {
+    grid-area: issues;
+    display: flex;
+    flex-direction: column;
+    gap: $normal;
+  }
+
+  h1 {
+    grid-area: title;
+    color: $primary;
+  }
+
+  .filter {
+    grid-area: filter;
+    align-self: center;
+    justify-self: end;
+    margin-top: 0.3rem;
+
+    select {
+      margin-left: 1rem;
+      padding: 2px 6px;
+    }
+  }
+}
+
+.add-comment {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+  }
+
+  h2 {
+    font-size: $normal;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    align-self: flex-end;
+    pad: 4px 6px;
+  }
+
+  textarea {
+    border-color: $lighter-gray;
+    padding: $smaller;
+    border-radius: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: $normal;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.comments {
+  grid-area: comments;
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    font-size: $normal;
+    font-weight: $semi-bold;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+  font-weight: $semi-bold;
+
+  svg {
+    height: $large;
+    width: $large;
+    align-self: center;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(359deg);
+    }
+  }
+
+  .rotate {
+    animation: rotate 4s linear infinite;
+  }
+}
+
+.alert {
+  width: 100%;
+  padding: $smaller;
+  border-radius: 10px;
+
+  &.warning {
+    background-color: $warning;
+  }
+
+  &.success {
+    background-color: $success;
+  }
+
+  &.danger {
+    background-color: $danger;
+  }
+
+  &.info {
+    background-color: $info;
+  }
+}

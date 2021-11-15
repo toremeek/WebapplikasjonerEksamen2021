@@ -8,11 +8,12 @@ export const useCalendar = () => {
   useEffect(() => {
     const getCalendar = async () => {
       try {
-        const response = await axios.get('/api/calenders?name=Julekalender')
+        const response = await axios.get(
+          'http://localhost:3000/api/calenders?name=Julekalender'
+        )
         const {
           data: { success, data },
         } = response
-
         if (success) {
           setCalendar(data)
         }

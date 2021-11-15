@@ -1,81 +1,46 @@
 import SupportItem from '@/components/SupportItem'
-import useGetData from '@/hooks/useGetData'
-import axios from 'axios'
+import Filter from '@/components/issue/Filter'
 import { useEffect, useState } from 'react'
+import useApi from '@/hooks/useApi'
+import Loading from '@/components/shared/Loading'
+import Alert from '@/components/shared/Alert'
 
 const SupportMain = () => {
   const [filter, setFilter] = useState('')
-  const [filterData, setFilterData] = useState()
+  const { data, get, error, isLoading } = useApi()
 
-  const url = 'issues'
-  // sender med url til custom hook for å hente api-data. Hooket returnerer apiData, error & loading //
-  const { apiData, error, loading } = useGetData({ url })
+  const getFilterIssues = async (filter) => {
+    const { property, value } = filter
 
-  //gjør nytt api-kall med verdien som er valgt i seleten//
-  const handleDepartmentFilter = async (e) => {
-    if (e === undefined || e.target.value === '') {
-      setFilterData(apiData)
-      setFilter('')
-    } else {
-      setFilter(e.target.value)
-      const filterDep = e.target.value
-      const response = await axios.get(
-        `http://localhost:3000/api/issues/department/${filterDep}`
-      )
-      const newData = await response?.data
-
-      setFilterData(newData)
-    }
+    if (!property || !value) getIssues()
+    else await get(`${property}/${value}`)
   }
 
-  //finner unike avdelinger fra apiData//
-  const departments = [
-    ...new Set(apiData?.data?.map((item) => item.department.name)),
-  ]
-  //finner unik hastegrad fra apiData //
-  const severity = [...new Set(apiData?.data?.map((item) => item.severity))]
+  const getIssues = async () => await get('')
+
+  useEffect(() => {
+    getFilterIssues(filter)
+  }, [filter])
+
+  useEffect(() => {
+    getIssues()
+  }, [])
 
   return (
-    <>
-      {error ? <p>Noe gikk galt, {error}</p> : null}
-      {loading ? (
-        <p>Laster..</p>
-      ) : (
-        <section className="issues">
-          <h2>Alle henvendelser</h2>
-
-          <div>
-            <p>Filtrer etter:</p>
-            <select
-              name="filter"
-              value={filter}
-              onChange={handleDepartmentFilter}
-            >
-              <option value="">Alle avdelinger</option>
-              {departments?.length > 0
-                ? departments.map((deps) => (
-                    <option key={deps} value={deps}>
-                      {deps}
-                    </option>
-                  ))
-                : null}
-            </select>
-          </div>
-          <ul>
-            {filterData?.data?.length > 0
-              ? filterData?.data?.map((items) => (
-                  <SupportItem key={items.id} item={items} />
-                ))
-              : filterData?.data?.length === undefined
-              ? apiData?.data?.map((item) => (
-                  <SupportItem key={item.id} item={item} />
-                ))
-              : null}
-          </ul>
-          <ul></ul>
-        </section>
-      )}
-    </>
+    <section className="allissues wrapper">
+      <Filter setFilter={setFilter} />
+      <h1>Henvendelser</h1>
+      <section className="issues-container">
+        {error ? <Alert role="danger" text={error} /> : null}
+        {isLoading ? (
+          <Loading />
+        ) : data?.length > 0 ? (
+          data.map((issues) => <SupportItem key={issues.id} item={issues} />)
+        ) : (
+          <Alert role="info" text="Finner ingen resultater..." />
+        )}
+      </section>
+    </section>
   )
 }
 

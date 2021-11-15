@@ -1,43 +1,54 @@
+import DateFormatter from '@/lib/dateFormatter'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import styled from 'styled-components'
 import GetComments from './GetComments'
+import IssueButton from './issue/IssueButton'
+import Severity from './issue/Severity'
 import PostComment from './PostComment'
-
-const StyledDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
+import Link from 'next/link'
+import CommentsList from './issue/CommentsList'
 
 /* eslint-disable no-ternary */
-const SupportItem = ({ item }) => {
-  const [buttonText, setButtonText] = useState(
-    `Se kommentarer (${item._count.comments})`
-  )
-  const [commentButtonText, setCommentButtonText] =
-    useState('Legg til kommentar')
+const SupportItem = (props) => {
+  const { item, extend } = props
+  const {
+    id,
+    title,
+    severity,
+    description,
+    creator,
+    isResolved,
+    created_at,
+    department: { name: department },
+    comments,
+  } = item
+
+  // Hånderer hva som skal vises
   const [showComments, setShowComments] = useState(false)
   const [addComments, setAddComments] = useState(false)
-  const severityHigh = item?.severity === 3 ? 'Høy' : null
-  const severityMedium = item?.severity === 2 ? 'Medium' : null
-  const severityLow = item?.severity === 1 ? 'Lav' : null
+
+  // Vise legg til kommentar eller vis kommentarer
+  const [display, setDisplay] = useState()
 
   const handleShowComments = () => {
-    if (!showComments) {
-      setShowComments(true)
-      setButtonText('Lukk kommentarer')
-    } else {
+    if (showComments) {
       setShowComments(false)
-      setButtonText(`Se kommentarer (${item._count.comments})`)
-    }
-  }
-  const handleAddComments = () => {
-    if (!addComments) {
-      setAddComments(true)
-      setCommentButtonText('Angre kommentar')
+      setDisplay()
     } else {
       setAddComments(false)
-      setCommentButtonText('Legg til kommentar')
+      setShowComments(true)
+      setDisplay(<GetComments id={item.id} />)
+    }
+  }
+
+  const handleAddComments = () => {
+    if (addComments) {
+      setAddComments(false)
+      setDisplay()
+    } else {
+      setShowComments(false)
+      setAddComments(true)
+      setDisplay(<PostComment setAddComments={setAddComments} id={item.id} />)
     }
   }
   const router = useRouter()
@@ -45,58 +56,57 @@ const SupportItem = ({ item }) => {
     localStorage.setItem('item', JSON.stringify(item))
     router.push(`/Issue/`, `/Issue/${item.title}`)
   }
+
+  const handleResolve = () => {
+    console.log('Clicked')
+    resolve(id)
+  }
+
+  // TODO: Hva blir mest semantisk riktig?? section -> article / article -> section ? Mtp. kommentarer osv.
   return (
-    <>
-      <li className="issue">
-        <div className="meta">
-          <span>
-            {item?.department.name.charAt(0).toUpperCase() +
-              item?.department.name.slice(1)}
-          </span>
-          {severityHigh ? (
-            <span className="high">
-              {severityHigh}
-              <div></div>
-            </span>
-          ) : null}
-          {severityMedium ? (
-            <span className="medium">
-              {severityMedium}
-              <div></div>
-            </span>
-          ) : null}
-          {severityLow ? (
-            <span className="low">
-              {severityLow}
-              <div></div>
-            </span>
-          ) : null}
-        </div>
-        <h3>{item.title}</h3>
-        {item.isResolved ? <p>Løst</p> : <p>Ikke løst</p>}
-        <span>{item.description}</span>
-        <span id="creator">{item.creator}</span>
-        <div className="meta">
-          {/*TODO: formater tidsstrengen*/}
-          <span>{item.created_at}</span>
-          {item._count.comments > 0 ? (
-            <button type="button" id="kommentarer" onClick={handleShowComments}>
-              {buttonText}
-            </button>
-          ) : null}
-          <button type="button" onClick={handleAddComments}>
-            {commentButtonText}
-          </button>
-          <button type="button" onClick={nextPage}>
-            Åpne saken
-          </button>
-        </div>
-        {addComments ? (
-          <PostComment setAddComments={setAddComments} id={item.id} />
-        ) : null}
-        {showComments ? <GetComments id={item.id} /> : null}
-      </li>
-    </>
+    <article className="">
+      <section className="wrapper border light issue">
+        <span className="department">{department}</span>
+        <Severity severity={severity} />
+        <header>
+          <h1>{extend ? title : <Link href={`/issue/${id}`}>{title}</Link>}</h1>
+        </header>
+        <p className="description">{description}</p>
+        <p className="creator">{creator}</p>
+        <footer>
+          <time dateTime={DateFormatter(created_at)}>
+            {DateFormatter(created_at)}
+          </time>
+          <nav>
+            {item._count?.comments > 0 && !extend ? (
+              <IssueButton
+                state={showComments}
+                trueText="Lukk kommentarer"
+                falseText={`Se kommentarer (${item._count?.comments})`}
+                handler={handleShowComments}
+              />
+            ) : null}
+            <IssueButton
+              state={addComments}
+              trueText="Angre kommentar"
+              falseText="Legg til kommentar"
+              handler={handleAddComments}
+            />
+            <IssueButton
+              state={isResolved}
+              trueText="Saken er løst"
+              falseText="Avslutt"
+              handler={handleResolve}
+              isResolved={isResolved}
+            />
+          </nav>
+        </footer>
+      </section>
+      {display ? display : null}
+      {extend && comments.length > 0 ? (
+        <CommentsList comments={comments} />
+      ) : null}
+    </article>
   )
 }
 
