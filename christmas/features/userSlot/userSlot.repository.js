@@ -2,13 +2,11 @@ import { DbError } from '@/lib/api/dbErrors'
 import { Result } from '@/lib/api/result'
 import prisma from '@/lib/clients/db'
 
-// TODO: Sette coupon til default i dbSchema
-
-export const create = async (slotId, userId) => {
+export const create = async (slotId, userId, coupon) => {
   try {
     const userSlot = await prisma.userSlot.create({
       data: {
-        coupon: '',
+        coupon,
         slot: {
           connect: {
             id: slotId,
