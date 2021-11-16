@@ -1,6 +1,7 @@
 import { getSlotById } from '../slot/slot.repository'
 import { getUserById } from '../user/user.repository'
 import { create, exists } from './userSlot.repository'
+import generateCouponCode from '@/lib/api/couponGenerator'
 import { Result } from '@/lib/api/result'
 import { isTimePassed } from '@/lib/dateHandler'
 
@@ -32,8 +33,10 @@ export const openSlot = async (slotId, user) => {
   if (userSlot?.data)
     return Result.failure(`Slot with id: ${slotId} has allready been opend!`)
 
+  const coupon = generateCouponCode()
+
   // Lager en ny userSlot (åpen luke)
-  const { success, data, error } = await create(+slotId, user.id)
+  const { success, data, error } = await create(+slotId, user.id, coupon)
 
   if (!success) return Result.failure(error)
 

@@ -2,8 +2,9 @@ const slotDto = (slot) => {
   const { userSlots, ...slotInfo } = slot
 
   const open = userSlots?.length > 0
+  const { coupon } = userSlots[0] || ''
 
-  return { ...slotInfo, isOpen: open }
+  return { ...slotInfo, isOpen: open, coupon }
 }
 
 export const userCalender = (calender) => {

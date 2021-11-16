@@ -1,3 +1,4 @@
+import { DbError } from '@/lib/api/dbErrors'
 import { Result } from '@/lib/api/result'
 import prisma from '@/lib/clients/db'
 
@@ -14,7 +15,7 @@ export const get = async (name) => {
 
     return Result.success(calender)
   } catch (error) {
-    return Result.failure(error.code)
+    return Result.failure(DbError.read('calender', error))
   }
 }
 
@@ -44,6 +45,6 @@ export const getUsersCalendar = async (name, userId) => {
 
     return Result.success(calender)
   } catch (error) {
-    return Result.failure(error.code)
+    return Result.failure(DbError.read('calender', error))
   }
 }
