@@ -117,23 +117,37 @@ h1 {
 }
 
 .alert {
-  width: 100%;
+  // width: 100%;
   padding: $smaller;
+  border: 1px solid;
   border-radius: 10px;
+  margin: $normal 0;
+
+  p {
+    margin: $mini 0;
+  }
 
   &.warning {
     background-color: $warning;
+    color: darken($warning, 50);
+    border-color: darken($warning, 5);
   }
 
   &.success {
     background-color: $success;
+    color: darken($success, 50);
+    border-color: darken($success, 5);
   }
 
   &.danger {
     background-color: $danger;
+    color: darken($danger, 50);
+    border-color: darken($danger, 5);
   }
 
   &.info {
     background-color: $info;
+    color: darken($info, 50);
+    border-color: darken($info, 5);
   }
 }
