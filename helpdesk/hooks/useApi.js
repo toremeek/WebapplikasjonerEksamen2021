@@ -22,7 +22,7 @@ const useApi = () => {
     }
   }, [])
 
-  const post = useCallback(async (url, task) => {
+  const post = useCallback(async (task, url = '') => {
     setIsLoading(true)
     try {
       const response = await axios.post(`/api/issues/${url}`, task)
