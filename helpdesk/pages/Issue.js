@@ -11,13 +11,7 @@ const IssuePage = () => {
   const back = () => {
     router.push('AllIssues')
   }
-  const handleResolved = async () => {
-    try {
-      await axios.put(`http://localhost:3000/api/issues/${itemData.id}`)
-    } catch (err) {
-      console.log('noe gikk galt', err)
-    }
-  }
+
   return (
     <>
       <section>
@@ -25,11 +19,6 @@ const IssuePage = () => {
         <button type="button" onClick={back}>
           Tilbake
         </button>
-        {itemData.isResolved === false ? (
-          <button type="button" onClick={handleResolved}>
-            Sett som løst
-          </button>
-        ) : null}
       </section>
     </>
   )

@@ -10,11 +10,10 @@ const StyledErrorP = styled.p`
   color: red;
   margin: 20px 0 0 0;
 `
-const JsonP = styled.p`
-  max-width: 200px;
-  color: blue;
-  margin: auto;
-  text-align: center;
+const CommentArea = styled.textarea`
+  max-width: 100%;
+  height: 100px;
+  border: 1px solid black;
 `
 
 const SupportForm = () => {
@@ -178,7 +177,7 @@ const SupportForm = () => {
               <StyledErrorP>{validationErrors.description}</StyledErrorP>
             ) : null}
             <label htmlFor="description">Beskrivelse</label>
-            <textarea
+            <CommentArea
               type="text"
               id="description"
               placeholder="Hva er problemet?"
