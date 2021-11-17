@@ -1,9 +1,4 @@
-import SupportForm from '@/components/SupportForm'
-
+// TODO: Lage en side som henter én issue (siste?)
 export default function Home() {
-  return (
-    <main>
-      <SupportForm />
-    </main>
-  )
+  return <p>Trenger noe nytt her....</p>
 }

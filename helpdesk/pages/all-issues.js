@@ -4,38 +4,35 @@ import { useEffect, useState } from 'react'
 import useApi from '@/hooks/useApi'
 import Loading from '@/components/shared/Loading'
 import Alert from '@/components/shared/Alert'
+import { useIssueContext } from 'context/IssuesContext'
 
 const SupportMain = () => {
-  const [filter, setFilter] = useState('')
   const { data, get, error, isLoading } = useApi()
-
-  const getFilterIssues = async (filter) => {
-    const { property, value } = filter
-
-    if (!property || !value) getIssues()
-    else await get(`${property}/${value}`)
-  }
-
-  const getIssues = async () => await get('')
+  const { state, dispatch } = useIssueContext()
+  const { issues, isGlobalLoading } = state
 
   useEffect(() => {
-    getFilterIssues(filter)
-  }, [filter])
+    dispatch({ type: 'SET_ISSUES', issues: data })
+  }, [data])
 
   useEffect(() => {
+    const getIssues = async () => {
+      await get('')
+    }
+
     getIssues()
   }, [])
 
   return (
     <section className="allissues wrapper">
-      <Filter setFilter={setFilter} />
+      <Filter />
       <h1>Henvendelser</h1>
       <section className="issues-container">
         {error ? <Alert role="danger" text={error} /> : null}
-        {isLoading ? (
+        {isLoading || isGlobalLoading ? (
           <Loading />
-        ) : data?.length > 0 ? (
-          data.map((issues) => <SupportItem key={issues.id} item={issues} />)
+        ) : issues?.length > 0 ? (
+          issues.map((issues) => <SupportItem key={issues.id} item={issues} />)
         ) : (
           <Alert role="info" text="Finner ingen resultater..." />
         )}
