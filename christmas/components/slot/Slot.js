@@ -10,7 +10,7 @@ const Slot = (props) => {
   const { slot } = props
   const { id, isOpen, openAt, order, coupon } = slot
 
-  const { data, error, openSlot } = useApi()
+  const { data, openSlot } = useApi()
 
   useEffect(() => {
     if (data?.success) dispatch({ type: 'OPEN_SLOT', slot: data.slot })
