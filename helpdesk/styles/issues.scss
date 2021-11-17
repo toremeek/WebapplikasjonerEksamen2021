@@ -1,65 +1,3 @@
-// COLORS
-$primary: #2e2d2d;
-$red-color: #b52424;
-$green-color: #4a8c52;
-$yellow-color: #dede2f;
-$light-gray: #989898;
-$lighter-gray: #eaeaea;
-$light-blue: #77abc6;
-
-$warning: #fff3cd;
-$info: #cce5ff;
-$success: #d4edda;
-$danger: #f8d7da;
-
-// FONT SIZES
-$large: 1.3rem;
-$medium: 1.1rem;
-$normal: 1rem;
-$small: 0.9rem;
-$smaller: 0.8rem;
-
-// FONT WEIGHT
-$bolder: 700;
-$bold: 600;
-$semi-bold: 500;
-
-// Setting bg and color in severity
-@mixin priority($color) {
-  color: $color;
-
-  .dot {
-    background-color: $color;
-  }
-}
-
-button {
-  background: none;
-  border: none;
-  font-weight: $bold;
-  text-decoration: underline;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: $smaller;
-
-  .border {
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 1rem;
-  }
-
-  &.dark {
-    border-color: $light-gray;
-  }
-
-  &.light {
-    border-color: $lighter-gray;
-  }
-}
-
 .issue {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -69,15 +7,6 @@ button {
   p {
     margin: 0;
     padding: 0;
-  }
-
-  header {
-    h1 {
-      grid-area: title;
-      color: $primary;
-      font-size: $large;
-      margin: 0.4rem 0;
-    }
   }
 
   .department {
@@ -146,14 +75,14 @@ button {
 
 .allissues {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas: 'title filter' 'issues issues';
 
   .issues-container {
     grid-area: issues;
     display: flex;
     flex-direction: column;
-    gap: $normal;
+    gap: $large;
   }
 
   h1 {
@@ -191,19 +120,6 @@ button {
     align-self: flex-end;
     pad: 4px 6px;
   }
-
-  textarea {
-    border-color: $lighter-gray;
-    padding: $smaller;
-    border-radius: 10px;
-    resize: none;
-    font-family: inherit;
-    font-size: $normal;
-
-    &:focus {
-      outline: none;
-    }
-  }
 }
 
 .comments {
@@ -217,54 +133,5 @@ button {
   h3 {
     font-size: $normal;
     font-weight: $semi-bold;
-  }
-}
-
-.loading {
-  display: flex;
-  flex-direction: column;
-
-  text-align: center;
-  font-weight: $semi-bold;
-
-  svg {
-    height: $large;
-    width: $large;
-    align-self: center;
-  }
-
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(359deg);
-    }
-  }
-
-  .rotate {
-    animation: rotate 4s linear infinite;
-  }
-}
-
-.alert {
-  width: 100%;
-  padding: $smaller;
-  border-radius: 10px;
-
-  &.warning {
-    background-color: $warning;
-  }
-
-  &.success {
-    background-color: $success;
-  }
-
-  &.danger {
-    background-color: $danger;
-  }
-
-  &.info {
-    background-color: $info;
   }
 }

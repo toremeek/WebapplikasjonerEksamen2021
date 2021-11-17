@@ -1,0 +1,23 @@
+.add-issue {
+  display: flex;
+  flex-direction: column;
+  gap: $normal;
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: $mini;
+
+    button {
+      align-self: flex-end;
+      pad: 4px 6px;
+      margin-top: $smaller;
+    }
+  }
+
+  .col-2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $mini;
+  }
+}

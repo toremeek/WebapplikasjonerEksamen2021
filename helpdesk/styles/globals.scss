@@ -1,4 +1,7 @@
-@import './support.scss';
+@import './config.scss';
+@import './navigation.scss';
+@import './issues.scss';
+@import './add-issue.scss';
 
 html {
   font-size: 100%;
@@ -10,49 +13,127 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: $primary;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+
+  &:hover {
+    color: lighten($primary, 10);
+  }
 }
 
-* {
-  box-sizing: border-box;
+main {
+  max-width: $max-width;
+  width: $width;
+  min-width: $min-width;
+  margin: $large auto 10vh auto;
 }
 
-ul,
-li {
-  margin: 0;
-  padding: 0;
-}
-
-//styling for navigasjonen//
-
-.navigation {
-  background-color: #39afb1;
-  margin: 1rem auto;
-  width: 50%;
-  ul {
-    margin: 0;
-    padding: 0.5rem;
-    display: flex;
-    gap: 1rem;
-  }
-  li {
-    text-decoration: none;
-    list-style: none;
-  }
-  .first {
-    color: black;
-    font-size: 1.2rem;
-    text-decoration: none;
-  }
-  .first:hover {
-    color: white;
-  }
+article {
+  display: flex;
+  flex-direction: column;
+  gap: $normal;
 }
 
 button {
+  background: none;
+  border: none;
+  font-weight: $bold;
+  text-decoration: underline;
   cursor: pointer;
+}
+
+textarea {
+  border-color: $lighter-gray;
+  padding: $smaller;
+  border-radius: 10px;
+  resize: none;
+  font-family: inherit;
+  font-size: $normal;
+
+  &:focus {
+    outline: none;
+    border-color: $light-gray;
+  }
+}
+
+h1 {
+  grid-area: title;
+  color: $primary;
+  font-size: $large;
+  margin: $normal 0;
+}
+
+.wrapper {
+  &.flex {
+    display: flex;
+    flex-direction: column;
+    gap: $smaller;
+  }
+
+  &.border {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  &.dark {
+    border-color: $light-gray;
+  }
+
+  &.light {
+    border-color: $lighter-gray;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+  font-weight: $semi-bold;
+
+  svg {
+    height: $large;
+    width: $large;
+    align-self: center;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(359deg);
+    }
+  }
+
+  .rotate {
+    animation: rotate 4s linear infinite;
+  }
+}
+
+.alert {
+  width: 100%;
+  padding: $smaller;
+  border-radius: 10px;
+
+  &.warning {
+    background-color: $warning;
+  }
+
+  &.success {
+    background-color: $success;
+  }
+
+  &.danger {
+    background-color: $danger;
+  }
+
+  &.info {
+    background-color: $info;
+  }
 }

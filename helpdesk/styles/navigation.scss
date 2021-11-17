@@ -1,0 +1,35 @@
+.navigation {
+  background-color: $primary;
+
+  font-size: $medium;
+  font-weight: $semi-bold;
+
+  box-shadow: 0 $smaller $smaller lighten($light-gray, 20);
+
+  ul {
+    max-width: $max-width;
+    width: $width;
+    min-width: $min-width;
+
+    padding: $medium 0;
+    margin: 0 auto 5vh;
+
+    li {
+      display: inline;
+      margin-right: $small;
+    }
+  }
+
+  a {
+    padding: $large;
+    color: $lighter-gray;
+
+    &:first-of-type {
+      padding-left: 0;
+    }
+
+    &:hover {
+      color: $white;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+// CONTENT WIDTH
+$width: 40%;
+$max-width: 1000px;
+$min-width: calc($max-width / 2);
+
+// COLORS
+$primary: #2e2d2d;
+$red-color: #b52424;
+$green-color: #4a8c52;
+$yellow-color: #dede2f;
+$light-gray: #989898;
+$lighter-gray: #eaeaea;
+$light-blue: #77abc6;
+$white: #ffffff;
+
+$warning: #fff3cd;
+$info: #cce5ff;
+$success: #d4edda;
+$danger: #f8d7da;
+
+// FONT SIZES
+$large: 1.3rem;
+$medium: 1.1rem;
+$normal: 1rem;
+$small: 0.9rem;
+$smaller: 0.8rem;
+$mini: 0.5rem;
+
+// FONT WEIGHT
+$bolder: 700;
+$bold: 600;
+$semi-bold: 500;
+
+// Setting bg and color in severity
+@mixin priority($color) {
+  color: $color;
+
+  .dot {
+    background-color: $color;
+  }
+}
