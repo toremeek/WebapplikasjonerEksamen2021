@@ -1,19 +1,28 @@
-import AdminModal from '@/components/AdminModal'
-import DashboardItem from '@/components/DashboardItem'
-import { useUser } from '@/hooks/useUser'
-import React from 'react'
+import DashboardItem from '@/components/DashboardItems'
+import { CalenderProvider } from '../context/CalenderContext'
+import Loading from '@/components/shared/Loading'
+import useApi from '@/hooks/useApi'
+import { useEffect } from 'react'
+import DashboardItems from '@/components/DashboardItems'
 
 const dashboard = () => {
-  const { admin } = useUser()
+  // const { data: calendar } = useCalender()
+
+  const { isLoading, data, get, error } = useApi()
+
+  useEffect(() => {
+    get('calenders?name=Julekalender')
+  }, [get])
+
   return (
     <>
-      {admin ? (
-        <>
-          <DashboardItem />
-          <DashboardItem />
-        </>
+      <h1>Julekalender eksamen 2021</h1>
+      {isLoading ? (
+        <Loading />
       ) : (
-        <p>Bare admin har tilgang her</p>
+        <CalenderProvider value={data}>
+          <DashboardItems />
+        </CalenderProvider>
       )}
     </>
   )
