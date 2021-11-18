@@ -36,14 +36,14 @@ const CloseSign = styled.span`
   cursor: pointer;
 `
 
-const AdminModal = ({ modal, setModal, obj }) => {
+const AdminModal = ({ showAdminModal, setShowAdminModal, obj }) => {
   const closeModal = () => {
-    setModal(false)
+    setShowAdminModal(false)
   }
 
   return (
     <>
-      {modal ? (
+      {showAdminModal ? (
         <StyledModal>
           <InnerModal>
             <CloseSign onClick={closeModal}>X</CloseSign>
