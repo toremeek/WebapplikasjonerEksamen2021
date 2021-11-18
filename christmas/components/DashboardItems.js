@@ -58,6 +58,9 @@ const DashboardItems = () => {
   const [showAdminModal, setShowAdminModal] = useState(false)
   const { users } = useUser()
   //console.log(users)
+  const { slot } = dummyOjekt
+  const { username } = slot[2]
+  console.log(username)
 
   const openModal = () => {
     setShowAdminModal(true)
@@ -77,6 +80,7 @@ const DashboardItems = () => {
               <AdminModal
                 showAdminModal={showAdminModal}
                 setShowAdminModal={setShowAdminModal}
+                username={username}
               />
             </div>
             <table>
