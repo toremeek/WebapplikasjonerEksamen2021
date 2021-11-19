@@ -2,6 +2,9 @@
 import * as React from 'react'
 
 import { createRows } from '@/lib/utils'
+import axios from 'axios'
+import { getUserFromCookie } from '@/lib/utils/api'
+import { useUser } from '@/hooks/useUser'
 
 const GameContext = React.createContext()
 
@@ -28,6 +31,8 @@ const initialState = {
   remaningColors: colors,
   foundCombination: false,
   isComplete: false,
+  gameCounter: 1,
+  user: '',
 }
 
 const getRemainingColors = (selectedColors, currentColor) => {
@@ -87,6 +92,12 @@ function gameReducer(state, action) {
         remaningColors: colors,
       }
     }
+    case 'set_user': {
+      return {
+        ...state,
+        user: payload,
+      }
+    }
     case 'set_complete': {
       return {
         ...state,
@@ -115,9 +126,17 @@ function gameReducer(state, action) {
         selectedColors: [...state.selectedColors],
       }
     }
+    //teller antall forsøk her, bruker currentrow som referanse //
+    case 'increment_counter': {
+      return {
+        ...state,
+        gameCounter: state.gameCounter + 1,
+      }
+    }
     case 'set_combination': {
       return {
         ...state,
+        //setter spill-kombinasjonen som mottas fra api-et //
         game: payload.game,
       }
     }
@@ -129,24 +148,41 @@ function gameReducer(state, action) {
 
 const GameProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(gameReducer, initialState)
-
   React.useEffect(() => {
-    const getCombination = async () => {
-      // TODO: Må kalle api for å hente rett kombinasjon
-
-      dispatch({
-        type: 'set_combination',
-        payload: { game: null },
-      })
+    //henter brukernavnet og setter det i contexten//
+    const setUser = async () => {
+      const user = await getUserFromCookie()
+      if (user?.length > 0) {
+        dispatch({
+          type: 'set_user',
+          payload: user,
+        })
+      }
     }
 
+    //henter kombinasjonen som genereres på apiet //
+    const getCombination = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:3000/api/combinations'
+        )
+        const data = await response?.data.combination
+        dispatch({
+          type: 'set_combination',
+          payload: { game: data },
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    setUser()
     getCombination()
   }, [])
+
   const value = { state, dispatch }
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 }
-
 function useGameContext() {
   const context = React.useContext(GameContext)
 
