@@ -53,18 +53,18 @@ const dummyOjekt = {
   ],
 }
 
+let randomNum = Math.floor(Math.random() * dummyOjekt.slot.length)
+
 const DashboardItems = () => {
   const { state } = useCalender()
   const [showAdminModal, setShowAdminModal] = useState(false)
   const { users } = useUser()
   //console.log(users)
   const { slot } = dummyOjekt
-  const { username } = slot[2]
-  console.log(username)
+  const { username } = slot[randomNum]
 
   const openModal = () => {
     setShowAdminModal(true)
-    console.log('jdfh')
   }
 
   return (
