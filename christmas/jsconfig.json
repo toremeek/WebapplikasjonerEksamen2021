@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": false,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/components/*": ["__mocks__/components/*"],
       "@/pages/*": ["pages/*"],
       "@/lib/*": ["lib/*"],
       "@/hooks/*": ["hooks/*"],

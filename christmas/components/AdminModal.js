@@ -36,19 +36,19 @@ const CloseSign = styled.span`
   cursor: pointer;
 `
 
-const AdminModal = ({ modal, setModal, obj }) => {
+const AdminModal = ({ showAdminModal, setShowAdminModal, username }) => {
   const closeModal = () => {
-    setModal(false)
+    setShowAdminModal(false)
   }
 
   return (
     <>
-      {modal ? (
+      {showAdminModal ? (
         <StyledModal>
           <InnerModal>
             <CloseSign onClick={closeModal}>X</CloseSign>
-            <h1>Superbonus luke 1</h1>
-            <div className="superbonus winner">{obj}</div>
+            <h1 className="headline">Superbonus luke 1</h1>
+            <div className="superbonus-winner"> Gratulerer, {username}</div>
           </InnerModal>
         </StyledModal>
       ) : null}

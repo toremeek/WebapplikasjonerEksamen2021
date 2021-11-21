@@ -1,4 +1,4 @@
-.dashboard{
+.dashboarditems{
   width: 100%;
   height: 50%;
   border: 1px solid #333;
@@ -6,8 +6,11 @@
   padding: 1rem;
   .dashboard-options{
     display: flex;
-    span:first-of-type{
+    p:first-of-type{
       margin-right: 1rem;
+    }
+    p:last-of-type{
+      cursor: pointer
     }
   }
 }
@@ -29,7 +32,17 @@
     }
   
   }
-
+  
+  .superbonus-winner{
+    border: 1px solid black;
+    padding: 50px;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+  }
+  .headline{
+    font-size: x-large;
+  }
   @media only screen and(min-width: 800px)  {
     .dashboard{max-width: 80%;}
   }
