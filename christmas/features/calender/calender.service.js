@@ -1,3 +1,4 @@
+import { dashboardDto } from '../admin/dashboard.dto'
 import { userCalender } from './calender.dto'
 import {
   get,
@@ -26,6 +27,6 @@ export const getAdminCalender = async (name) => {
   if (!success) return Result.failure(error)
   if (!data) return Result.failure('Cannot find calender with name')
 
-  return Result.success(data)
-  // return Result.success(userCalender(data))
+  // return Result.success(data)
+  return Result.success(dashboardDto(data))
 }

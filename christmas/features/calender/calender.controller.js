@@ -6,6 +6,8 @@ export const get = async (req, res) => {
   const { name } = req.query
   const { user } = await userInfo(req)
 
+  console.log(user)
+
   if (!name) Response(res).badRequest('Missing required parameters: name')
 
   const { success, data, error } = await getCalender(name, user)
