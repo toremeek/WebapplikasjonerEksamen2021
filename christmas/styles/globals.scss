@@ -1,43 +1,12 @@
+@import './config.scss';
 @import './dashboard.scss';
-
-// Christmas font
-@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
-
-// COLORS
-$primary: #2e2d2d;
-$white: #ffffff;
-$green: #96e8c5;
-$light-gray: #f4f4f4;
-$darker-gray: #c3c3c3;
-
-$warning: #fff3cd;
-$info: #cce5ff;
-$success: #d4edda;
-$danger: #f8d7da;
-
-// CHRISTMAS THEME COLOR?
-$dark-green: #042a2b;
-$red: #e71d36;
-$yellow: #ff9f1c;
-$theme-white: #eee5e9;
-
-// SIZES
-$x-large: 1.3rem;
-$large: 1.1rem;
-$normal: 1rem;
-$small: 0.8rem;
-$smaller: 0.7rem;
-
-// FONT WEIGHT
-$bolder: 900;
-$bold: 700;
-$semi-bold: 500;
+@import './modal.scss';
 
 html {
   font-size: 100%;
   // font-size: calc(1.4vw / 2);
 }
-html,
+
 body {
   padding: 0;
   margin: 0;
@@ -57,6 +26,8 @@ a {
 }
 
 body {
+  margin: 0;
+  padding: 0;
   position: relative;
   min-height: 100vh;
 }
@@ -69,46 +40,51 @@ body {
 
 main {
   width: 40%;
-  margin: 0 auto 7vh auto;
+  margin: 5vh auto 7vh auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: $large;
 }
 
+// SVG Laget med: https://www.svgwaves.io/
 header {
-  width: 50%;
-  margin: 0.5rem auto;
+  height: 14vh;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1920 357" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="rgba(255, 255, 255, 1)" d="M 0 233 C 102.80000000000001 233 154.2 202 257 202 L 257 202 L 257 0 L 0 0 Z" stroke-width="0"></path> <path fill="rgba(255, 255, 255, 1)" d="M 256 202 C 398.4 202 469.6 273 612 273 L 612 273 L 612 0 L 256 0 Z" stroke-width="0"></path> <path fill="rgba(255, 255, 255, 1)" d="M 611 273 C 794.6 273 886.4 198 1070 198 L 1070 198 L 1070 0 L 611 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1069 198 C 1233 198 1315 266 1479 266 L 1479 266 L 1479 0 L 1069 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1478 266 C 1602.8 266 1665.2 206 1790 206 L 1790 206 L 1790 0 L 1478 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1789 206 C 1841.4 206 1867.6 233 1920 233 L 1920 233 L 1920 0 L 1789 0 Z" stroke-width="0"></path></svg>');
+  background-size: cover;
+  background-position-y: -13vh;
+}
 
-  padding: 1rem 2rem;
+nav {
+  width: 50%;
+  margin: 0 auto;
+
+  padding-top: 3vh;
 
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: $large;
-
-  // border-bottom: 0.3rem solid $dark-green;
 
   h1 {
     margin: 0;
     font-family: 'Pinyon Script', cursive;
     font-weight: $bold;
     color: $red;
-    text-shadow: 2px 2px 0px lighten($dark-green, 20);
+    text-shadow: 2px 2px 0px $dark-green;
     font-size: 2 * $x-large;
   }
-}
 
-nav {
-  ul {
-    margin: 0;
-    padding: 0;
+  span {
+    border: 2px solid $red;
+    border-radius: 0.3rem;
+    padding: 0.7rem 1.3rem;
+    font-weight: $semi-bold;
+    color: $red;
 
-    li {
-      display: inline;
-      font-size: $large;
-      font-weight: $semi-bold;
-      letter-spacing: 0.1rem;
-      padding: $large;
-
-      &:hover {
-        color: $theme-white;
-      }
+    &:hover {
+      background-color: $red;
+      color: $theme-white;
     }
   }
 }
@@ -254,4 +230,16 @@ nav {
     color: darken($info, 50);
     border-color: darken($info, 5);
   }
+}
+
+.grow {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+h1 {
+  color: $dark-green;
 }

@@ -1,48 +1,70 @@
-.dashboarditems{
+// .dashboarditems {
+//   width: 100%;
+//   height: 50%;
+//   border: 1px solid #333;
+//   margin-bottom: 1rem;
+//   padding: 1rem;
+//   .dashboard-options {
+//     display: flex;
+//     p:first-of-type {
+//       margin-right: 1rem;
+//     }
+//     p:last-of-type {
+//       cursor: pointer;
+//     }
+//   }
+// }
+
+table {
+  margin-top: 1rem;
   width: 100%;
-  height: 50%;
-  border: 1px solid #333;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  .dashboard-options{
-    display: flex;
-    p:first-of-type{
-      margin-right: 1rem;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.7rem 0.9rem;
+  }
+
+  thead {
+    tr {
+      background-color: $dark-green;
+      color: $white;
+      text-align: left;
     }
-    p:last-of-type{
-      cursor: pointer
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $darker-gray;
+
+      &:nth-of-type(odd) {
+        background-color: lighten($theme-white, 4);
+      }
+
+      &:last-of-type {
+        border-bottom: 2px solid $dark-green;
+      }
+
+      &:hover {
+        background-color: lighten($red, 6);
+        color: $white;
+      }
     }
   }
 }
-  table{
-    margin-top: 1rem;
-    width: 100%;
-    border-collapse: collapse;
 
-    th{
-      text-align: center;
-      border-bottom: 1px solid black;
-    }
-    td{
-      text-align: center;
-      border-bottom: 1px solid black;
-    }
-    tr:last-of-type{
-      border-bottom: none;
-    }
-  
+.superbonus-winner {
+  border: 1px solid black;
+  padding: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: large;
+}
+.headline {
+  font-size: x-large;
+}
+@media only screen and(min-width: 800px) {
+  .dashboard {
+    max-width: 80%;
   }
-  
-  .superbonus-winner{
-    border: 1px solid black;
-    padding: 50px;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-  }
-  .headline{
-    font-size: x-large;
-  }
-  @media only screen and(min-width: 800px)  {
-    .dashboard{max-width: 80%;}
-  }
+}
