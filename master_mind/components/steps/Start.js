@@ -1,10 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { createUser } from '@/lib/utils/api'
+import axios from 'axios'
 
 const Start = () => {
+  const [results, setResults] = useState([])
+
+  //TODO: hente resultat fr apiet //
+  const getScoreBoard = async () => {
+    const getData = await axios.get('/api/results')
+    const response = await getData?.data
+    console.log(response)
+  }
   useEffect(() => {
     createUser()
+    getScoreBoard()
   }, [])
 
   return (

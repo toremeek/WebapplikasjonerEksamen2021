@@ -7,11 +7,10 @@ import Row from './Row'
 import Solution from './Solution'
 import { useGameContext } from '@/contexts/game-context'
 import axios from 'axios'
-import { getUserFromCookie } from '@/lib/utils/api'
+import TransferResult from './TransferResults'
 
 const Rows = () => {
   const { state, dispatch } = useGameContext()
-
   const isCurrentRow = useCallback(
     (rowNumber) => {
       return rowNumber === state?.currentRow
@@ -19,43 +18,24 @@ const Rows = () => {
     [state.currentRow]
   )
 
-  const setUser = async () => {
-    const user = await getUserFromCookie()
-    if (user?.length > 0) {
-      console.log(user)
-      dispatch({
-        type: 'set_user',
-        payload: user,
-      })
-    }
-  }
-
   //sender kopi av state til apiet og får hints og color tilbake //
   const handleRowSubmit = async (event) => {
     event.preventDefault()
-
+    //øker counteren for hvert forsøk, lagrer verdien i state //
+    dispatch({
+      type: 'increment_counter',
+    })
     try {
       const dataToApi = { ...state }
-      console.log(dataToApi)
       const sendData = await axios.post('/api/hints', { dataToApi })
       const receivedData = await sendData?.data
-      console.log('mottak', receivedData)
       const hints = receivedData.data
-
-      //øker counteren for hvert forsøk, lagrer verdien i state //
-      dispatch({
-        type: 'increment_counter',
-      })
+      //  Sjekker om spillet er løst basert på hints fra api-et og setter hint //
       dispatch({ type: 'set_hints', payload: { hints } })
       if (hints?.positions === 4) {
         dispatch({ type: 'set_complete' })
       } else {
-        const rowLength = state.rows.length
-        if (state.gameCounter === rowLength) {
-          setFailed(true)
-        } else {
-          dispatch({ type: 'increase_row' })
-        }
+        dispatch({ type: 'increase_row' })
       }
     } catch (error) {
       console.log(error)
@@ -82,10 +62,13 @@ const Rows = () => {
     <>
       <div className="rows">
         {state?.isComplete ? (
-          <Solution
-            row={state.rows[state.currentRow]}
-            foundCombination={state?.foundCombination}
-          />
+          <>
+            <Solution
+              row={state.rows[state.currentRow]}
+              foundCombination={state?.foundCombination}
+            />
+            <TransferResult />
+          </>
         ) : null}
         {!state?.isComplete &&
           state?.rows?.map((row) => (

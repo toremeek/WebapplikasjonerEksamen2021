@@ -19,7 +19,7 @@ const colors = [
   'gray',
 ]
 
-const rows = createRows(10)
+const rows = createRows(1)
 
 const initialState = {
   game: null,
@@ -149,7 +149,7 @@ function gameReducer(state, action) {
 const GameProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(gameReducer, initialState)
   React.useEffect(() => {
-    //henter brukernavnet og setter det i contexten//
+    //henter brukernavnet og setter det i user i contexten//
     const setUser = async () => {
       const user = await getUserFromCookie()
       if (user?.length > 0) {
