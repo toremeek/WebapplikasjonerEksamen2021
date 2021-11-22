@@ -6,22 +6,26 @@ import Alert from '@/components/shared/Alert'
 import Loading from '@/components/shared/Loading'
 import useApi from '@/hooks/useApi'
 import { useUser } from '@/hooks/useUser'
+import useToggle from '@/hooks/useToggle'
+import Superbonus from '@/components/dashboard/Superbonus'
 
 const Dashboard = () => {
   const { admin } = useUser()
   const { isLoading, getDashboardCalender } = useApi()
+  const displayModal = useToggle(false)
 
   useEffect(() => {
-    getDashboardCalender()
+    getDashboardCalender('Julekalender')
   }, [])
 
   if (!admin) return <Alert role="warning" text="Her skal ikke du være!" />
 
   return (
-    <section>
+    <>
+      {displayModal ? <Superbonus toggle={displayModal} data={winner} /> : null}
       <h1>Admin dashboard</h1>
       {isLoading ? <Loading /> : <DashboardList />}
-    </section>
+    </>
   )
 }
 
