@@ -5,54 +5,6 @@ import axios from 'axios'
 
 import { useCalenderContext } from '@/context/CalenderContext'
 
-const dummyOjekt = {
-  name: 'dummy',
-  slot: [
-    {
-      slotId: 1,
-      userId: 30,
-      username: 'trude',
-      participationDate: '11.06.2021',
-      cupon: 'abcd1234',
-    },
-    {
-      slotId: 2,
-      userId: 31,
-      username: 'markus',
-      participationDate: '11.06.2021',
-      cupon: 'abcd1234',
-    },
-    {
-      slotId: 3,
-      userId: 32,
-      username: 'tom',
-      participationDate: '15.06.2021',
-      cupon: 'abcd1234',
-    },
-    {
-      slotId: 4,
-      userId: 33,
-      username: 'trude',
-      participationDate: '22.06.2021',
-      cupon: 'abcd1234',
-    },
-    {
-      slotId: 5,
-      userId: 34,
-      username: 'tom',
-      participationDate: '21.06.2021',
-      cupon: 'abcd1234',
-    },
-    {
-      slotId: 6,
-      userId: 34,
-      username: 'lars',
-      participationDate: '18.06.2021',
-      cupon: 'abcd1234',
-    },
-  ],
-}
-
 const useApi = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState()
@@ -137,15 +89,15 @@ const useApi = () => {
     }
   }, [])
 
-  const getDashboardCalender = async () => {
+  const getDashboardCalender = async (name) => {
     setIsLoading(true)
     try {
-      // const response = await axios.get(`/api/calenders?name=${name}`)
-      // const { data, success } = response.data
+      const response = await axios.get(
+        `http://localhost:3000/api/admin/calenders?name=${name}`
+      )
+      const { data, success } = response.data
 
-      const success = true
-
-      if (success) dispatch({ type: 'SET_DASHBOARD', dashboard: dummyOjekt })
+      if (success) dispatch({ type: 'SET_DASHBOARD', dashboard: data })
       setError()
     } catch (err) {
       setError(err.response.data.error)
