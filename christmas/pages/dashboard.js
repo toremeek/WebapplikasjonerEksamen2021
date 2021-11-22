@@ -1,23 +1,27 @@
-import { CalenderProvider } from '../context/CalenderContext'
+/* eslint-disable no-ternary */
+import { useEffect } from 'react'
+
+import DashboardList from '@/components/dashboard/DashboardList'
+import Alert from '@/components/shared/Alert'
 import Loading from '@/components/shared/Loading'
 import useApi from '@/hooks/useApi'
-import { useEffect } from 'react'
-import DashboardItems from '../components/DashboardItems'
 import { useUser } from '@/hooks/useUser'
 import Alert from '../components/shared/Alert'
 
-const dashboard = () => {
-  // const { data: calendar } = useCalender()
+const Dashboard = () => {
   const { admin } = useUser()
-  const { isLoading, data, get, error } = useApi()
+  const { isLoading, getDashboardCalender } = useApi()
 
   useEffect(() => {
-    get('calenders?name=Julekalender')
-  }, [get])
+    getDashboardCalender()
+  }, [])
+
+  if (!admin) return <Alert role="warning" text="Her skal ikke du være!" />
 
   return (
-    <>
+    <section>
       <h1>Admin dashboard</h1>
+<<<<<<< HEAD
       {
         //sjekker om bruker er admin før siden vises
         admin ? (
@@ -33,7 +37,11 @@ const dashboard = () => {
         )
       }
     </>
+=======
+      {isLoading ? <Loading /> : <DashboardList />}
+    </section>
+>>>>>>> aleks_oppgave_2_christmas
   )
 }
 
-export default dashboard
+export default Dashboard

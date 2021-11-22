@@ -107,6 +107,7 @@
   "settings": {
     "import/resolver": {
       "alias": [
+        ["@/context", "./context"],
         ["@/components", "./components"],
         ["@/pages", "./pages"],
         ["@/lib", "./lib"],

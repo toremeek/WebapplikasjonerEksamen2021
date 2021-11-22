@@ -1,6 +1,8 @@
 const slotDto = (slot) => {
   const { userSlots, ...slotInfo } = slot
 
+  if (!userSlots) return { ...slotInfo }
+
   const open = userSlots?.length > 0
   const { coupon } = userSlots[0] || ''
 

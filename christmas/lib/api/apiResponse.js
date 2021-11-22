@@ -15,6 +15,10 @@ export const Response = (res) => ({
   badRequest: (error = 'Bad request 💀') =>
     res.status(400).json(Result.failure(error)),
 
+  // 403 - Forbidden: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+  forbidden: (error = 'Forbidden 💀') =>
+    res.status(403).json(Result.failure(error)),
+
   // 409 - Conflict: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
   conflict: (error = 'Ressursen finnes allerede') =>
     res.status(409).json(Result.failure(error)),

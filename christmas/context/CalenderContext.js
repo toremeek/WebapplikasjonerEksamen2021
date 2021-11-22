@@ -1,9 +1,26 @@
 import { createContext, useContext, useReducer } from 'react'
 
-const reducer = (state, { type, slot }) => {
+const initialState = {
+  error: '',
+  isLoading: false,
+  slots: [],
+}
+
+const reducer = (state, action) => {
+  const { type } = action
+
   switch (type) {
+    case 'SET_CALENDER': {
+      const { calender } = action
+
+      return {
+        ...state,
+        ...calender,
+      }
+    }
+
     case 'OPEN_SLOT': {
-      const { slotId, coupon } = slot
+      const { slotId, coupon } = action
 
       const { slot: slots } = state
       const slotIndex = slots.findIndex((obj) => obj.id === slotId)
@@ -17,25 +34,57 @@ const reducer = (state, { type, slot }) => {
       }
     }
 
+    case 'SET_DASHBOARD': {
+      const { dashboard } = action
+
+      return {
+        ...state,
+        dashboard,
+      }
+    }
+
+    case 'SET_ERROR': {
+      const { error } = action
+
+      return {
+        ...state,
+        error,
+      }
+    }
+
+    case 'SET_LOADING': {
+      const { isLoading } = action
+
+      return {
+        ...state,
+        isLoading,
+      }
+    }
+
     default:
       return state
   }
 }
 
 const CalenderContext = createContext()
-const CalenderContextDispatch = createContext(() => {})
 
-export const CalenderProvider = ({ children, value }) => {
-  const [state, dispatch] = useReducer(reducer, value)
+const CalenderProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <CalenderContextDispatch.Provider value={dispatch}>
-      <CalenderContext.Provider value={{ state }}>
-        {children}
-      </CalenderContext.Provider>
-    </CalenderContextDispatch.Provider>
+    <CalenderContext.Provider value={{ state, dispatch }}>
+      {children}
+    </CalenderContext.Provider>
   )
 }
 
-export const useCalender = () => useContext(CalenderContext)
-export const useCalenderDispatch = () => useContext(CalenderContextDispatch)
+const useCalenderContext = () => {
+  const context = useContext(CalenderContext)
+
+  if (context === undefined)
+    throw new Error('useCalenderContext must be used within a CalenderProvider')
+
+  return context
+}
+
+export { CalenderProvider, useCalenderContext }
