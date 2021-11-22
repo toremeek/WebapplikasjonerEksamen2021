@@ -7,19 +7,17 @@ const Navigation = () => {
   const { admin } = useUser()
 
   return (
-    <header>
-      <h1>Julekalender</h1>
+    <header className="">
       <nav>
-        <ul>
-          <li>
-            <Link href="/">Hjem</Link>
-          </li>
-          {admin ? (
-            <li>
-              <Link href="/dashboard">Admin</Link>
-            </li>
-          ) : null}
-        </ul>
+        <h1 className="title grow ">
+          <Link href="/">Julekalender</Link>
+        </h1>
+
+        {admin ? (
+          <span>
+            <Link href="/dashboard">Admin</Link>
+          </span>
+        ) : null}
       </nav>
     </header>
   )
