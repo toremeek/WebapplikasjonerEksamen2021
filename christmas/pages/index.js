@@ -21,11 +21,8 @@ export default function Home() {
   if (error)
     return <Alert role="danger" text={`⚠️ En feil har oppstått: ${error}`} />
 
-  console.log(id, username)
-
   return (
     <>
-      <h1>Julekalender eksamen 2021</h1>
       {!id || !username ? (
         <Alert role="info" text="Vennligst logg inn for å åpne luker!" />
       ) : null}
