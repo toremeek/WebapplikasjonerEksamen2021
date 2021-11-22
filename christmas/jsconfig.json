@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": false,
     "baseUrl": ".",
     "paths": {
+      "@/context/*": ["context/*"],
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/lib/*": ["lib/*"],
