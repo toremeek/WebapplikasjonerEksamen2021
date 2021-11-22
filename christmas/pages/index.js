@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 
 import { CalenderProvider } from '../context/CalenderContext'
 import Loading from '@/components/shared/Loading'
-import SlotList from '@/components/slot/SlotList'
+import SlotList from '../components/slot/SlotList'
 import useApi from '@/hooks/useApi'
 
 // import { useCalendar } from '@/hooks/useCalendar'

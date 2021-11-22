@@ -4,6 +4,7 @@ import useApi from '@/hooks/useApi'
 import { useEffect } from 'react'
 import DashboardItems from '../components/DashboardItems'
 import { useUser } from '@/hooks/useUser'
+import Alert from '../components/shared/Alert'
 
 const dashboard = () => {
   // const { data: calendar } = useCalender()
@@ -28,7 +29,7 @@ const dashboard = () => {
             </CalenderProvider>
           )
         ) : (
-          <p>404</p>
+          <Alert text={'Du har ikke tilgang til dette området'} />
         )
       }
     </>
