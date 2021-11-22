@@ -9,6 +9,8 @@ const DashboardList = () => {
 
   const { slot } = dashboard || []
 
+  console.log(dashboard)
+
   if (slot.length <= 0)
     return <Alert type="warning" text="Finner ingen dager i databasen!" />
 
