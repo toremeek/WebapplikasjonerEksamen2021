@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { number } from 'prop-types'
 
 const prisma = new PrismaClient()
 const colors = [
@@ -12,9 +13,9 @@ const colors = [
   'gray',
 ]
 
-const user = ['Trude', 'Kjell', 'Tone']
-const numberOfTries = [2, 4, 10]
-const foundCombination = [true, false, true]
+const user = ['Tore', 'Aleksander', 'Markus']
+const numberOfTries = [8, 6, 10]
+const foundCombination = [true, true, true]
 
 //lager random kombinasjon av de tilgjenglige fargene //
 const getRandomCombination = () => {
@@ -25,10 +26,12 @@ const getRandomCombination = () => {
 }
 const createGame = async () => {
   Promise.all(
-    user.map(async (users) => {
+    user.map(async (users, index) => {
       await prisma.game.create({
         data: {
           user: users,
+          foundCombination: foundCombination[index],
+          numberOfTries: numberOfTries[index],
           combination: getRandomCombination(colors),
         },
       })

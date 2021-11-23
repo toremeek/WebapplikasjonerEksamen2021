@@ -1,11 +1,11 @@
 import axios from 'axios'
+import { response } from 'msw'
 import { useEffect, useState } from 'react'
 
 const { useGameContext } = require('@/contexts/game-context')
 
 // sender staten til api-et for registrering når spillet er avsluttet //
 const TransferResult = () => {
-  const [success, setSucces] = useState(false)
   const { state } = useGameContext()
   //lager objekt av state-data som skal sendes til databasen //
   const stateData = {
@@ -19,9 +19,7 @@ const TransferResult = () => {
     try {
       const data = await axios.post('/api/results', { stateData })
       const response = await data?.data
-      if (response.success) {
-        setSucces(true)
-      }
+      return response?.success
     } catch (error) {
       console.log('noe gikk galt', error)
     }
@@ -32,11 +30,7 @@ const TransferResult = () => {
 
   return (
     <>
-      {success ? (
-        <p>Ditt resultat har blitt lagret</p>
-      ) : (
-        <p>Noe gikk galt. Skyld på Marius :-) </p>
-      )}
+      <p>Ditt resultat er lagret</p>
     </>
   )
 }

@@ -18,7 +18,7 @@ const colors = [
   'gray',
 ]
 
-const rows = createRows(1)
+const rows = createRows(5)
 
 const initialState = {
   game: null,
