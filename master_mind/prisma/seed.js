@@ -13,8 +13,8 @@ const colors = [
 ]
 
 const user = ['Trude', 'Kjell', 'Tone']
-const numberOfTries = ['2', '4', '10']
-const foundCombination = ['true', 'false', 'true']
+const numberOfTries = [2, 4, 10]
+const foundCombination = [true, false, true]
 
 //lager random kombinasjon av de tilgjenglige fargene //
 const getRandomCombination = () => {

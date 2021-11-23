@@ -11,7 +11,7 @@ model Game {
   id               String  @id @default(cuid())
   combination      String
   user             String
-  numberOfTries    String   @default("0")
-  foundCombination String @default("false")
+  numberOfTries    Int   @default(1)
+  foundCombination Boolean @default(false)
 
 }

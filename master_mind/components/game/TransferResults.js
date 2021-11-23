@@ -1,30 +1,44 @@
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const { useGameContext } = require('@/contexts/game-context')
 
 // sender staten til api-et for registrering når spillet er avsluttet //
 const TransferResult = () => {
+  const [success, setSucces] = useState(false)
   const { state } = useGameContext()
   //lager objekt av state-data som skal sendes til databasen //
   const stateData = {
     combination: state?.game.toString(),
     user: state?.user,
-    numberOfTries: state?.gameCounter.toString(),
-    foundCombination: state?.foundCombination.toString(),
+    numberOfTries: state?.gameCounter,
+    foundCombination: state?.foundCombination,
   }
 
   const shipToApi = async () => {
-    const data = await axios.post('/api/results', { stateData })
-    console.log(stateData)
-    const response = await data?.data
-    console.log(response)
+    try {
+      const data = await axios.post('/api/results', { stateData })
+      const response = await data?.data
+      if (response.success) {
+        setSucces(true)
+      }
+    } catch (error) {
+      console.log('noe gikk galt', error)
+    }
   }
   useEffect(() => {
     shipToApi()
   })
 
-  return <p>{JSON.stringify(state)}</p>
+  return (
+    <>
+      {success ? (
+        <p>Ditt resultat har blitt lagret</p>
+      ) : (
+        <p>Noe gikk galt. Skyld på Marius :-) </p>
+      )}
+    </>
+  )
 }
 
 export default TransferResult

@@ -4,7 +4,6 @@ import * as React from 'react'
 import { createRows } from '@/lib/utils'
 import axios from 'axios'
 import { getUserFromCookie } from '@/lib/utils/api'
-import { useUser } from '@/hooks/useUser'
 
 const GameContext = React.createContext()
 
@@ -31,7 +30,7 @@ const initialState = {
   remaningColors: colors,
   foundCombination: false,
   isComplete: false,
-  gameCounter: 1,
+  gameCounter: 0,
   user: '',
 }
 

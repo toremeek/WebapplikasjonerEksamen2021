@@ -21,6 +21,7 @@ const Rows = () => {
   //sender kopi av state til apiet og får hints og color tilbake //
   const handleRowSubmit = async (event) => {
     event.preventDefault()
+    console.log(state.game)
     //øker counteren for hvert forsøk, lagrer verdien i state //
     dispatch({
       type: 'increment_counter',
@@ -38,7 +39,7 @@ const Rows = () => {
         dispatch({ type: 'increase_row' })
       }
     } catch (error) {
-      console.log(error)
+      console.log('noe gikk galt', error)
     }
   }
 
