@@ -7,7 +7,9 @@ import resultsCreateDto from './results.dto'
 export const listResults = async (req, res) => {
   const results = await resultsService.list()
   const { success, error, data } = results
+
   if (!success) return Response(res).serverError(error)
+
   return Response(res).ok(data)
 }
 
@@ -19,7 +21,9 @@ export const createResult = async (req, res) => {
   //TODO: validering av req-body
   const result = req.body.stateData
   const newResult = await resultsService.create(resultsCreateDto(result))
-  const { succcess, error, data } = newResult
-  if (!succcess) return Response(res).serverError(error)
+
+  const { success, error, data } = newResult
+  if (!success) return Response(res).serverError(error)
+
   return Response(res).created(data)
 }

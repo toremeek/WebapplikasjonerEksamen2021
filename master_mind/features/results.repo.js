@@ -29,7 +29,4 @@ export const create = async (result) => {
   } catch (error) {
     return Result.failure(DbError.create('result', undefined, error))
   }
-
-  {
-  }
 }

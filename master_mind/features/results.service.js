@@ -24,7 +24,9 @@ export const create = async (result) => {
   // }
 
   const createdResult = await resultsRepo.create(result)
-  const { succes, data, error } = createdResult
-  if (!succes) return Result.failure(error)
+
+  const { success, data, error } = createdResult
+  if (!success) return Result.failure(error)
+
   return Result.success(data)
 }
