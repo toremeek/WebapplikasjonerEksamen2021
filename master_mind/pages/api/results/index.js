@@ -2,15 +2,13 @@ import * as resultsController from 'features/results.controller'
 
 export default async function handler(req, res) {
   const { method } = req
-  console.log(method)
-  console.log(req.body)
   switch (method?.toLowerCase()) {
     case 'post':
-      // kaller på kontrolleren som brukes til å lage ny feed
+      // kaller på kontrolleren som brukes til å lage ny result
       await resultsController.createResult(req, res)
       break
     case 'get':
-      // kaller på kontrolleren som brukes til å hente alle feeds
+      // kaller på kontrolleren som brukes til å hente alle results
       await resultsController.listResults(req, res)
       break
     default:

@@ -6,7 +6,13 @@ const { useGameContext } = require('@/contexts/game-context')
 // sender staten til api-et for registrering når spillet er avsluttet //
 const TransferResult = () => {
   const { state } = useGameContext()
-  const stateData = state
+  //lager objekt av state-data som skal sendes til databasen //
+  const stateData = {
+    combination: state?.game.toString(),
+    user: state?.user,
+    numberOfTries: state?.gameCounter.toString(),
+    foundCombination: state?.foundCombination.toString(),
+  }
 
   const shipToApi = async () => {
     const data = await axios.post('/api/results', { stateData })

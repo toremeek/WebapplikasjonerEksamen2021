@@ -8,7 +8,6 @@ import prisma from '@/lib/clients/db'
 export const findMany = async () => {
   try {
     const results = await prisma.game.findMany()
-    console.log('alle resultater fra repo', results)
     return Result.success(results)
   } catch (error) {
     return Result.failure(DbError.read('results', undefined, error))
@@ -18,13 +17,14 @@ export const findMany = async () => {
 // lager et nytt resultat
 //result må inneholde combination, user, numberOfTries, foundCombination (boolean) //
 export const create = async (result) => {
+  console.log('dette kommer til repo', result)
+
   try {
     const newResult = await prisma.game.create({
       data: {
         ...result,
       },
     })
-    console.log('nytt resultat fra repo', newResult)
     return Result.success(newResult)
   } catch (error) {
     return Result.failure(DbError.create('result', undefined, error))

@@ -10,8 +10,8 @@ generator client {
 model Game {
   id               String  @id @default(cuid())
   combination      String
-  user             String?
-  numberOfTries    Int?    @default(2)
-  foundCombination Boolean @default(false)
+  user             String
+  numberOfTries    String   @default("0")
+  foundCombination String @default("false")
 
 }

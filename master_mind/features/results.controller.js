@@ -15,10 +15,10 @@ export const listResults = async (req, res) => {
 // api/results
 
 export const createResult = async (req, res) => {
-  console.log('dette mottar api-et i req.body', req.body)
   //fra req.body : combination, user, numberOfTries, foundCombination (boolean) //
   //TODO: validering av req-body
-  const newResult = await resultsService.create(resultsCreateDto(req.body))
+  const result = req.body.stateData
+  const newResult = await resultsService.create(resultsCreateDto(result))
   const { succcess, error, data } = newResult
   if (!succcess) return Response(res).serverError(error)
   return Response(res).created(data)

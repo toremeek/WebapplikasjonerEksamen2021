@@ -13,14 +13,14 @@ const colors = [
 ]
 
 const user = ['Trude', 'Kjell', 'Tone']
-const numberOfTries = [2, 4, 10]
+const numberOfTries = ['2', '4', '10']
 const foundCombination = ['true', 'false', 'true']
 
 //lager random kombinasjon av de tilgjenglige fargene //
 const getRandomCombination = () => {
   const shuffled = colors.sort(() => 0.5 - Math.random())
   let selected = shuffled.slice(0, 4).join()
-  console.log(selected)
+  console.log('kombinasjonen', selected)
   return selected
 }
 const createGame = async () => {
