@@ -1,43 +1,12 @@
-import { useEffect, useState } from 'react'
-
 import { createUser } from '@/lib/utils/api'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { ScoreBoardItems } from '../game/ScoreBoardItems'
-import styled from 'styled-components'
-
-const MainOuterSection = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  backgrund: teal;
-  width: 100%;
-`
-const ResultsSection = styled.section`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  padding: 1rem;
-  background: pink;
-`
-const GameSection = styled.section`
-  width: 50%;
-  height: 100%;
-  margin: 2rem auto;
-  background: yellow;
-`
-const Styledh2 = styled.h2`
-  wisth: 100%;
-  text-allign: center;
-  margin: auto;
-`
 
 const Start = () => {
   const [results, setResults] = useState()
   const [loading, setLoading] = useState()
 
-  //TODO: hente resultat fr apiet //
   const getScoreBoard = async () => {
     setLoading(true)
     try {
@@ -71,14 +40,22 @@ const Start = () => {
 
   return (
     <>
-      <MainOuterSection>
-        <ResultsSection>
-          <Styledh2>Scoreboard</Styledh2>
-          {console.log(results)}
+      <section className="startSectionWrapper">
+        <h2 id="h2">
+          <span style={{ color: 'red' }}>MasterMind </span>
+          {''}
+          <span style={{ color: 'teal' }}>Hall</span>{' '}
+          <span style={{ color: 'blue ' }}>Of</span>
+        </h2>
+        <h2 id="fame">
+          <span style={{ color: 'orange' }}>Fame</span>
+        </h2>
+        <section id="resultsSection">
           {loading ? <p>Laster..</p> : null}
-          <ul>
+          <ul className="ul">
             {results?.length > 0 ? (
-              results?.map((items, index) =>
+              //slicer result for å vise topp 3 som har klart spillet
+              results?.slice(0, 3).map((items, index) =>
                 //viser kun de som har klart kombinasjonen
                 items.foundCombination ? (
                   <ScoreBoardItems key={items.id} items={items} index={index} />
@@ -88,21 +65,21 @@ const Start = () => {
               <p>Det er ingen resultater å vise</p>
             )}
           </ul>
-        </ResultsSection>
-        <GameSection>
+        </section>
+        <section id="gameSection">
           <h1>Velkommen til Master Mind</h1>
           <ul>
             <li>
-              Spillet går ut på at den ene spilleren bruker farvete brikker for
-              å sette opp en skjult kombinasjon (kode), som den andre spilleren
-              skal forsøke å gjette.
+              Spillet går ut på at den ene spilleren bruker brikker med ulik
+              farge for å sette opp en skjult kombinasjon (kode), som den andre
+              spilleren skal forsøke å gjette. Her kommer koden fra apiet.
             </li>
             <li>
-              Etter hver gjetning får spilleren et antall små sorte og hvite
+              Etter hver gjetning får spilleren et antall små sorte og grå
               pinner ved siden av koden han/hun gjettet på. Pinnene viser hvor
-              mange brikker som er av riktig farve på riktig plass (sorte
+              mange brikker som er av riktig farge på riktig plass (sorte
               pinner), og hvor mange brikker som er av riktig farve, men er feil
-              plassert (hvite pinner).
+              plassert (grå pinner).
             </li>
             <li>NB: Det er kun lov å bruke en av hver farge</li>
             <li>
@@ -110,8 +87,8 @@ const Start = () => {
               mulig forsøk.
             </li>
           </ul>
-        </GameSection>
-      </MainOuterSection>
+        </section>
+      </section>
     </>
   )
 }

@@ -1,6 +1,9 @@
 @import './game.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 html {
   font-size: 100%;
+font-family: 'Roboto', sans-serif;;
 }
 html,
 body {
@@ -17,4 +20,142 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.playerWrapper{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin: .2rem auto;
+  #leftDiv{
+    display: flex;
+    width: 30%;
+    align-items: center;
+  }
+  #place{
+    font-size: 6rem;
+    width: 100%;
+    color: white;
+    padding: 0;
+    margin: 0 auto 0 auto;
+   
+    text-align: center;
+  }
+  #rightDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+    align-items: center;
+  }
+  #textBox{
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+  }
+  #playerName{
+    color: white;
+    font-size: 2rem;
+    width: 100%;  
+    margin: 0 auto;
+    padding: 0;
+  }
+  #playerInfo{
+    color: white;
+    font-size: 1rem;
+    width: 100%;  
+    margin: 0 auto;
+    padding: 0;
+  }
+}
+
+.startSectionWrapper{
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: white;
+  width: 100%;
+  #resultsSection{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 2rem;
+    background: white;
+  }
+  #h2{
+    font-size: 2.2rem;
+    letter-spacing: 12px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+
+  }
+  #fame{
+    font-size: 8rem;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .ul{
+    margin: 0;
+    padding: 0; 
+  }
+ 
+  #gameSection{
+    width: 100%;
+   
+    margin: 0 auto;
+    background: white;
+  }
+ 
+  h1{
+    font-size: 2rem;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+//animasjoner //
+
+@keyframes tumbleIn {
+  0%{
+    opacity: 0;
+    rotate: 45deg;
+  }
+  50%{
+    opacity: .5;
+    
+  }
+  100%{
+    opacity: 1;
+    rotate: 0;
+  }
+}
+
+#liste:nth-child(1){
+  background-color: gold;
+  border: 10px solid gold;
+  animation-name: tumbleIn;
+  animation-duration: 4s;
+  
+
+}
+#liste:nth-child(2){
+  background-color: silver;
+  border: 10px solid silver;
+  animation-name: tumbleIn;
+  animation-duration: 3s;
+
+}
+#liste:nth-child(3){
+  background-color: rgb(208, 126, 26);
+  border: 10px solid rgb(208, 126, 26);
+  animation-name: tumbleIn;
+  animation-duration: 2s;
+
 }

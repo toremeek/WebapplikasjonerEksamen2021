@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { response } from 'msw'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const { useGameContext } = require('@/contexts/game-context')
 
@@ -24,13 +23,19 @@ const TransferResult = () => {
       console.log('noe gikk galt', error)
     }
   }
+
   useEffect(() => {
     shipToApi()
   })
 
   return (
     <>
-      <p>Ditt resultat er lagret</p>
+      <div>
+        <p>Ditt resultat er lagret</p>
+        <button type="button" onClick={window.location.reload()}>
+          Spill igjen
+        </button>
+      </div>
     </>
   )
 }
