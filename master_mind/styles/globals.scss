@@ -28,7 +28,7 @@ a {
 .playerWrapper{
   display: flex;
   cursor: pointer;
-  width: 60%;
+  width: 80%;
   border-radius: 30px;
   flex-direction: row;
   margin: .2rem auto;
@@ -103,13 +103,13 @@ a {
     padding: 0;
     #hallOf{
       position: absolute;
-      width: 100%;
-      font-size: 2rem;
+      width: 40%;
+      font-size: 3rem;
       top: 10%;
       left: 42%;
     }
     #masterMind{
-      font-size: 2.5rem;
+      font-size: 4rem;
       width: 100%;
       text-align: center;
       margin: 0 auto;
@@ -117,7 +117,7 @@ a {
   
     }
     #fame{
-      font-size: 5rem;
+      font-size: 6rem;
       text-align: center;
       width: 100%;
       margin: 0 auto;
@@ -165,9 +165,9 @@ a {
 }
 
 #liste:nth-child(1){
-  width: 60%;
+  width: 50%;
   margin: auto;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: gold;
   border: 10px solid gold;
   animation-name: tumbleIn;
@@ -176,16 +176,16 @@ a {
 #liste:nth-child(2){
   width: 60%;
   margin: auto;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: silver;
   border: 10px solid silver;
   animation-name: tumbleIn;
   animation-duration: 2s;
 }
 #liste:nth-child(3){
-  width: 60%;
+  width: 70%;
   margin: auto;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: rgb(208, 126, 26);
   border: 10px solid rgb(208, 126, 26);
   animation-name: tumbleIn;
@@ -195,7 +195,7 @@ a {
 
 .startButton{
   border: none;
-  border-radius: 50px;;
+  border-radius: 10px;;
   width: 100%;
   margin: auto;
   background-color: gold;
