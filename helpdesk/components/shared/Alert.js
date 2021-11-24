@@ -1,19 +1,8 @@
-import { useState } from 'react'
-
+// TODO: Skrive om slik at den bruker children istede for text?
 const Alert = (props) => {
-  const [visible, setVisible] = useState(true)
   const { role, text } = props
 
-  // TODO: Fikse styling på lukking av alert! Knapp helt til høyre osv osv.. :)
-  if (!visible) return null
-  return (
-    <div className={`alert ${role}`}>
-      {text}{' '}
-      <button type="button" onClick={() => setVisible(false)}>
-        Close
-      </button>
-    </div>
-  )
+  return <div className={`alert ${role}`}>{text}</div>
 }
 
 export default Alert

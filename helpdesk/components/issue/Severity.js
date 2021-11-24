@@ -10,6 +10,7 @@ const Severity = ({ severity }) => {
     color: 'gray',
     text: 'dont know',
   }
+
   return (
     <span className={`severity ${color}`}>
       {text} <span className="dot"></span>

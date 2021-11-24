@@ -1,5 +1,5 @@
-import { Response } from '@/lib/api/apiResponse'
 import * as commentsService from './comments.service'
+import { Response } from '@/lib/api/apiResponse'
 
 // GET
 // /api/issues/{id}/comments
@@ -8,11 +8,11 @@ export const listIssueComments = async (req, res) => {
 
   if (!id) return Response(res).badRequest('Missing required field: id')
 
-  const issueComments = await commentsService.getIssueComments(id)
-
   // Sjekke svar fra server
-  const { success, data, error } = issueComments
+  const { success, data, error } = await commentsService.getIssueComments(id)
+
   if (!success) return Response(res).serverError(error)
+
   return Response(res).ok(data)
 }
 
@@ -25,10 +25,10 @@ export const addComment = async (req, res) => {
   if (!id || !comment)
     return Response(res).badRequest('Missing required fields')
 
-  const addComment = await commentsService.add({ comment, id })
-
   // Sjekke svar fra server
-  const { success, data, error } = addComment
+  const { success, data, error } = await commentsService.add({ comment, id })
+
   if (!success) return Response(res).serverError(error)
+
   return Response(res).ok(data)
 }

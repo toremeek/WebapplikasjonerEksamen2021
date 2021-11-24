@@ -1,14 +1,17 @@
-import DateFormatter from '@/lib/dateFormatter'
-import { useRouter } from 'next/router'
+/* eslint-disable no-ternary */
 import { useState } from 'react'
+
+import Link from 'next/link'
+
 import GetComments from './GetComments'
+import CommentsList from './issue/CommentsList'
 import IssueButton from './issue/IssueButton'
 import Severity from './issue/Severity'
 import PostComment from './PostComment'
-import Link from 'next/link'
-import CommentsList from './issue/CommentsList'
+import useApi from '@/hooks/useApi'
+import DateFormatter from '@/lib/dateFormatter'
 
-/* eslint-disable no-ternary */
+// TODO: Fikse dette med en DTO?
 const SupportItem = (props) => {
   const { item, extend } = props
   const {
@@ -29,15 +32,16 @@ const SupportItem = (props) => {
 
   // Vise legg til kommentar eller vis kommentarer
   const [display, setDisplay] = useState()
+  const { resolve } = useApi()
 
-  const handleShowComments = () => {
+  const handleShowComments = async () => {
     if (showComments) {
       setShowComments(false)
       setDisplay()
     } else {
       setAddComments(false)
       setShowComments(true)
-      setDisplay(<GetComments id={item.id} />)
+      setDisplay(<GetComments id={id} comments={comments} />)
     }
   }
 
@@ -51,24 +55,17 @@ const SupportItem = (props) => {
       setDisplay(<PostComment setAddComments={setAddComments} id={item.id} />)
     }
   }
-  const router = useRouter()
-  const nextPage = () => {
-    localStorage.setItem('item', JSON.stringify(item))
-    router.push(`/Issue/`, `/Issue/${item.title}`)
-  }
 
-  const handleResolve = () => {
-    console.log('Clicked')
-    resolve(id)
-  }
+  // Merker henvendelse om løst
+  const handleResolve = () => resolve(id)
 
   // TODO: Hva blir mest semantisk riktig?? section -> article / article -> section ? Mtp. kommentarer osv.
   return (
-    <article className="">
+    <article>
       <section className="wrapper border light issue">
         <span className="department">{department}</span>
         <Severity severity={severity} />
-        <header>
+        <header className="span-2">
           <h1>{extend ? title : <Link href={`/issue/${id}`}>{title}</Link>}</h1>
         </header>
         <p className="description">{description}</p>
@@ -78,17 +75,17 @@ const SupportItem = (props) => {
             {DateFormatter(created_at)}
           </time>
           <nav>
-            {item._count?.comments > 0 && !extend ? (
+            {comments?.length > 0 && !extend ? (
               <IssueButton
                 state={showComments}
                 trueText="Lukk kommentarer"
-                falseText={`Se kommentarer (${item._count?.comments})`}
+                falseText={`Se kommentarer (${comments?.length})`}
                 handler={handleShowComments}
               />
             ) : null}
             <IssueButton
               state={addComments}
-              trueText="Angre kommentar"
+              trueText="Lukk"
               falseText="Legg til kommentar"
               handler={handleAddComments}
             />
@@ -102,8 +99,8 @@ const SupportItem = (props) => {
           </nav>
         </footer>
       </section>
-      {display ? display : null}
-      {extend && comments.length > 0 ? (
+      {display || null}
+      {extend && comments?.length > 0 ? (
         <CommentsList comments={comments} />
       ) : null}
     </article>

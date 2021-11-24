@@ -1,7 +1,7 @@
 // Validerings kriterier
 const TITLE_LENGTH = { min: 25, max: 150 }
 const DESC_LENGTH = { min: 5, max: 250 }
-const COMMENT_LENGTH = { min: 1, max: 250 }
+const COMMENT_LENGTH = { min: 5, max: 250 }
 
 // Validerings beskjeder
 const VALIDATION_ERROR_MESSAGES = {
@@ -58,6 +58,7 @@ const Validate = {
     const notValidFields = Object.keys(isValidFields).filter(
       (i) => !isValidFields[i]
     )
+
     return {
       isValid: false,
       issues: notValidFields.map((key) => VALIDATION_ERROR_MESSAGES[key]),

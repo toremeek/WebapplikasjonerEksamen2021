@@ -4,7 +4,7 @@ export const filterProps = {
     defaultText: 'Avdeling',
     list: ['IT', 'Design', 'Salg'],
     // Brukes av filter prop
-    getValues: function () {
+    getValues() {
       return this.list.map((item) => ({ value: item, text: item }))
     },
   },
@@ -18,7 +18,7 @@ export const filterProps = {
       { value: 3, text: 'Høy' },
     ],
     // Brukes av filter prop
-    getValues: function () {
+    getValues() {
       return this.list
     },
   },

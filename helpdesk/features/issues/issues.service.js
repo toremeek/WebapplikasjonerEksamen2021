@@ -37,9 +37,10 @@ export const create = async (issueData) => {
 
   if (!duplicateIssue.success) return Result.failure(duplicateIssue.error)
 
-  const createdIssue = await issuesRepository.create(issue, departmentId)
-
-  const { success, data, error } = createdIssue
+  const { success, data, error } = await issuesRepository.create(
+    issue,
+    departmentId
+  )
 
   if (!success) return Result.failure(error)
 

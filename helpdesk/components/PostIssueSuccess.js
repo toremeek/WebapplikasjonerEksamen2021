@@ -1,4 +1,5 @@
 import Link from 'next/dist/client/link'
+
 const PostIssueSuccess = () => (
   <>
     <h1>Takk for din henvendelse</h1>

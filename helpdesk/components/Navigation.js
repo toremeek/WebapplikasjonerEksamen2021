@@ -5,13 +5,13 @@ const Navigation = () => {
     <nav className="navigation">
       <ul>
         <li>
-          <Link href="/">
-            <a className="first">Ny sak</a>
+          <Link href="/new-issue">
+            <a>Ny sak</a>
           </Link>
         </li>
         <li>
-          <Link href="/allissues">
-            <a className="first">Alle saker</a>
+          <Link href="/all-issues">
+            <a>Alle saker</a>
           </Link>
         </li>
       </ul>

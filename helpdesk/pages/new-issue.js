@@ -1,10 +1,12 @@
+/* eslint-disable no-ternary */
+import { useEffect, useState } from 'react'
+
 import PostIssueSuccess from '@/components/PostIssueSuccess'
 import Alert from '@/components/shared/Alert'
 import Loading from '@/components/shared/Loading'
 import ValidationAlert from '@/components/shared/ValidationAlert'
 import useApi from '@/hooks/useApi'
-import Validate from '@/lib/validation/validate'
-import { useEffect, useState } from 'react'
+import Validate from '@/lib/validate'
 
 const SupportForm = () => {
   const [validationErrors, setValidationErrors] = useState([])
@@ -15,37 +17,39 @@ const SupportForm = () => {
     title: '',
     description: '',
     creator: '',
-    severity: null,
+    severity: '',
     department: '',
   })
 
   const handleInputChange = ({ currentTarget: { name, value } }) =>
     setForm((state) => ({ ...state, [name]: value }))
 
-  //Validere input før de sendes til api
+  // Sender henvendelse til apiet
+  const postForm = async (issue) => {
+    await post(issue)
+  }
+
+  // Validere input før de sendes til api
   const handleSendSupport = async (event) => {
     event.preventDefault()
     const { isValid, issues } = Validate.issue(form)
 
     if (isValid) {
       setValidationErrors(null)
-      await postForm({ ...form, severity: parseInt(form.severity) })
+      await postForm({ ...form, severity: parseInt(form.severity, 10) })
     } else {
-      console.log('ERROR:', issues)
       setValidationErrors(issues)
     }
   }
 
-  const postForm = async (issue) => {
-    await post(issue)
-  }
-
+  // Hvis en ny hendvendelse ble lagt til - vis success-melding
   useEffect(() => {
     if (data && !error) setSuccess(true)
-  }, [data])
+  }, [data, error])
 
   if (success) return <PostIssueSuccess />
 
+  // TODO: Bruke getFilter verdier
   return (
     <>
       {isLoading ? (

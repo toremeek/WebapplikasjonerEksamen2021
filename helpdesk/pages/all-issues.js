@@ -1,25 +1,20 @@
-import SupportItem from '@/components/SupportItem'
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-ternary */
+import { useEffect } from 'react'
+
 import Filter from '@/components/issue/Filter'
-import { useEffect, useState } from 'react'
-import useApi from '@/hooks/useApi'
-import Loading from '@/components/shared/Loading'
 import Alert from '@/components/shared/Alert'
-import { useIssueContext } from 'context/IssuesContext'
+import Loading from '@/components/shared/Loading'
+import SupportItem from '@/components/SupportItem'
+import { useIssueContext } from '@/context/IssuesContext'
+import useApi from '@/hooks/useApi'
 
 const SupportMain = () => {
-  const { data, get, error, isLoading } = useApi()
-  const { state, dispatch } = useIssueContext()
+  const { error, isLoading, getIssues } = useApi()
+  const { state } = useIssueContext()
   const { issues, isGlobalLoading } = state
 
   useEffect(() => {
-    dispatch({ type: 'SET_ISSUES', issues: data })
-  }, [data])
-
-  useEffect(() => {
-    const getIssues = async () => {
-      await get('')
-    }
-
     getIssues()
   }, [])
 
@@ -32,7 +27,7 @@ const SupportMain = () => {
         {isLoading || isGlobalLoading ? (
           <Loading />
         ) : issues?.length > 0 ? (
-          issues.map((issues) => <SupportItem key={issues.id} item={issues} />)
+          issues.map((issue) => <SupportItem key={issue.id} item={issue} />)
         ) : (
           <Alert role="info" text="Finner ingen resultater..." />
         )}

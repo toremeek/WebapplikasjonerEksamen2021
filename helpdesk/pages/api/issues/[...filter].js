@@ -12,7 +12,7 @@ const handler = async (req, res) => {
       await filterController.filterIssues(req, res)
       break
     default:
-      return Response(res).badRequest()
+      Response(res).badRequest()
   }
 }
 
