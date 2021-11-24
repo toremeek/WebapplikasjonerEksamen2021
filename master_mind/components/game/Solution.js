@@ -5,7 +5,7 @@ import Hints from './Hints'
 const Solution = ({ row, foundCombination }) => {
   return (
     <>
-      <h2>
+      <h2 id="endMessage">
         {foundCombination
           ? 'Du fant riktig kombinasjon'
           : 'Du fant ikke rett kombinasjon, prøv igjen'}

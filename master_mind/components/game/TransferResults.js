@@ -23,6 +23,9 @@ const TransferResult = () => {
       console.log('noe gikk galt', error)
     }
   }
+  const replay = () => {
+    window.location.reload()
+  }
 
   useEffect(() => {
     shipToApi()
@@ -32,7 +35,7 @@ const TransferResult = () => {
     <>
       <div>
         <p>Ditt resultat er lagret</p>
-        <button type="button" onClick={window.location.reload()}>
+        <button type="button" className="startButton" onClick={replay}>
           Spill igjen
         </button>
       </div>
