@@ -1,24 +1,34 @@
+import { useState } from 'react'
+import { ExtendedPlayerInfo } from '../extendendPlayerInfo'
+
 export const ScoreBoardItems = ({ items, index }) => {
   const name = items.user.charAt(0).toUpperCase() + items.user.slice(1)
+  const [showInfo, setShowInfo] = useState(false)
 
+  const setShow = () => {
+    if (showInfo === true) {
+      setShowInfo(false)
+    } else {
+      setShowInfo(true)
+    }
+  }
   return (
-    <li
-      id="liste"
-      className="playerWrapper"
-      // initial={{ scale: 0.5, opacity: 0 }}
-      // animate={{ opacity: 1, scale: 1 }}
-      // transition={{ duration: 0.5 }}
-    >
-      <div id="leftDiv">
-        <p id="place">{index + 1}</p>
-      </div>
-      <div id="rightDiv">
-        <div id="textBox">
-          <p id="playerName">{name}</p>
-          <p id="playerInfo">Forsøk: {items.numberOfTries}</p>
-          <p id="playerInfo">Kombinasjon: {items.combination.toString()}</p>
+    <>
+      <li id="liste">
+        <div className="playerWrapper" onClick={setShow}>
+          <div id="leftDiv">
+            <p id="place">{index + 1}</p>
+          </div>
+          <div id="rightDiv">
+            <div id="textBox">
+              <p id="playerName">{name}</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </li>
+        <div id="extended">
+          {showInfo ? <ExtendedPlayerInfo items={items} index={index} /> : null}
+        </div>
+      </li>
+    </>
   )
 }

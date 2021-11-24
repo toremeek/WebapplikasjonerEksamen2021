@@ -41,15 +41,18 @@ const Start = () => {
   return (
     <>
       <section className="startSectionWrapper">
-        <h2 id="h2">
-          <span style={{ color: 'red' }}>MasterMind </span>
-          {''}
-          <span style={{ color: 'teal' }}>Hall</span>{' '}
-          <span style={{ color: 'blue ' }}>Of</span>
-        </h2>
-        <h2 id="fame">
-          <span style={{ color: 'orange' }}>Fame</span>
-        </h2>
+        <div className="titleWrapper">
+          <h2 id="masterMind">
+            <span style={{ color: 'red' }}>MasterMind </span>
+          </h2>
+          <h2 id="hallOf">
+            <span style={{ color: 'teal' }}>Hall</span>{' '}
+            <span style={{ color: 'blue ' }}>Of</span>
+          </h2>
+          <h2 id="fame">
+            <span style={{ color: 'orange' }}>Fame</span>
+          </h2>
+        </div>
         <section id="resultsSection">
           {loading ? <p>Laster..</p> : null}
           <ul className="ul">

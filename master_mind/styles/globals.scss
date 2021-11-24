@@ -4,6 +4,7 @@
 html {
   font-size: 100%;
 font-family: 'Roboto', sans-serif;
+background-color: black;
 }
 html,
 body {
@@ -26,13 +27,14 @@ a {
 
 .playerWrapper{
   display: flex;
-  width: 90%;
+  cursor: pointer;
+  width: 60%;
+  border-radius: 30px;
   flex-direction: row;
   margin: .2rem auto;
   padding: 0;
   #leftDiv{
-    display: flex;
-    width: 30%;
+    width: 20%;
     padding: 0;
     align-items: center;
   }
@@ -42,15 +44,14 @@ a {
     color: white;
     padding: 0;
     margin: 0 auto 0 auto;
-    text-align: center;
+    text-align: left;
   }
   #rightDiv{
-    display: flex;
     padding: 0;
-    margin: 0;
+    margin: auto;
     flex-direction: column;
     justify-content: space-around;
-    width: 70%;
+    width: 100%;
     align-items: center;
   }
   #textBox{
@@ -60,7 +61,8 @@ a {
   }
   #playerName{
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    text-align: center;;
     width: 100%;  
     margin: 0 auto;
     padding: 0;
@@ -72,39 +74,57 @@ a {
     margin: 0 auto;
     padding: 0;
   }
+  #extended{
+    width: 100%;
+  }
 }
 
 .startSectionWrapper{
   display: flex;
   padding: 0;
   flex-direction: column;
+  background-color: black;
   justify-content: space-evenly;
-  background: white;
   width: 100%;
   #resultsSection{
     width: 90%;
     display: flex;
     flex-direction: column;
+    background-color: black;
     margin: auto;
     padding: 0;
-    background: white;
   }
-  #h2{
-    font-size: 2.2rem;
-    letter-spacing: 12px;
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
+  .titleWrapper{
+    position: relative;
+    background-color: black;
+    border-radius: 50px;
+    width:100%;
+    margin: 2rem auto;
     padding: 0;
-
+    #hallOf{
+      position: absolute;
+      width: 100%;
+      font-size: 2rem;
+      top: 10%;
+      left: 42%;
+    }
+    #masterMind{
+      font-size: 2.5rem;
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      padding: 0;
+  
+    }
+    #fame{
+      font-size: 5rem;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+    }
   }
-  #fame{
-    font-size: 8rem;
-    text-align: center;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-  }
+  
   .ul{
     margin: 0;
     padding: 0; 
@@ -113,8 +133,9 @@ a {
   .gameSection{
     width: 100%;
     margin: .5rem auto;
-    background: rgb(255, 255, 255);
-    padding: .5rem;
+    background: rgb(0, 0, 0);
+    padding: 1rem;
+    color: white;
  
   }
  
@@ -144,21 +165,27 @@ a {
 }
 
 #liste:nth-child(1){
+  width: 60%;
+  margin: auto;
+  border-radius: 50px;
   background-color: gold;
   border: 10px solid gold;
   animation-name: tumbleIn;
-  animation-duration: 4s;
-  
-
+  animation-duration: 2s;
 }
 #liste:nth-child(2){
+  width: 60%;
+  margin: auto;
+  border-radius: 50px;
   background-color: silver;
   border: 10px solid silver;
   animation-name: tumbleIn;
-  animation-duration: 3s;
-
+  animation-duration: 2s;
 }
 #liste:nth-child(3){
+  width: 60%;
+  margin: auto;
+  border-radius: 50px;
   background-color: rgb(208, 126, 26);
   border: 10px solid rgb(208, 126, 26);
   animation-name: tumbleIn;
@@ -168,10 +195,19 @@ a {
 
 .startButton{
   border: none;
+  border-radius: 50px;;
   width: 100%;
   margin: auto;
   background-color: gold;
   padding: .5rem 0;
   font-size: 2rem;
   cursor: pointer;
+}
+#liste{
+cursor: pointer;
+}
+.extendedInfo{
+  color: white;
+  text-align: center;
+  width: 100%;
 }
