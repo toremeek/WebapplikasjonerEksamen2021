@@ -66,7 +66,7 @@ const Start = () => {
             )}
           </ul>
         </section>
-        <section class="gameSection">
+        <section className="gameSection">
           <h1>Velkommen til Master Mind</h1>
           <ul>
             <li>
