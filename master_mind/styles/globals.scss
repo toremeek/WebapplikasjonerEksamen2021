@@ -31,7 +31,7 @@ a {
   width: 80%;
   border-radius: 30px;
   flex-direction: row;
-  margin: .2rem auto;
+  margin: 0 auto;
   padding: 0;
   #leftDiv{
     width: 20%;
@@ -97,7 +97,6 @@ a {
   .titleWrapper{
     position: relative;
     background-color: black;
-    border-radius: 50px;
     width:100%;
     margin: 2rem auto;
     padding: 0;
@@ -134,13 +133,14 @@ a {
     width: 100%;
     margin: .5rem auto;
     background: rgb(0, 0, 0);
+    margin-top: 2rem;
     padding: 1rem;
     color: white;
  
   }
  
   h1{
-    font-size: 2rem;
+    font-size: 2.5rem;
     width: 100%;
     text-align: center;
     margin: auto;
@@ -167,27 +167,27 @@ a {
 #liste:nth-child(1){
   width: 50%;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: gold;
-  border: 10px solid gold;
+  border: 5px solid gold;
   animation-name: tumbleIn;
   animation-duration: 2s;
 }
 #liste:nth-child(2){
   width: 60%;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: silver;
-  border: 10px solid silver;
+  border: 5px solid silver;
   animation-name: tumbleIn;
   animation-duration: 2s;
 }
 #liste:nth-child(3){
   width: 70%;
   margin: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: rgb(208, 126, 26);
-  border: 10px solid rgb(208, 126, 26);
+  border: 5px solid rgb(208, 126, 26);
   animation-name: tumbleIn;
   animation-duration: 2s;
 
