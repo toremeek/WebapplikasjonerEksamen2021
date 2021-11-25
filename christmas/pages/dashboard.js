@@ -2,12 +2,12 @@
 import { useEffect } from 'react'
 
 import DashboardList from '@/components/dashboard/DashboardList'
+import Superbonus from '@/components/dashboard/Superbonus'
 import Alert from '@/components/shared/Alert'
 import Loading from '@/components/shared/Loading'
 import useApi from '@/hooks/useApi'
-import { useUser } from '@/hooks/useUser'
 import useToggle from '@/hooks/useToggle'
-import Superbonus from '@/components/dashboard/Superbonus'
+import { useUser } from '@/hooks/useUser'
 
 const Dashboard = () => {
   const { admin } = useUser()
