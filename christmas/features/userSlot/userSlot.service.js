@@ -5,7 +5,6 @@ import generateCouponCode from '@/lib/api/couponGenerator'
 import { Result } from '@/lib/api/result'
 import { isTimePassed } from '@/lib/dateHandler'
 
-// TODO: Fikse int i spørringer (+) 💩
 export const openSlot = async (slotId, user) => {
   // Henter slot fra db
   const slotFromDb = await getSlotById(slotId)
@@ -27,7 +26,7 @@ export const openSlot = async (slotId, user) => {
     return Result.failure(`User with id: ${user.id} does not exist!`)
 
   // Sjekke om luken allerede er åpnet?
-  const userSlot = await exists(+slotId, +user.id)
+  const userSlot = await exists(slotId, user.id)
 
   if (!userSlot.success) return Result.failure(userSlot.error)
   if (userSlot?.data)
@@ -36,7 +35,7 @@ export const openSlot = async (slotId, user) => {
   const coupon = generateCouponCode()
 
   // Lager en ny userSlot (åpen luke)
-  const { success, data, error } = await create(+slotId, user.id, coupon)
+  const { success, data, error } = await create(slotId, user.id, coupon)
 
   if (!success) return Result.failure(error)
 

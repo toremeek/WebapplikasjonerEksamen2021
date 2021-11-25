@@ -2,6 +2,7 @@ import { DbError } from '@/lib/api/dbErrors'
 import { Result } from '@/lib/api/result'
 import prisma from '@/lib/clients/db'
 
+// Bruker + foran (eks. slotId) vil gjøre fra streng til tall 🤠
 export const create = async (slotId, userId, coupon) => {
   try {
     const userSlot = await prisma.userSlot.create({
@@ -9,12 +10,12 @@ export const create = async (slotId, userId, coupon) => {
         coupon,
         slot: {
           connect: {
-            id: slotId,
+            id: +slotId,
           },
         },
         user: {
           connect: {
-            id: userId,
+            id: +userId,
           },
         },
       },
@@ -30,7 +31,7 @@ export const exists = async (slotId, userId) => {
   try {
     const userSlot = await prisma.userSlot.findFirst({
       where: {
-        AND: [{ userId }, { slotId }],
+        AND: [{ userId: +userId }, { slotId: +slotId }],
       },
     })
 
