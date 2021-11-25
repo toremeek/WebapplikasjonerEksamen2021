@@ -30,11 +30,11 @@ const TransferResult = () => {
   useEffect(() => {
     shipToApi()
   })
-
+  //TODO: bedre info til bruker om potensielle feil//
   return (
     <>
       <div>
-        <p>Ditt resultat er lagret</p>
+        <p id="shipMessage">Ditt resultat er lagret</p>
         <button type="button" className="startButton" onClick={replay}>
           Spill igjen
         </button>

@@ -10,10 +10,9 @@ const Start = () => {
   const getScoreBoard = async () => {
     setLoading(true)
     try {
-      const getData = await axios.get('/api/results')
+      const getData = await axios.get('http://localhost:3000/api/results')
       const response = await getData?.data
-      console.log('fra db', response)
-      if (response.data.length > 0) {
+      if (response.success) {
         sortData(response.data)
       }
     } catch (error) {
@@ -33,6 +32,7 @@ const Start = () => {
     setResults(sortedByTries)
     setLoading(false)
   }
+
   useEffect(() => {
     createUser()
     getScoreBoard()
