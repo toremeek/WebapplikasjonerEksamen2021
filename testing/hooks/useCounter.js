@@ -3,15 +3,13 @@ import { useCallback, useState } from 'react'
 export function useCounter(initialState = 0) {
   const [counter, setCounter] = useState(initialState)
 
-  const add = useCallback(
-    (delta = 1) => setCounter((counter) => counter + delta),
-    [setCounter]
-  )
+  const add = () => {
+    setCounter(counter + 1)
+  }
 
-  const subtract = useCallback(
-    (delta = 1) => setCounter((counter) => counter - delta),
-    [setCounter]
-  )
+  const subtract = () => {
+    setCounter(counter - 1)
+  }
 
   return { add, subtract, counter }
 }
