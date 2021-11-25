@@ -10,17 +10,10 @@ let randomNum = Math.floor(Math.random() * dummyOjekt.slot.length)
 const DashboardItems = () => {
   const { state } = useCalenderContext()
   const [showAdminModal, setShowAdminModal] = useState(false)
-<<<<<<< HEAD
   const { users } = useUser()
   //console.log(users)
   const { slot } = dummyOjekt
   const { username } = slot[randomNum]
-=======
-  const { slot } = state.dashboard
-  const { username } = slot[2]
-
-  console.log(slot)
->>>>>>> aleks_oppgave_2_christmas
 
   const openModal = () => {
     setShowAdminModal(true)
