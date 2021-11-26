@@ -1,6 +1,6 @@
 import { getSlotById } from '../slot/slot.repository'
 import { getUserById } from '../user/user.repository'
-import { create, exists } from './userSlot.repository'
+import { create, exists, getBySlotId } from './userSlot.repository'
 import generateCouponCode from '@/lib/api/couponGenerator'
 import { Result } from '@/lib/api/result'
 import { isTimePassed } from '@/lib/dateHandler'
@@ -40,4 +40,18 @@ export const openSlot = async (slotId, user) => {
   if (!success) return Result.failure(error)
 
   return Result.success(data)
+}
+
+export const getSuperBonusWinner = async (id) => {
+  const { success, data, error } = await getBySlotId(id)
+
+  if (!success) return Result.failure(error)
+  if (data?.length <= 0)
+    return Result.failure(`Slot with id: ${id} has no participants.`)
+
+  const winner = data[Math.floor(Math.random() * data.length)]
+
+  const user = winner.user.username
+
+  return Result.success({ winner: user })
 }

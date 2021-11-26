@@ -40,3 +40,16 @@ export const exists = async (slotId, userId) => {
     return Result.failure(DbError.read('userSlot', error))
   }
 }
+
+export const getBySlotId = async (id) => {
+  try {
+    const participants = await prisma.userSlot.findMany({
+      where: { slotId: +id },
+      include: { user: true },
+    })
+
+    return Result.success(participants)
+  } catch (error) {
+    return Result.failure(DbError.read('userSlot', error))
+  }
+}
