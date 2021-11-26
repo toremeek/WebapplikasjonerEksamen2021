@@ -1,12 +1,12 @@
-const { default: Navigation } = require('./Navigation')
+import Footer from './Footer'
+import Navigation from './Navigation'
 
-const Layout = ({ children }) => {
-  return (
-    <>
-      <Navigation />
-      <main>{children}</main>
-    </>
-  )
-}
+const Layout = ({ children }) => (
+  <>
+    <Navigation />
+    <main>{children}</main>
+    <Footer />
+  </>
+)
 
 export default Layout
