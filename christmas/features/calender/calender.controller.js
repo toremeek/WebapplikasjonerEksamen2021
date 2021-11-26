@@ -6,9 +6,8 @@ export const get = async (req, res) => {
   const { name } = req.query
   const { user } = await userInfo(req)
 
-  console.log(user)
-
-  if (!name) Response(res).badRequest('Missing required parameters: name')
+  if (!name)
+    return Response(res).badRequest('Missing required parameters: name')
 
   const { success, data, error } = await getCalender(name, user)
 
@@ -21,8 +20,10 @@ export const getDashboard = async (req, res) => {
   const { name } = req.query
   const { admin } = await userInfo(req)
 
-  if (!name) Response(res).badRequest('Missing required parameters: name')
-  if (!admin) Response(res).forbidden()
+  if (!name)
+    return Response(res).badRequest('Missing required parameters: name')
+
+  if (!admin) return Response(res).forbidden()
 
   const { success, data, error } = await getAdminCalender(name)
 
