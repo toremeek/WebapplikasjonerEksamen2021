@@ -55,10 +55,16 @@ table {
 
 .superbonus-winner {
   border: 1px solid black;
+  border-radius: $small;
   padding: 50px;
   width: 100%;
   text-align: center;
-  font-size: large;
+  font-size: 2 * $x-large;
+  font-weight: $semi-bold;
+
+  span {
+    animation: blinker 1.3s linear infinite;
+  }
 }
 .headline {
   font-size: x-large;
@@ -66,5 +72,11 @@ table {
 @media only screen and(min-width: 800px) {
   .dashboard {
     max-width: 80%;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.3;
   }
 }
