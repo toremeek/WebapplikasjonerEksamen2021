@@ -17,7 +17,6 @@ export const listResults = async (req, res) => {
 // api/results
 
 export const createResult = async (req, res) => {
-  //fra req.body : combination, user, numberOfTries, foundCombination (boolean) //
   //TODO: validering av req-body
   const result = req.body.stateData
   const newResult = await resultsService.create(resultsCreateDto(result))

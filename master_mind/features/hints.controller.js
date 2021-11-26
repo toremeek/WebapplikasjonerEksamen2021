@@ -6,7 +6,6 @@ const getHints = (gameData) => {
       } else if (gameData.game.includes(color)) {
         hints.colors += 1
       }
-      console.log('hint', hints)
       return hints
     },
     { positions: 0, colors: 0 }
@@ -14,7 +13,6 @@ const getHints = (gameData) => {
 }
 
 export const giveHints = async (req, res) => {
-  console.log('give hints', req.body.dataToApi)
   const gameData = req.body.dataToApi
   if (gameData.game.length === 4) {
     res.status(200).json({

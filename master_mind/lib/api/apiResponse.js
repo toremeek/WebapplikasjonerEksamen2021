@@ -1,9 +1,6 @@
 import { Result } from './result'
-// TODO: Oppdatere med riktig default error navn
-// Trenger vi å logge hvorfor feil har oppstått?
-// Legge til flere error meldigner
 
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+// kilde: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 export const Response = (res) => ({
   // 200 - OK: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200

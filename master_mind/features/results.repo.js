@@ -17,8 +17,6 @@ export const findMany = async () => {
 // lager et nytt resultat
 //result må inneholde combination, user, numberOfTries, foundCombination (boolean) //
 export const create = async (result) => {
-  console.log('dette kommer til repo', result)
-
   try {
     const newResult = await prisma.game.create({
       data: {

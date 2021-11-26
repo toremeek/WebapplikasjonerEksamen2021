@@ -9,9 +9,8 @@ export const list = async () => {
 }
 
 //legger til nytt resultat i databasen
-
 export const create = async (result) => {
-  //sjekker dataene som kommer //
+  //sjekker dataene som kommer inn //
   if (result.combination.length <= 0) {
     return Result.failure('Inneholder ikke gyldig spillkombinasjon')
   } else if (result.user.length <= 0) {
