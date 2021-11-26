@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 export const DbError = {
-  // TODO: Håndtere error logging
   create(resource, error, message) {
     console.log(error)
 

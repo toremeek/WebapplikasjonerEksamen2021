@@ -1,5 +1,5 @@
 /* eslint-disable no-ternary */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import DashboardList from '@/components/dashboard/DashboardList'
 import Superbonus from '@/components/dashboard/Superbonus'
@@ -12,19 +12,24 @@ import { useUser } from '@/hooks/useUser'
 const Dashboard = () => {
   const { admin } = useUser()
   const { isLoading, getDashboardCalender } = useApi()
-  const displayModal = useToggle(false)
+  const [modal, displayModal] = useToggle(false)
+  const [winner, setWinner] = useState('')
 
   useEffect(() => {
-    getDashboardCalender('Julekalender')
+    if (admin) getDashboardCalender('Julekalender')
   }, [])
 
   if (!admin) return <Alert role="warning" text="Her skal ikke du være!" />
 
   return (
     <>
-      {displayModal ? <Superbonus toggle={displayModal} data={winner} /> : null}
+      {modal ? <Superbonus toggle={displayModal} data={winner} /> : null}
       <h1>Admin dashboard</h1>
-      {isLoading ? <Loading /> : <DashboardList />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <DashboardList modalHandler={{ setWinner, displayModal }} />
+      )}
     </>
   )
 }
