@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (admin) getDashboardCalender('Julekalender')
-  }, [])
+  }, [admin])
 
   if (!admin) return <Alert role="warning" text="Her skal ikke du være!" />
 
