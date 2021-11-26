@@ -1,13 +1,41 @@
+/* eslint-disable no-ternary */
+import { useState } from 'react'
+
+import Alert from '../shared/Alert'
+import SlotUserRow from './SlotUserRow'
+import useApi from '@/hooks/useApi'
 import { formatDate } from '@/lib/dateHandler'
 
-const DashboardSlot = ({ data }) => {
-  const { order, openAt, openBy } = data
+const DashboardSlot = ({ data, modalHandler }) => {
+  const { id, order, openAt, openBy } = data
+  const { setWinner, displayModal } = modalHandler
+  const [showMore, setShowMore] = useState(false)
+  const { get, error } = useApi()
+
+  // Velger superbonus for luke - Dette kunne vi videre ha lagret i database.
+  const superBonus = async () => {
+    const response = await get(`slots/${id}/superbonus`)
+
+    if (!error) {
+      setWinner({ order, user: response.winner })
+      displayModal()
+    }
+  }
+
+  const moreClickHandler = () => setShowMore(true)
+  const clickPickSuperBonus = () => superBonus()
 
   return (
     <article>
       <h1>Luke: {order}</h1>
       <p>Tilgjengelig fra {formatDate(openAt)}</p>
-
+      <p>
+        <button onClick={moreClickHandler}>
+          Se alle deltakelser ({openBy?.length})
+        </button>
+        <button onClick={clickPickSuperBonus}>Trekk superbonus</button>
+      </p>
+      {error ? <Alert role="danger" text={error} /> : null}
       <table>
         <thead>
           <tr>
@@ -18,14 +46,11 @@ const DashboardSlot = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {openBy.slice(0, 3).map((user, i) => (
-            <tr key={i}>
-              <td>{user.id}</td>
-              <td>{user.user}</td>
-              <td>{formatDate(user.createdAt)}</td>
-              <td>{user.coupon}</td>
-            </tr>
-          ))}
+          {showMore
+            ? openBy.map((user, i) => <SlotUserRow key={i} user={user} />)
+            : openBy
+                .slice(0, 3)
+                .map((user, i) => <SlotUserRow key={i} user={user} />)}
         </tbody>
       </table>
     </article>
