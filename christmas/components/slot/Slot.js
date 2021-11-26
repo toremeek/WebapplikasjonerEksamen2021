@@ -1,4 +1,7 @@
 /* eslint-disable no-ternary */
+import { useEffect, useState } from 'react'
+
+import { useCalenderContext } from '@/context/CalenderContext'
 import useApi from '@/hooks/useApi'
 import { useUser } from '@/hooks/useUser'
 import { daysUntil, isTimePassed } from '@/lib/dateHandler'
@@ -7,30 +10,41 @@ const Slot = (props) => {
   const { slot } = props
   const { id, isOpen, openAt, order, coupon } = slot
   const { user } = useUser()
+  const { put, error } = useApi()
+  const { dispatch } = useCalenderContext()
+  const [animation, setAnimation] = useState('')
 
-  const { openSlot } = useApi()
+  const openSlot = async () => {
+    const response = await put(`slots/${id}`)
 
-  // Slot click-handlers
-  // TODO: Legg til animasjon når luke åpnes
-  const handelOpenSlot = () => openSlot(id)
-  // TODO: Legg til animasjon når luke ikke er tilgjengelig
-  const noAvailableAnimation = () => console.log('Animerer....')
+    if (!error) dispatch({ type: 'OPEN_SLOT', ...response })
+  }
+
+  // Cleanup - kom warning om mermory leak
+  useEffect(() => {
+    return () => {
+      setAnimation('')
+    }
+  }, [])
 
   // Bestemmer hvordan slot skal virke - style, handler osv.
   const slotType = () => {
+    // Hvis bruker ikke er logget inn - vis julekalender som ikke kan åpnes
+    if (!user.username || !user.id)
+      return {
+        handler: () => setAnimation('shake'),
+        stopAnimation: () => setAnimation(''),
+        style: 'can-open',
+        display: { main: order },
+      }
+
     // Hvis slot ikke er tilgjengelig - ikke åpen ennå
     if (!isTimePassed(openAt))
       return {
-        handler: noAvailableAnimation,
+        handler: () => setAnimation('shake'),
+        stopAnimation: () => setAnimation(''),
         style: 'not-available',
         display: { main: order, alt: `Åpner om ${daysUntil(openAt)} dager` },
-      }
-
-    if (!user.username || !user.id)
-      return {
-        handler: noAvailableAnimation,
-        style: 'can-open',
-        display: { main: order },
       }
 
     // Bruker har åpnet sloten
@@ -42,16 +56,21 @@ const Slot = (props) => {
 
     // Slot er tilgjengelig, og kan åpnes
     return {
-      handler: handelOpenSlot,
+      handler: () => setAnimation('opening'),
+      stopAnimation: () => openSlot(id),
       style: 'can-open',
       display: { main: order },
     }
   }
 
-  const { handler, style, display } = slotType()
+  const { handler, stopAnimation, style, display } = slotType()
 
   return (
-    <div className={`slot ${style}`} onClick={handler}>
+    <div
+      className={`slot ${style} ${animation}`}
+      onAnimationEnd={stopAnimation}
+      onClick={handler}
+    >
       <h1>{display.main}</h1>
       {display.alt ? <p className="small">{display.alt}</p> : null}
     </div>
