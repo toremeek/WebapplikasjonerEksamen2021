@@ -10,7 +10,7 @@ describe('Stepper component', () => {
   it('should render button', () => {
     render(<Stepper />)
 
-    expect(screen.getByRole('button')).toBeTruthy()
+    expect(screen.getByRole('button')).toBeInTheDocument()
   })
   it('should have correct text content on button', () => {
     render(<Stepper />)
@@ -21,29 +21,23 @@ describe('Stepper component', () => {
 
   it('should update step-count and button content on click', async () => {
     render(<Stepper />)
-    //step sin initial value og sjekker om den er 0
-    let step = 0
-    expect(step).toBe(0)
-    //Sjekker om knappen eksisterer
-    expect(screen.getByRole('button')).toBeTruthy()
-    console.log(step)
 
-    //Finner knappen med teksten 'Game'
+    expect(screen.getByRole('button')).toBeInTheDocument()
     await screen.findByText('Game')
-    //Klikker på knappen og øker step med 1
-    fireEvent.click(screen.getByRole('button'))
-    step += 1
-    //Sjekker om step = 1
-    expect(step).toBe(1)
-    console.log(step)
 
-    //Venter og ser om knappen har endret seh fra 'Game' til 'End'
+    fireEvent.click(screen.getByRole('button'))
+    await screen.findByText('End')
+  })
+  it('should remove button when step count is higher than amount of steps', async () => {
+    render(<Stepper />)
+    expect(screen.getByRole('button')).toBeInTheDocument()
+
+    await screen.findByText('Game')
+    fireEvent.click(screen.getByRole('button'))
+
     await screen.findByText('End')
     fireEvent.click(screen.getByRole('button'))
-    console.log(step)
-    step += 1
-    expect(step).toBe(2)
-    console.log(step)
+
+    expect(screen.queryByRole('button')).toBeNull()
   })
-  it('should remove button when step count is higher than amount of steps', async () => {})
 })
