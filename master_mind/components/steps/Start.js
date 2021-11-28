@@ -54,6 +54,7 @@ const Start = () => {
           </h2>
         </div>
         <section id="resultsSection">
+          <p id="scoreboardExplain">Klikk på resultatene for mer info:</p>
           {loading ? <p>Laster..</p> : null}
           <ul className="ul">
             {results?.length > 0 ? (

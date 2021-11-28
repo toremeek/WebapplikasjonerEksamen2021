@@ -28,7 +28,9 @@ const Rows = () => {
     })
     try {
       const dataToApi = { ...state }
-      const sendData = await axios.post('/api/hints', { dataToApi })
+      const sendData = await axios.post('http://localhost:3000/api/hints', {
+        dataToApi,
+      })
       const receivedData = await sendData?.data
       const hints = receivedData.data
       //  Sjekker om spillet er løst basert på hints fra api-et og setter hint //

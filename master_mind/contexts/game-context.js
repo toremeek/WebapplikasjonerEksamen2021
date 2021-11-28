@@ -17,7 +17,7 @@ const colors = [
   'gray',
 ]
 
-const rows = createRows(5)
+const rows = createRows(10)
 
 const initialState = {
   game: null,
@@ -31,6 +31,7 @@ const initialState = {
   isComplete: false,
   gameCounter: 0,
   user: '',
+  transferStatus: '',
 }
 
 const getRemainingColors = (selectedColors, currentColor) => {
@@ -136,6 +137,13 @@ function gameReducer(state, action) {
         ...state,
         //setter spill-kombinasjonen som mottas fra api-et //
         game: payload.game,
+      }
+    }
+    case 'set_transferStatus': {
+      return {
+        ...state,
+        //setter status på overføringen av resultatet etter endt spill //
+        transferStatus: payload,
       }
     }
     default: {
