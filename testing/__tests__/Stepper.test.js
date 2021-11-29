@@ -1,43 +1,53 @@
 /**
  * @jest-environment jsdom
  */
-import Stepper from '../components/Stepper'
-import userEvent from '@testing-library/user-event'
 
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+
+import Stepper from '../components/Stepper'
 
 describe('Stepper component', () => {
   it('should render button', () => {
     render(<Stepper />)
-
+    // Sjekker om knappen finnes
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
   it('should have correct text content on button', () => {
     render(<Stepper />)
-    expect(screen.getByRole('button')).toHaveTextContent('Game')
-    fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByRole('button')).toHaveTextContent('End')
+
+    // Henter knappen fra komponenten
+    const button = screen.getByRole('button')
+
+    // Sjekker at knappen har tekst lik game
+    expect(button).toHaveTextContent('Game')
   })
 
   it('should update step-count and button content on click', async () => {
     render(<Stepper />)
 
-    expect(screen.getByRole('button')).toBeInTheDocument()
-    await screen.findByText('Game')
+    // Henter knappen fra komponenten
+    const button = screen.getByRole('button')
 
-    fireEvent.click(screen.getByRole('button'))
-    await screen.findByText('End')
+    // Sjekker at tekst er lik game (initial)
+    expect(button).toHaveTextContent('Game')
+
+    // Klikker på knappen og øker step med 1
+    fireEvent.click(button)
+
+    // Sjekker at tekst på knappen oppdaterer seg
+    await waitFor(() => expect(button).toHaveTextContent('End'))
   })
+
   it('should remove button when step count is higher than amount of steps', async () => {
     render(<Stepper />)
-    expect(screen.getByRole('button')).toBeInTheDocument()
 
-    await screen.findByText('Game')
-    fireEvent.click(screen.getByRole('button'))
+    // Henter knappen fra komponenten
+    const button = screen.getByRole('button')
 
-    await screen.findByText('End')
-    fireEvent.click(screen.getByRole('button'))
+    // Trykker på knappen to ganger
+    fireEvent.click(button)
+    fireEvent.click(button)
 
-    expect(screen.queryByRole('button')).toBeNull()
+    await waitFor(() => expect(button).not.toBeInTheDocument())
   })
 })
