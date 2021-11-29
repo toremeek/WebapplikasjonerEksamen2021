@@ -13,13 +13,19 @@ import useApi from '@/hooks/useApi'
 const IssuePage = () => {
   const router = useRouter()
   const { id } = router.query
-  const { state } = useIssueContext()
-  const { error, isLoading, getIssue } = useApi()
+  const { dispatch, state } = useIssueContext()
+  const { error, isLoading, get } = useApi()
 
   // Henter hele henvendelsen fra api når siden lastes og oppdaterer context.
   useEffect(() => {
-    getIssue(id)
-  }, [])
+    const fetchIssue = async (issueId) => {
+      const result = await get(issueId)
+
+      if (!error) dispatch({ type: 'SET_ISSUE', issue: result })
+    }
+
+    fetchIssue(id)
+  }, [id])
 
   // TODO: Tungvind måte å gjøre dette på. Itererer over issue arrayen for å finne riktig. 💩
   const getIssueStateId = (issueId) => {
@@ -40,7 +46,12 @@ const IssuePage = () => {
         <Alert role="danger" text={error} />
       ) : issue ? (
         <SupportItem item={issue} extend />
-      ) : null}
+      ) : (
+        <Alert
+          role="warning"
+          text="Her gikk det litt fort i sivngen, så her mangler det noe"
+        />
+      )}
 
       <button type="button" className="mt-2" onClick={back}>
         Tilbake
