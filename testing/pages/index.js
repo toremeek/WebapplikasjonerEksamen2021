@@ -1,5 +1,3 @@
-import ColorPicker from '@/components/ColorPicker'
-import Stepper from '@/components/Stepper'
 import Link from 'next/link'
 
 export default function Home() {
