@@ -3,14 +3,15 @@ import { useState } from 'react'
 
 import Alert from './shared/Alert'
 import Loading from './shared/Loading'
+import { useIssueContext } from '@/context/IssuesContext'
 import useApi from '@/hooks/useApi'
 import Validate from '@/lib/validate'
 
 const PostComment = ({ id }) => {
   const [comment, setComment] = useState('')
   const [validInput, setValidInput] = useState(true)
-
-  const { data, postComment, error, isLoading } = useApi()
+  const { dispatch } = useIssueContext()
+  const { data, post, error, isLoading } = useApi()
 
   const handleCommentChange = (e) => {
     setComment(e.target.value)
@@ -19,7 +20,15 @@ const PostComment = ({ id }) => {
   const handlePostComment = async (event) => {
     event.preventDefault()
     if (Validate.comment(comment)) {
-      postComment(comment, id)
+      const result = await post({ comment }, `${id}/comments`)
+
+      if (!error) {
+        dispatch({
+          type: 'ADD_NEW_COMMENT_TO_ISSUE',
+          comment: result,
+          issueId: id,
+        })
+      }
     } else {
       setValidInput(false)
     }
