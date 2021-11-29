@@ -10,11 +10,17 @@ import { useIssueContext } from '@/context/IssuesContext'
 import useApi from '@/hooks/useApi'
 
 const SupportMain = () => {
-  const { error, isLoading, getIssues } = useApi()
-  const { state } = useIssueContext()
+  const { error, isLoading, get } = useApi()
+  const { dispatch, state } = useIssueContext()
   const { issues, isGlobalLoading } = state
 
   useEffect(() => {
+    const getIssues = async () => {
+      const result = await get()
+
+      if (!error) dispatch({ type: 'SET_ISSUES', issues: result })
+    }
+
     getIssues()
   }, [])
 
