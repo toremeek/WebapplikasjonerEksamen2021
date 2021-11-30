@@ -1,4 +1,4 @@
-import issueCreateDto from './issues.dto'
+import { issueCreateDto } from './issues.dto'
 import * as issuesService from './issues.service'
 import { Response } from '@/lib/api/apiResponse'
 import Validate from '@/lib/validate'

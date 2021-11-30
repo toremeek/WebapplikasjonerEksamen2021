@@ -95,6 +95,10 @@ export const resolve = async (issueId) => {
     const issue = await prisma.issue.update({
       where: { id: issueId },
       data: { isResolved: true },
+      include: {
+        department: true,
+        comments: true,
+      },
     })
 
     return Result.success(issue)

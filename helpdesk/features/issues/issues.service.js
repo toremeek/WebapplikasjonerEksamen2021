@@ -1,4 +1,5 @@
 import * as departmentRepository from '../departments/departments.repository'
+import { issueGetDto } from './issues.dto'
 import * as issuesRepository from './issues.repository'
 import { Result } from '@/lib/api/result'
 
@@ -8,7 +9,7 @@ export const list = async () => {
 
   if (!success) return Result.failure(error)
 
-  return Result.success(data)
+  return Result.success(data.map((issue) => issueGetDto(issue)))
 }
 
 // Henter en issue med kommentarer
@@ -18,7 +19,7 @@ export const getIssueExtended = async (issueId) => {
   if (!success) return Result.failure(error)
   if (!data) return Result.failure('Missing required field: id')
 
-  return Result.success(data)
+  return Result.success(issueGetDto(data))
 }
 
 // Legg til ny issue i databasen
@@ -62,5 +63,5 @@ export const resolve = async (id) => {
 
   if (!success) return Result.failure(error)
 
-  return Result.success(data)
+  return Result.success(issueGetDto(data))
 }
