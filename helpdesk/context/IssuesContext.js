@@ -11,7 +11,6 @@ const initialState = {
 
 // (state, action) action.data / payload
 const reducer = (state, action) => {
-  // TODO: Må oppdatere dette!
   const { type } = action
 
   switch (type) {
