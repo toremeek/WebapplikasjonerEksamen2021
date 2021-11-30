@@ -7,7 +7,7 @@ export const open = async (req, res) => {
   const { user } = await userInfo(req)
 
   if (!id || !user)
-    Response(res).badRequest('Missing required parameters: id, user')
+    return Response(res).badRequest('Missing required parameters: id, user')
 
   const { success, data, error } = await openSlot(id, user)
 
