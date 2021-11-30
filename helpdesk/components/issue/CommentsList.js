@@ -5,7 +5,7 @@ const CommentsList = ({ comments }) => {
     return <Alert role="warning" text="Ingenting å vise her!" />
 
   return (
-    <section className="wrapper">
+    <section className="wrapper flex">
       {comments.map((comment, index) => (
         <article className="comments wrapper border dark" key={comment.id}>
           <h3>Kommentar {index + 1}</h3>

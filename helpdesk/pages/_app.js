@@ -1,12 +1,14 @@
 import Layout from '@/components/Layout'
+import { IssueProvider } from 'context/IssuesContext'
 import '../styles/globals.scss'
-import '../styles/issues.css'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <IssueProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </IssueProvider>
   )
 }
 

@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+/* eslint-disable no-shadow */
+import { useState } from 'react'
 
 import axios from 'axios'
 
@@ -7,7 +8,8 @@ const useApi = () => {
   const [data, setData] = useState()
   const [error, setError] = useState()
 
-  const get = useCallback(async (url) => {
+  // GET
+  const get = async (url = '') => {
     setIsLoading(true)
     try {
       const response = await axios.get(`/api/issues/${url}`)
@@ -15,14 +17,19 @@ const useApi = () => {
 
       if (success) setData(data)
       setError()
+      setIsLoading(false)
+
+      return data
     } catch (err) {
       setError(err.response.data.error)
-    } finally {
       setIsLoading(false)
-    }
-  }, [])
 
-  const post = useCallback(async (url, task) => {
+      return err
+    }
+  }
+
+  // POST
+  const post = async (task, url = '') => {
     setIsLoading(true)
     try {
       const response = await axios.post(`/api/issues/${url}`, task)
@@ -30,45 +37,45 @@ const useApi = () => {
 
       if (success) setData(data)
       setError()
+      setIsLoading(false)
+
+      return data
     } catch (err) {
       setError(err.response?.data?.error)
-    } finally {
       setIsLoading(false)
+
+      return err
     }
-  }, [])
+  }
 
-  // const remove = useCallback(
-  //   async (id) => {
-  //     setIsLoading(true)
-  //     try {
-  //       await axios.delete(`/api/todos/${id}`)
-  //       get()
-  //     } catch (err) {
-  //       setError(err)
-  //     } finally {
-  //       setIsLoading(false)
-  //     }
-  //   },
-  //   [get]
-  // )
+  // PUT
+  const put = async (id) => {
+    setIsLoading(true)
+    try {
+      const response = await axios.put(`/api/issues/${id}`)
+      const { data, success } = response.data
 
-  const resolve = useCallback(
-    async (id) => {
-      console.log(id)
-      setIsLoading(true)
-      try {
-        await axios.put(`/api/issues/${id}`)
-        get()
-      } catch (err) {
-        setError(err)
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    [get]
-  )
+      if (success) setData(data)
+      setError()
+      setIsLoading(false)
 
-  return { isLoading, data, get, error, post, resolve }
+      return data
+    } catch (err) {
+      setError(err.response?.data?.error)
+      setIsLoading(false)
+
+      return err
+    }
+  }
+
+  return {
+    isLoading,
+    data,
+    get,
+    error,
+    post,
+    put,
+  }
 }
 
 export default useApi

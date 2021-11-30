@@ -13,7 +13,7 @@ const handler = async (req, res) => {
       await issuesController.markIssueResovled(req, res)
       break
     default:
-      return Response(res).badRequest()
+      Response(res).badRequest()
   }
 }
 

@@ -95,12 +95,19 @@
         "named": "never",
         "asyncArrow": "always"
       }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
     ]
   },
   "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {
     "import/resolver": {
       "alias": [
+        ["@/context", "./context"],
         ["@/components", "./components"],
         ["@/pages", "./pages"],
         ["@/lib", "./lib"],
@@ -108,11 +115,5 @@
         ["@/features", "./features"]
       ]
     }
-  },
-  "prettier/prettier": [
-    "error",
-    {
-      "endOfLine": "auto"
-    }
-  ]
+  }
 }

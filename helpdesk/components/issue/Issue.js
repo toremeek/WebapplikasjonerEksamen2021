@@ -1,11 +1,12 @@
-import Severity from './Severity'
-import CommentForm from './CommentForm'
-import DateFormatter from '@/lib/dateFormatter'
 import { useState } from 'react'
+
+import CommentForm from './CommentForm'
+import Severity from './Severity'
+import DateFormatter from '@/lib/dateFormatter'
 
 const Issue = ({ data }) => {
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false)
-
+  // TODO: Bruke DTO
   const {
     id,
     isResolved,
@@ -26,7 +27,7 @@ const Issue = ({ data }) => {
   return (
     <section>
       <header>
-        <h1>{title}</h1>
+        <h1 className="span-2">{title}</h1>
         <p>{department}</p>
         <p>
           <Severity severity={severity} />

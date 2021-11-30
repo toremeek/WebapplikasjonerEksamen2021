@@ -1,7 +1,16 @@
 // Validerings kriterier
 const TITLE_LENGTH = { min: 25, max: 150 }
-const DESC_LENGTH = { min: 1, max: 250 }
-const COMMENT_LENGTH = { min: 1, max: 250 }
+const DESC_LENGTH = { min: 5, max: 250 }
+const COMMENT_LENGTH = { min: 5, max: 250 }
+
+// Validerings beskjeder
+const VALIDATION_ERROR_MESSAGES = {
+  name: 'For og etternavn må ha stor forbokstav og mellomrom',
+  title: `Tittel må fylles ut, min ${TITLE_LENGTH.min} og maks ${TITLE_LENGTH.max} tegn`,
+  desciption: `Beskrivelse må fylles ut, min ${DESC_LENGTH.min} tegn og maks ${DESC_LENGTH.max} tegn`,
+  severity: 'Viktighet må velges',
+  department: 'Avdeling må velges',
+}
 
 // Funksjoner for å sjekke lengde på strenger
 const isMinLength = (length, string) => length && string?.length >= length
@@ -37,13 +46,23 @@ const Validate = {
 
   // Issue: Sjekker tile, desc osv..
   issue(issue) {
-    return (
-      this.name(issue.creator) &&
-      this.title(issue.title) &&
-      this.description(issue.description) &&
-      issue.severity &&
-      issue.department
+    const isValidFields = {
+      name: this.name(issue.creator),
+      title: this.title(issue.title),
+      desciption: this.description(issue.description),
+      severity: Boolean(issue.severity),
+      department: Boolean(issue.department),
+    }
+
+    if (Object.values(isValidFields).every(Boolean)) return { isValid: true }
+    const notValidFields = Object.keys(isValidFields).filter(
+      (i) => !isValidFields[i]
     )
+
+    return {
+      isValid: false,
+      issues: notValidFields.map((key) => VALIDATION_ERROR_MESSAGES[key]),
+    }
   },
 }
 

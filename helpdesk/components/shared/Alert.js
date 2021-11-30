@@ -1,3 +1,4 @@
+// TODO: Skrive om slik at den bruker children istede for text?
 const Alert = (props) => {
   const { role, text } = props
 

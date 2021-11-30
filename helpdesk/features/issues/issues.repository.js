@@ -8,11 +8,7 @@ export const findMany = async () => {
     const issues = await prisma.issue.findMany({
       include: {
         department: { select: { name: true } },
-        _count: {
-          select: {
-            comments: true,
-          },
-        },
+        comments: true,
       },
     })
 
@@ -50,11 +46,7 @@ export const findManyWhere = async (property, value) => {
       },
       include: {
         department: { select: { name: true } },
-        _count: {
-          select: {
-            comments: true,
-          },
-        },
+        comments: true,
       },
     })
 
@@ -103,6 +95,10 @@ export const resolve = async (issueId) => {
     const issue = await prisma.issue.update({
       where: { id: issueId },
       data: { isResolved: true },
+      include: {
+        department: true,
+        comments: true,
+      },
     })
 
     return Result.success(issue)
