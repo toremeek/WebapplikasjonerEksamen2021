@@ -1,3 +1,4 @@
+import { issueGetDto } from '../issues/issues.dto'
 import * as issuesRepository from '../issues/issues.repository'
 import * as departmentRepository from '@/features/departments/departments.repository'
 import { Result } from '@/lib/api/result'
@@ -35,18 +36,5 @@ export const listIssuesWith = async (property) => {
 
   if (!success) return Result.failure(error)
 
-  return Result.success(data)
-}
-
-// TODO: Brukes ikke?? Ta bort
-export const filterProps = async () => {
-  const { success, data } = await departmentRepository.findMany()
-
-  if (!success) return Result.failure('Failed finding departments')
-  const departments = data.map((dep) => dep.name)
-
-  return Result.success({
-    departments,
-    severity: [{ 1: 'Lav', 2: 'Middels', 3: 'Høy' }],
-  })
+  return Result.success(data.map((issue) => issueGetDto(issue)))
 }
