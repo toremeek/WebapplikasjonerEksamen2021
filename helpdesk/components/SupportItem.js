@@ -1,5 +1,5 @@
 /* eslint-disable no-ternary */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 
@@ -8,6 +8,7 @@ import CommentsList from './issue/CommentsList'
 import IssueButton from './issue/IssueButton'
 import Severity from './issue/Severity'
 import PostComment from './PostComment'
+import { useIssueContext } from '@/context/IssuesContext'
 import useApi from '@/hooks/useApi'
 import DateFormatter from '@/lib/dateFormatter'
 
@@ -21,10 +22,13 @@ const SupportItem = (props) => {
     description,
     creator,
     isResolved,
-    created_at,
-    department: { name: department },
+    created,
+    department,
     comments,
   } = item
+
+  const { put, error } = useApi()
+  const { dispatch } = useIssueContext()
 
   // Hånderer hva som skal vises
   const [showComments, setShowComments] = useState(false)
@@ -32,7 +36,6 @@ const SupportItem = (props) => {
 
   // Vise legg til kommentar eller vis kommentarer
   const [display, setDisplay] = useState()
-  const { resolve } = useApi()
 
   const handleShowComments = async () => {
     if (showComments) {
@@ -57,22 +60,37 @@ const SupportItem = (props) => {
   }
 
   // Merker henvendelse om løst
-  const handleResolve = () => resolve(id)
+  const handleResolve = async () => {
+    const result = await put(id)
 
-  // TODO: Hva blir mest semantisk riktig?? section -> article / article -> section ? Mtp. kommentarer osv.
+    if (!error) dispatch({ type: 'SET_ISSUE', issue: result })
+  }
+
+  useEffect(() => {
+    dispatch({ type: 'SET_ERROR', error })
+  }, [error])
+
   return (
     <article>
       <section className="wrapper border light issue">
         <span className="department">{department}</span>
         <Severity severity={severity} />
         <header className="span-2">
-          <h1>{extend ? title : <Link href={`/issue/${id}`}>{title}</Link>}</h1>
+          <h1>
+            {extend ? (
+              title
+            ) : (
+              <Link href={`/issue/${id}`}>
+                <a>{title}</a>
+              </Link>
+            )}
+          </h1>
         </header>
         <p className="description">{description}</p>
         <p className="creator">{creator}</p>
         <footer>
-          <time dateTime={DateFormatter(created_at)}>
-            {DateFormatter(created_at)}
+          <time dateTime={DateFormatter(created)}>
+            {DateFormatter(created)}
           </time>
           <nav>
             {comments?.length > 0 && !extend ? (
