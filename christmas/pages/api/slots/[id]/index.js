@@ -5,11 +5,6 @@ const handler = async (req, res) => {
   const { method } = req
 
   switch (method.toUpperCase()) {
-    // TODO: Fjern denne - grei å bruke ved feilsøking
-    // case 'GET':
-    //   await open(req, res)
-    //   break
-
     case 'PUT':
       await open(req, res)
       break
