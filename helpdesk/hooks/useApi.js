@@ -52,7 +52,7 @@ const useApi = () => {
   const put = async (id) => {
     setIsLoading(true)
     try {
-      const response = await axios.put(`/api/issues/${id}asdasd`)
+      const response = await axios.put(`/api/issues/${id}`)
       const { data, success } = response.data
 
       if (success) setData(data)
