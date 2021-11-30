@@ -21,7 +21,7 @@ const IssuePage = () => {
     const fetchIssue = async (issueId) => {
       const result = await get(issueId)
 
-      if (!error) dispatch({ type: 'SET_ISSUE', issue: result })
+      if (!error && result.id) dispatch({ type: 'SET_ISSUE', issue: result })
     }
 
     fetchIssue(id)
