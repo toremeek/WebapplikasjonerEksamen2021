@@ -8,6 +8,7 @@ import Solution from './Solution'
 import { useGameContext } from '@/contexts/game-context'
 import axios from 'axios'
 import TransferResult from './TransferResults'
+import { validate } from '@/lib/validation'
 
 const Rows = () => {
   const { state, dispatch } = useGameContext()
@@ -21,27 +22,38 @@ const Rows = () => {
   //sender kopi av state til apiet og får hints og color tilbake //
   const handleRowSubmit = async (event) => {
     event.preventDefault()
+    //får du løsningen i konsollen for å gjøre dev enklere
     console.log(state.game)
     //øker counteren for hvert forsøk, lagrer verdien i state //
     dispatch({
       type: 'increment_counter',
     })
-    try {
-      const dataToApi = { ...state }
-      const sendData = await axios.post('http://localhost:3000/api/hints', {
-        dataToApi,
-      })
-      const receivedData = await sendData?.data
-      const hints = receivedData.data
-      //  Sjekker om spillet er løst basert på hints fra api-et og setter hint //
-      dispatch({ type: 'set_hints', payload: { hints } })
-      if (hints?.positions === 4) {
-        dispatch({ type: 'set_complete' })
-      } else {
-        dispatch({ type: 'increase_row' })
+    if (!validate.correctLength(4, state.game)) {
+      alert('Noe er feil spillkombinasjonen som sendes')
+      console.log('Det sendes feil lengde på spillkombinasjonen til apiet')
+    }
+    if (!validate.correctLength(4, state.selectedColors)) {
+      alert('Noe er feil fargekombinasjonen som sendes')
+      console.log('Det sendes feil lengde på valgte farge til apiet')
+    } else {
+      try {
+        const dataToApi = { ...state }
+        const sendData = await axios.post('http://localhost:3000/api/hints', {
+          dataToApi,
+        })
+        const receivedData = await sendData?.data
+        const hints = receivedData.data
+        console.log('hint fra apiet', hints)
+        //  Sjekker om spillet er løst basert på hints fra api-et og setter hint //
+        dispatch({ type: 'set_hints', payload: { hints } })
+        if (hints?.positions === 4) {
+          dispatch({ type: 'set_complete' })
+        } else {
+          dispatch({ type: 'increase_row' })
+        }
+      } catch (error) {
+        console.log('noe gikk galt', error)
       }
-    } catch (error) {
-      console.log('noe gikk galt', error)
     }
   }
 

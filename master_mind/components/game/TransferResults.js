@@ -1,3 +1,4 @@
+import { validate } from '@/lib/validation'
 import axios from 'axios'
 
 const { useGameContext } = require('@/contexts/game-context')
@@ -7,6 +8,7 @@ const TransferResult = () => {
   const { state, dispatch } = useGameContext()
 
   //lager objekt av state-data som skal sendes til databasen //
+
   const stateData = {
     combination: state?.game.toString(),
     user: state?.user,

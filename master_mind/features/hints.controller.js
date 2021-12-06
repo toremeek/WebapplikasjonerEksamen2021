@@ -1,3 +1,5 @@
+import { validate } from '@/lib/validation'
+
 const getHints = (gameData) => {
   return gameData.selectedColors?.reduce(
     (hints, color, index) => {
@@ -14,12 +16,22 @@ const getHints = (gameData) => {
 
 export const giveHints = async (req, res) => {
   const gameData = req.body.dataToApi
-  if (gameData.game.length === 4) {
-    res.status(200).json({
-      success: true,
-      data: getHints(gameData),
+
+  if (!validate.correctLength(4, gameData.selectedColors)) {
+    return res.status(400).json({
+      success: false,
+      error: 'Not valid length of colors selected',
     })
-  } else {
-    res.status(500).json({ success: false, message: 'Ingen data å behandle' })
   }
+  if (!validate.correctLength(4, gameData.game)) {
+    return res.status(400).json({
+      success: false,
+      error: 'Not valid length of colors',
+    })
+  }
+
+  return res.status(200).json({
+    success: true,
+    data: getHints(gameData),
+  })
 }

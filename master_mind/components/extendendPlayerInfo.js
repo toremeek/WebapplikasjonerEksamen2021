@@ -3,7 +3,7 @@ export const ExtendedPlayerInfo = ({ items, index }) => {
     <>
       <section className="extendedInfo">
         <p>Antall forsøk: {items.numberOfTries}</p>
-        <p>Kombinasjon: {items.combination.toString()}</p>
+        <p>Kombinasjon: {items.combination.replace(/,/g, ', ')}</p>
       </section>
     </>
   )
