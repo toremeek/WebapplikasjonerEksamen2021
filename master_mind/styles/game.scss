@@ -1,12 +1,15 @@
 main {
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   padding-top: 1.5rem;
 }
 
 button[type="submit"] {
+  
   padding: 0.6rem 0.6rem;
   font-size: 1rem;
+  background-color: white;
+  color: black;
   margin-top: 0.6rem;
 }
 
@@ -18,6 +21,7 @@ button[type="submit"] {
 
 .userform {
   margin-top: 3rem;
+
   label {
     font-weight: bold;
   }
@@ -25,6 +29,7 @@ button[type="submit"] {
   input {
     display: block;
     margin: 0.5rem 0;
+    background-color: white;
   }
 }
 
@@ -32,16 +37,19 @@ button[type="submit"] {
   max-width: 600px;
   margin: 0 auto;
   margin-top: 2rem;
+ 
 }
 
 .row-wrapper {
   position: relative;
   margin-bottom: 2.5rem;
+  color: white;
 
   form {
     display: flex;
     button {
       border: none;
+      
     }
   }
 }
@@ -62,13 +70,14 @@ button[type="submit"] {
 .cells {
   display: flex;
   gap: 15px;
+  color: white;
   place-content: center;
   align-items: center;
 }
 
 .cell {
   .cellButton {
-    border: 1px solid #000;
+    border: 1px solid rgb(255, 252, 252);
     background: none;
     border-radius: 50%;
     width: 45px;
@@ -86,8 +95,8 @@ button[type="submit"] {
 }
 
 .peg {
-  border: 1px solid #000;
-  background: none;
+  border: 1px solid rgb(255, 255, 255);
+  background: white;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -118,4 +127,9 @@ button[type="submit"] {
       background: none;
     }
   }
+}
+#endMessage{
+color: white;
+width: 100%;
+text-align: center;
 }

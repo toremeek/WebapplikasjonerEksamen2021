@@ -2,7 +2,7 @@
 const Stepper = ({ steps, step, setStep }) => {
   return (
     <button
-      style={{ marginTop: '2rem' }}
+      className="startButton"
       type="button"
       onClick={() => setStep(step + 1)}
     >
